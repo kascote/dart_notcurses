@@ -1,0 +1,124 @@
+output: '../lib/src/ffi/notcurses_g.dart'
+name: 'NcFfi'
+description: 'Notcurses binding for Dart'
+headers:
+  entry-points:
+    - '/usr/local/opt/notcurses/include/notcurses/notcurses.h'
+  include-directives:
+    - '/usr/local/opt/notcurses/include/notcurses/notcurses.h'
+# compiler-opts:
+#   - '-I/usr/local/opt/llvm/include'
+compiler-opts-automatic:
+  macos:
+    include-c-standard-library: true
+dart-bool: false
+functions:
+  include:
+    - notcurses.*
+    - nccell.*
+    - ncstrwidth.*
+    - ncchannel.*
+    - ncdirect.*
+    - ncplane.*
+    - ncfadectx.*
+    - ncfdplane.*
+    - ncsubproc.*
+    - nckey.*
+    - ncinput.*
+    - cnotcurses.*
+    - ncmenu.*
+    - ncmultiselector.*
+    - ncpalette.*
+    - ncpile.*
+    - ncvisual.*
+    - ncuplot.*
+    - ncprogbar.*
+    - ncreader.*
+    - ncreel.*
+    - nctablet.*
+    - ncselector.*
+    - nctab.*
+    - nctree.*
+  exclude:
+    - _.*
+structs:
+  exclude:
+    - _.*
+unions:
+  exclude:
+    - _.*
+enums:
+  exclude:
+    - _.*
+macros:
+  exclude:
+    - _.*
+#     - IPV6.*
+#     - ICMP.*
+#     - IP.*
+#     - IN.*
+#     - MCAST.*
+#     - SCM.*
+#     - SHUT.*
+#     - MSG.*
+#     - NET.*
+#     - SOMA.*
+#     - PF.*
+#     - SOCK.*
+#     - FP.*
+#     - AF.*
+#     - pseudo.*
+#     - SOL.*
+#     - CONNECT.*
+#     - KEV.*
+#     - WAKEMON.*
+#     - IOPOL.*
+#     - RLIM.*
+#     - RU.*
+#     - PRIO.*
+#     - CLD.*
+#     - TRAP.*
+#     - BUS.*
+#     - FPE.*
+#     - ILL.*
+#     - SIG_ATOM.*
+#     - SEEK.*
+#     - RENAME.*
+#     - SA.*
+#     - SI.*
+#     - SO.*
+#     - SS.*
+#     - SV.*
+#     - MAC_OS.*
+globals:
+  exclude:
+    - _.*
+typedefs:
+  exclude:
+    - _.*
+    # - _opaque.*
+    # - __darwin.*
+    # - __IPV6.*
+    # - _SS_.*
+    # - __DARWIN.*
+    # - _DARWIN.*
+    # - _XOPEN.*
+    # - _POSIX.*
+    # - __KAME.*
+    # - __S.*
+    # - __IO.*
+    # - _IO.*
+    # - _X8.*
+    # - _QUAD.*
+    # - _CTYPE.*
+    # - __WATCHOS.*
+    # - __TVOS.*
+    # - __IPHONE.*
+    # - __MAC_.*
+    # - __PTHREAD.*
+preamble: |
+  // ignore_for_file: camel_case_types
+  // ignore_for_file: non_constant_identifier_names
+  // ignore_for_file: unused_element
+  // ignore_for_file: unused_field
+  // ignore_for_file: constant_identifier_names

@@ -1,0 +1,63 @@
+output: 'lib/src/ffi/notcurses_inline_g.dart'
+name: 'NcFfiInline'
+description: 'Notcurses binding for Dart'
+headers:
+  entry-points:
+    - './ffi/ffi.c'
+  include-directives:
+    - './ffi/ffi.c'
+    # - '/usr/local/opt/notcurses/include/notcurses/ffi.c'
+compiler-opts:
+  - '-I/usr/local/opt/notcurses/include'
+compiler-opts-automatic:
+  macos:
+    include-c-standard-library: true
+typedef-map:
+  'bool': 'Int8'
+functions:
+  include:
+    - nccapability.*
+    - nccell.*
+    - ncchannel.*
+    - ncdirect.*
+    - ncinput.*
+    - nckey.*
+    - ncplane.*
+    - notcurses.*
+    - ncwcsrtombs.*
+    - ncbprefix.*
+    - nciprefix.*
+    - ncqprefix.*
+    - ncpalette.*
+    - ncpixel.*
+    - ncplane.*
+    - ncvisualplane.*
+    - nctabbed.*
+  exclude:
+    - _.*
+structs:
+  exclude:
+    - _.*
+unions:
+  exclude:
+    - _.*
+enums:
+  exclude:
+    - _.*
+macros:
+  exclude:
+    - _.*
+globals:
+  exclude:
+    - _.*
+typedefs:
+  exclude:
+    - _.*
+preamble: |
+  // ignore_for_file: camel_case_types
+  // ignore_for_file: non_constant_identifier_names
+  // ignore_for_file: unused_element
+  // ignore_for_file: unused_field
+  // ignore_for_file: constant_identifier_names
+  // ignore_for_file: directives_ordering
+  import './notcurses_g.dart';

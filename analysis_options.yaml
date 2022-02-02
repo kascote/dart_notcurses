@@ -1,0 +1,24 @@
+include: package:lints/recommended.yaml
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  language:
+    strict-raw-types: true
+    strict-inference: true
+
+linter:
+  rules:
+    # Enabled.
+    directives_ordering: true
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+    # prefer_final_parameters: true
+    always_declare_return_types: true
+    prefer_relative_imports: true
+    prefer_single_quotes: true
+    package_api_docs: true
+    # Disabled.
+    constant_identifier_names: false
+    # there are some issues linting the first import on some files
+    file_names: false
