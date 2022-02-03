@@ -587,6 +587,147 @@ class Plane {
     return nc.ncplane_move_yx(ptr, y, x) == 0;
   }
 
+  /// Move this plane relative to its current location. Negative values move up
+  /// and left, respectively. Pass 0 to hold an axis constant.
+  bool moveRelative(int y, int x) {
+    return ncInline.ncplane_move_rel(_ptr, y, x) == 0;
+  }
+
+  /// Get the origin of plane 'n' relative to its bound plane, or pile (if 'n' is
+  /// a root plane). To get absolute coordinates, use ncplane_abs_yx().
+  Dimensions yx() {
+    return using<Dimensions>((Arena alloc) {
+      final y = alloc<ffi.Int32>();
+      final x = alloc<ffi.Int32>();
+      nc.ncplane_yx(_ptr, y, x);
+      return Dimensions(y.value, x.value);
+    });
+  }
+
+  /// Get the origin Y of plane 'n' relative to its bound plane, or pile (if 'n' is
+  /// a root plane).
+  int y() {
+    return nc.ncplane_y(_ptr);
+  }
+
+  /// Get the origin X of plane 'n' relative to its bound plane, or pile (if 'n' is
+  /// a root plane).
+  int x() {
+    return nc.ncplane_x(_ptr);
+  }
+
+  /// Get the absolute coordinates of plane relative to its pile.
+  Dimensions absYX() {
+    return using<Dimensions>((Arena alloc) {
+      final y = alloc<ffi.Int32>();
+      final x = alloc<ffi.Int32>();
+      nc.ncplane_abs_yx(_ptr, y, x);
+      return Dimensions(y.value, x.value);
+    });
+  }
+
+  /// Get the absolute Y coordinate of plane relative to its pile.
+  int absY() {
+    return nc.ncplane_abs_y(_ptr);
+  }
+
+  /// Get the absolute X coordinate of plane relative to its pile.
+  int absX() {
+    return nc.ncplane_abs_x(_ptr);
+  }
+
+  /// The standard plane cannot be reparented; we return NULL in that case.
+  /// If provided |newparent|==|n|, we are moving |n| to its own pile. If |n|
+  /// is already bound to |newparent|, this is a no-op, and we return |n|.
+  /// This is essentially a wrapper around ncplane_reparent_family() that first
+  /// reparents any children to the parent of 'n', or makes them root planes if
+  /// 'n' is a root plane.
+  Plane? reparent(Plane newparent) {
+    final newp = nc.ncplane_reparent(_ptr, newparent.ptr);
+    if (newp == ffi.nullptr) return null;
+    return Plane(newp);
+  }
+
+  /// Move a Plane and to a another one. The new parent can not be a child of the current plane.
+  Plane? reparentFamily(Plane newparent) {
+    final newp = nc.ncplane_reparent_family(_ptr, newparent.ptr);
+    if (newp == ffi.nullptr) return null;
+    return Plane(newp);
+  }
+
+  /// Return true iff 'n' is a proper descendent of 'ancestor'.
+  bool descendantP(Plane ancestor) {
+    return ncInline.ncplane_descendant_p(_ptr, ancestor.ptr) != 0;
+  }
+
+  /// Resize the specified ncplane. The four parameters 'keepy', 'keepx',
+  /// 'keepleny', and 'keeplenx' define a subset of the ncplane to keep,
+  /// unchanged. This may be a region of size 0, though none of these four
+  /// parameters may be negative. 'keepx' and 'keepy' are relative to the ncplane.
+  /// They must specify a coordinate within the ncplane's totality. 'yoff' and
+  /// 'xoff' are relative to 'keepy' and 'keepx', and place the upper-left corner
+  /// of the resized ncplane. Finally, 'ylen' and 'xlen' are the dimensions of the
+  /// ncplane after resizing. 'ylen' must be greater than or equal to 'keepleny',
+  /// and 'xlen' must be greater than or equal to 'keeplenx'. It is an error to
+  /// attempt to resize the standard plane. If either of 'keepleny' or 'keeplenx'
+  /// is non-zero, both must be non-zero.
+  ///
+  /// Essentially, the kept material does not move. It serves to anchor the
+  /// resized plane. If there is no kept material, the plane can move freely.
+  bool resize(int keepy, int keepx, int keepleny, int keeplenx, int yoff, int xoff, int ylen, int xlen) {
+    return nc.ncplane_resize(_ptr, keepy, keepx, keepleny, keeplenx, yoff, xoff, ylen, xlen) == 0;
+  }
+
+  /// realign the plane 'n' against its parent, using the alignments specified
+  /// with NCPLANE_OPTION_HORALIGNED and/or NCPLANE_OPTION_VERALIGNED.
+  bool resizeRealign() {
+    return nc.ncplane_resize_realign(_ptr) == 0;
+  }
+
+  /// resize the plane to the visual region's size (used for the standard plane).
+  bool resizeMaximize() {
+    return nc.ncplane_resize_maximize(_ptr) == 0;
+  }
+
+  /// resize the plane to its parent's size, attempting to enforce the margins
+  /// supplied along with NCPLANE_OPTION_MARGINALIZED.
+  bool resizeMarginalized() {
+    return nc.ncplane_resize_marginalized(_ptr) == 0;
+  }
+
+  /// move the plane such that it is entirely within its parent, if possible.
+  /// no resizing is performed.
+  bool resizePlaceWithin() {
+    return nc.ncplane_resize_placewithin(_ptr) == 0;
+  }
+
+  /// Duplicate an existing ncplane. The new plane will have the same geometry,
+  /// will duplicate all content, and will start with the same rendering state.
+  /// The new plane will be immediately above the old one on the z axis, and will
+  /// be bound to the same parent (unless 'n' is a root plane, in which case the
+  /// new plane will be bound to it). Bound planes are *not* duplicated; the new
+  /// plane is bound to the parent of 'n', but has no bound planes.
+  Plane dup(Plane plane) {
+    // TODO: figure how send the 'opaque' param that is a Void* to let the user
+    // store some information on the pane
+    return Plane(nc.ncplane_dup(plane.ptr, ffi.nullptr));
+  }
+
+  /// Get the plane to which the plane 'n' is bound, if any.
+  Plane? parent() {
+    final p = nc.ncplane_parent(_ptr);
+    if (p == ffi.nullptr) return null;
+    return Plane(p);
+  }
+
+  /// Set the ncplane's base nccell to 'c'. The base cell is used for purposes of
+  /// rendering anywhere that the ncplane's gcluster is 0. Note that the base cell
+  /// is not affected by ncplane_erase(). 'c' must not be a secondary cell from a
+  /// multicolumn EGC.
+  int setBaseCell(Cell c) {
+    return nc.ncplane_set_base_cell(_ptr, c.ptr);
+  }
+
   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Lines
   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
