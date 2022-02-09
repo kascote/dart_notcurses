@@ -6,6 +6,8 @@ analyzer:
   language:
     strict-raw-types: true
     strict-inference: true
+  errors:
+    todo: ignore
 
 linter:
   rules:
