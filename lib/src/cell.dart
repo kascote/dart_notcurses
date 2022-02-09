@@ -8,6 +8,15 @@ import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './plane.dart';
 
+
+class CellData {
+  String egc;
+  int stylemask;
+  int channels;
+
+  CellData(this.egc, this.stylemask, this.channels);
+}
+
 /// An nccell corresponds to a single character cell on some plane, which can be
 /// occupied by a single grapheme cluster (some root spacing glyph, along with
 /// possible combining characters, which might span multiple columns). At any

@@ -1,9 +1,11 @@
 import 'dart:ffi' as ffi;
-import 'package:characters/characters.dart';
+import 'dart:typed_data';
 
+import 'package:characters/characters.dart';
 import 'package:ffi/ffi.dart';
 
 import './cell.dart';
+import './channels.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './load_library.dart';
@@ -112,6 +114,17 @@ class Plane {
     return ncInline.ncplane_dim_y(_ptr);
   }
 
+  /// Extract 24 bits of foreground RGB from 'n', split into components.
+  NcResult<int, RGB> fgRGB8() {
+    return using<NcResult<int, RGB>>((Arena alloc) {
+      final r = alloc<ffi.Uint32>();
+      final g = alloc<ffi.Uint32>();
+      final b = alloc<ffi.Uint32>();
+      final rc = ncInline.ncplane_fg_rgb8(_ptr, r, g, b);
+      return NcResult(rc, RGB(r.value, g.value, b.value));
+    });
+  }
+
   /// Set the current fore color using RGB specifications. If the
   /// terminal does not support directly-specified 3x8b cells (24-bit "TrueColor",
   /// indicated by the "RGB" terminfo capability), the provided values will be
@@ -120,6 +133,17 @@ class Plane {
   /// time using "color pairs"; Notcurses will manage color pairs transparently.
   bool setFgRGB8(int r, int g, int b) {
     return nc.ncplane_set_fg_rgb8(_ptr, r, g, b) == 0;
+  }
+
+  /// Extract 24 bits of background RGB from 'n', split into components.
+  NcResult<int, RGB> bgRGB8() {
+    return using<NcResult<int, RGB>>((Arena alloc) {
+      final r = alloc<ffi.Uint32>();
+      final g = alloc<ffi.Uint32>();
+      final b = alloc<ffi.Uint32>();
+      final rc = ncInline.ncplane_bg_rgb8(_ptr, r, g, b);
+      return NcResult(rc, RGB(r.value, g.value, b.value));
+    });
   }
 
   /// Set the current background color using RGB specifications. If the
@@ -162,9 +186,19 @@ class Plane {
     nc.ncplane_set_bg_default(_ptr);
   }
 
+  // Extract 2 bits of foreground alpha from 'struct ncplane', shifted to LSBs.
+  int fgAlpha() {
+    return ncInline.ncplane_fg_alpha(_ptr);
+  }
+
   /// Set the alpha parameters for ncplane 'n'.
   void setFgAlpha(int value) {
     nc.ncplane_set_fg_alpha(_ptr, value);
+  }
+
+  /// Extract 2 bits of background alpha from 'struct ncplane', shifted to LSBs.
+  int bgAlpha() {
+    return ncInline.ncplane_bg_alpha(_ptr);
   }
 
   /// Set the alpha parameters for ncplane 'n'.
@@ -329,6 +363,11 @@ class Plane {
     return res; */
   }
 
+  /// Return the current styling for this ncplane.
+  int styles() {
+    return nc.ncplane_styles(_ptr);
+  }
+
   /// Set the specified style bits for the ncplane 'n', whether they're actively
   /// supported or not.
   void setStyles(int styles) {
@@ -350,6 +389,7 @@ class Plane {
   /// 'maxbmapx'). If bitmaps are not supported, or if there is no artificial
   /// limit on bitmap size, 'maxbmapy' and 'maxbmapx' will be 0. Any of the
   /// geometry arguments may be NULL.
+  // TODO bring this class inside
   NcPixelGeomData pixelGeom({
     bool pxy = false,
     bool pxx = false,
@@ -513,8 +553,8 @@ class Plane {
   /// the secondary columns of a wide glyph, the return can be distinguished from
   /// the primary column (nccell_wide_right_p(c) will return true). It is an
   /// error to call this on a sprixel plane (unlike ncplane_at_yx()).
-  bool atYXcell(int y, int x, Cell cell) {
-    return nc.ncplane_at_yx_cell(_ptr, y, x, cell.ptr) >= 0;
+  int atYXcell(int y, int x, Cell cell) {
+    return nc.ncplane_at_yx_cell(_ptr, y, x, cell.ptr);
   }
 
   /// All planes are created with scrolling disabled. Scrolling can be dynamically
@@ -591,6 +631,42 @@ class Plane {
   /// and left, respectively. Pass 0 to hold an axis constant.
   bool moveRelative(int y, int x) {
     return ncInline.ncplane_move_rel(_ptr, y, x) == 0;
+  }
+
+  /// Splice ncplane 'n' and its bound planes out of the z-buffer, and reinsert
+  /// them above 'targ'. Relative order will be maintained between the
+  /// reinserted planes. For a plane E bound to C, with z-ordering A B C D E,
+  /// moving the C family to the top results in C E A B D, while moving it to
+  /// the bottom results in A B D C E.
+  bool moveFamilyAbove(Plane plane) {
+    return nc.ncplane_move_family_above(_ptr, plane.ptr) == 0;
+  }
+
+  /// Splice ncplane 'n' and its bound planes out of the z-buffer, and reinsert
+  /// them below 'targ'. Relative order will be maintained between the
+  /// reinserted planes. For a plane E bound to C, with z-ordering A B C D E,
+  /// moving the C family to the top results in C E A B D, while moving it to
+  /// the bottom results in A B D C E.
+  bool moveFamilyBelow(Plane plane) {
+    return nc.ncplane_move_family_below(_ptr, plane.ptr) == 0;
+  }
+
+  /// Splice ncplane 'n' and its bound planes out of the z-buffer, and reinsert
+  /// it at the top. Relative order will be maintained between the
+  /// reinserted planes. For a plane E bound to C, with z-ordering A B C D E,
+  /// moving the C family to the top results in C E A B D, while moving it to
+  /// the bottom results in A B D C E.
+  void moveFamilyTop() {
+    ncInline.ncplane_move_family_top(_ptr);
+  }
+
+  /// Splice ncplane 'n' and its bound planes out of the z-buffer, and reinsert
+  /// it at the bottom. Relative order will be maintained between the
+  /// reinserted planes. For a plane E bound to C, with z-ordering A B C D E,
+  /// moving the C family to the top results in C E A B D, while moving it to
+  /// the bottom results in A B D C E.
+  void moveFamilyBottom() {
+    ncInline.ncplane_move_family_bottom(_ptr);
   }
 
   /// Get the origin of plane 'n' relative to its bound plane, or pile (if 'n' is
@@ -726,6 +802,229 @@ class Plane {
   /// multicolumn EGC.
   int setBaseCell(Cell c) {
     return nc.ncplane_set_base_cell(_ptr, c.ptr);
+  }
+
+  /// Retrieve the current contents of the cell under the cursor. The EGC is
+  /// returned, or NULL on error. The stylemask and channels are written to
+  /// 'stylemask' and 'channels', respectively.
+  CellData? atCursor() {
+    return using<CellData?>((Arena alloc) {
+      final pstyle = alloc<ffi.Uint16>();
+      final pchannel = alloc<ffi.Uint64>();
+      final pi8 = nc.ncplane_at_cursor(_ptr, pstyle, pchannel);
+      if (pi8 == ffi.nullptr) return null;
+      final rc = CellData(pi8.cast<Utf8>().toDartString(), pstyle.value, pchannel.value);
+      malloc.free(pi8);
+      return rc;
+    });
+  }
+
+  /// Retrieve the current contents of the cell under the cursor into 'c'. This
+  /// cell is invalidated if the associated plane is destroyed. Returns the number
+  /// of bytes in the EGC, or -1 on error.
+  NcResult<int, Cell?> atCursorCell() {
+    final c = Cell.init();
+    final rc = nc.ncplane_at_cursor_cell(_ptr, c.ptr);
+    if (rc == -1) {
+      c.destroy(null);
+      return NcResult(-1, null);
+    }
+    return NcResult(rc, c);
+  }
+
+  /// Retrieve the current contents of the specified cell. The EGC is returned, or
+  /// NULL on error. This EGC must be free()d by the caller. The stylemask and
+  /// channels are written to 'stylemask' and 'channels', respectively. The return
+  /// represents how the cell will be used during rendering, and thus integrates
+  /// any base cell where appropriate. If called upon the secondary columns of a
+  /// wide glyph, the EGC will be returned (i.e. this function does not distinguish
+  /// between the primary and secondary columns of a wide glyph). If called on a
+  /// sprixel plane, its control sequence is returned for all valid locations.
+  CellData? atYX(int y, int x) {
+    return using<CellData?>((Arena alloc) {
+      final pstyle = alloc<ffi.Uint16>();
+      final pchannel = alloc<ffi.Uint64>();
+      final pi8 = nc.ncplane_at_yx(_ptr, y, x, pstyle, pchannel);
+      if (pi8 == ffi.nullptr) return null;
+      final rc = CellData(pi8.cast<Utf8>().toDartString(), pstyle.value, pchannel.value);
+      calloc.free(pi8);
+      return rc;
+    });
+  }
+
+  /// Create an RGBA flat array from the selected region of the ncplane 'nc'.
+  /// Start at the plane's 'begy'x'begx' coordinate (which must lie on the
+  /// plane), continuing for 'leny'x'lenx' cells. Either or both of 'leny' and
+  /// 'lenx' can be specified as 0 to go through the boundary of the plane.
+  /// Only glyphs from the specified ncblitset may be present. If 'pxdimy' and/or
+  /// 'pxdimx' are non-NULL, they will be filled in with the total pixel geometry.
+  Uint32List? asRGBA(int blit, int begy, int begx, int leny, int lenx) {
+    return using<Uint32List?>((Arena alloc) {
+      final pxdimy = alloc<ffi.Uint32>();
+      final pxdimx = alloc<ffi.Uint32>();
+      final rgbaSize = ffi.sizeOf<ffi.Uint32>() * lenx * pxdimx.value * leny * pxdimy.value;
+      final u32 = nc.ncplane_as_rgba(_ptr, blit, begy, begx, leny, lenx, pxdimy, pxdimx);
+      if (u32 == ffi.nullptr) return null;
+
+      final u32List = Uint32List.fromList(u32.asTypedList(rgbaSize));
+      allocator.free(u32);
+
+      return u32List;
+    });
+  }
+
+  /// Create a flat string from the EGCs of the selected region of the ncplane
+  /// 'n'. Start at the plane's 'begy'x'begx' coordinate (which must lie on the
+  /// plane), continuing for 'leny'x'lenx' cells. Either or both of 'leny' and
+  /// 'lenx' can be specified as 0 to go through the boundary of the plane.
+  /// -1 can be specified for 'begx'/'begy' to use the current cursor location.
+  String contents(int begy, int begx, int leny, int lenx) {
+    final egc = nc.ncplane_contents(_ptr, begy, begx, leny, lenx);
+    final rc = egc.cast<Utf8>().toDartString();
+    allocator.free(egc);
+    return rc;
+  }
+
+  // TODO:
+  /* void* ncplane_set_userptr(struct ncplane* n, void* opaque);
+  void* ncplane_userptr(struct ncplane* n); */
+
+  /// provided a coordinate relative to the origin of 'src', map it to the same
+  /// absolute coordinate relative to the origin of 'dst'. either or both of 'y'
+  /// and 'x' may be NULL. if 'dst' is NULL, it is taken to be the standard plane.
+  Dimensions translate(Plane? dst, int y, int x) {
+    return using<Dimensions>((Arena alloc) {
+      final py = alloc<ffi.Int32>();
+      final px = alloc<ffi.Int32>();
+      final dp = dst != null ? dst.ptr : ffi.nullptr;
+      nc.ncplane_translate(_ptr, dp, py, px);
+      return Dimensions(py.value, px.value);
+    });
+  }
+
+  /// Fed absolute 'y'/'x' coordinates, determine whether that coordinate is
+  /// within the ncplane 'n'. If not, return false. If so, return true. Either
+  /// way, translate the absolute coordinates relative to 'n'. If the point is not
+  /// within 'n', these coordinates will not be within the dimensions of the plane.
+  NcResult<bool, Dimensions> translateAbs(int y, int x) {
+    return using<NcResult<bool, Dimensions>>((Arena alloc) {
+      final py = alloc<ffi.Int32>();
+      final px = alloc<ffi.Int32>();
+      final rc = nc.ncplane_translate_abs(_ptr, py, px) != 0;
+      return NcResult(rc, Dimensions(py.value, px.value));
+    });
+  }
+
+  /// Get the current channels or attribute word for ncplane 'n'.
+  int channels() {
+    return nc.ncplane_channels(_ptr);
+  }
+
+  /// Set the current channels or attribute word for ncplane 'n'.
+  void setChannels(int channels) {
+    nc.ncplane_set_channels(_ptr, channels);
+  }
+
+  /// Extract the background alpha and coloring bits from a 64-bit channel
+  /// pair as a single 32-bit value.
+  int bchannel() {
+    return ncInline.ncplane_bchannel(_ptr);
+  }
+
+  /// Extract the foreground alpha and coloring bits from a 64-bit channel
+  /// pair as a single 32-bit value.
+  int fchannel() {
+    return ncInline.ncplane_fchannel(_ptr);
+  }
+
+  /// Convert the plane's content to greyscale.
+  void greyscale() {
+    nc.ncplane_greyscale(_ptr);
+  }
+
+  /// Merge the ncplane 'src' down onto the ncplane 'dst'. This is most rigorously
+  /// defined as "write to 'dst' the frame that would be rendered were the entire
+  /// stack made up only of the specified subregion of 'src' and, below it, the
+  /// subregion of 'dst' having the specified origin. Supply -1 to indicate the
+  /// current cursor position in the relevant dimension. Merging is independent of
+  /// the position of 'src' viz 'dst' on the z-axis. It is an error to define a
+  /// subregion that is not entirely contained within 'src'. It is an error to
+  /// define a target origin such that the projected subregion is not entirely
+  /// contained within 'dst'.  Behavior is undefined if 'src' and 'dst' are
+  /// equivalent. 'dst' is modified, but 'src' remains unchanged. Neither 'src'
+  /// nor 'dst' may have sprixels. Lengths of 0 mean "everything left".
+  bool mergeDown(Plane dst, int begsrcy, int begsrcx, int leny, int lenx, int dsty, int dstx) {
+    return nc.ncplane_mergedown(_ptr, dst.ptr, begsrcy, begsrcx, leny, lenx, dsty, dstx) != 0;
+  }
+
+  /// Merge the entirety of 'src' down onto the ncplane 'dst'. If 'src' does not
+  /// intersect with 'dst', 'dst' will not be changed, but it is not an error.
+  bool mergeDownSimple(Plane dst) {
+    return nc.ncplane_mergedown_simple(_ptr, dst.ptr) != 0;
+  }
+
+  /// By default, planes are created with autogrow disabled. Autogrow can be
+  /// dynamically controlled with ncplane_set_autogrow(). Returns true if
+  /// autogrow was previously enabled, or false if it was disabled.
+  bool setAutogrow(bool status) {
+    return nc.ncplane_set_autogrow(_ptr, status ? 1 : 0) != 0;
+  }
+
+  /// Returns current autogrow status
+  bool getAutogrow() {
+    return nc.ncplane_autogrow_p(_ptr) != 0;
+  }
+
+  /// Effect |r| scroll events on the plane |n|. Returns an error if |n| is not
+  /// a scrolling plane, and otherwise returns the number of lines scrolled.
+  int scrollUp(int r) {
+    return nc.ncplane_scrollup(_ptr, r);
+  }
+
+  /// Scroll |n| up until |child| is no longer hidden beneath it. Returns an
+  /// error if |child| is not a child of |n|, or |n| is not scrolling, or |child|
+  /// is fixed. Returns the number of scrolling events otherwise (might be 0).
+  /// If the child plane is not fixed, it will likely scroll as well.
+  int scrollUpChild(Plane child) {
+    return nc.ncplane_scrollup_child(_ptr, child.ptr);
+  }
+
+  // Rotate the plane π/2 radians clockwise. This cannot
+  // be performed on arbitrary planes, because glyphs cannot be arbitrarily
+  // rotated. The glyphs which can be rotated are limited: line-drawing
+  // characters, spaces, half blocks, and full blocks. The plane must have
+  // an even number of columns. Use the ncvisual rotation for a more
+  // flexible approach.
+  int rotateCW() {
+    return nc.ncplane_rotate_cw(_ptr);
+  }
+
+  // Rotate the plane π/2 radians counterclockwise. This cannot
+  // be performed on arbitrary planes, because glyphs cannot be arbitrarily
+  // rotated. The glyphs which can be rotated are limited: line-drawing
+  // characters, spaces, half blocks, and full blocks. The plane must have
+  // an even number of columns. Use the ncvisual rotation for a more
+  // flexible approach.
+  int rotateCCW() {
+    return nc.ncplane_rotate_ccw(_ptr);
+  }
+
+  // Change the name of 't'. Returns -1 if 'newname' is NULL, and 0 otherwise.
+  bool setName(String name) {
+    final n = name.toNativeUtf8().cast<ffi.Int8>();
+    final rc = nc.ncplane_set_name(_ptr, n) != 0;
+    allocator.free(n);
+    return rc;
+  }
+
+  /// Return a heap-allocated copy of the plane's name, or NULL if it has none.
+  String? name() {
+    final i8 = nc.ncplane_name(_ptr);
+    if (i8 == ffi.nullptr) return null;
+
+    final rc = i8.cast<Utf8>().toDartString();
+    allocator.free(i8);
+    return rc;
   }
 
   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
