@@ -187,20 +187,19 @@ void keyHandler(Plane stdPlane, Key key) {
 
   stdPlane.setFgRGB8(0xd0, 0xd0, 0xd0); // #d0d0d0
 
-  final List<String> keys = [
-    key.hasShift() ? 'S' : 's',
-    key.hasAlt() ? 'A' : 'a',
-    key.hasCtrl() ? 'C' : 'c',
-    key.hasSuper() ? 'U' : 'u',
-    key.hasHyper() ? 'H' : 'h',
-    key.hasMeta() ? 'M' : 'm',
-    key.hasCapslock() ? 'X' : 'x',
-    key.hasNumlock() ? '#' : '.',
-    evTypeToChar(key),
-    ' ',
-  ];
+  final keys = StringBuffer();
+  keys.write(key.hasShift() ? 'S' : 's');
+  keys.write(key.hasAlt() ? 'A' : 'a');
+  keys.write(key.hasCtrl() ? 'C' : 'c');
+  keys.write(key.hasSuper() ? 'U' : 'u');
+  keys.write(key.hasHyper() ? 'H' : 'h');
+  keys.write(key.hasMeta() ? 'M' : 'm');
+  keys.write(key.hasCapslock() ? 'X' : 'x');
+  keys.write(key.hasNumlock() ? '#' : '.');
+  keys.write(evTypeToChar(key));
+  keys.write(' ');
 
-  stdPlane.putStr(keys.join());
+  stdPlane.putStr(keys.toString());
 
   if (key.id < 0x80) {
     stdPlane.setFgRGB8(0x80, 0xfa, 0x40); // #80fa40
@@ -240,7 +239,7 @@ bool dimRows(Plane n, Dimensions dim) {
   final c = Cell.init();
   for (int y = 0; y < dim.y; ++y) {
     for (int x = 0; x < dim.x; ++x) {
-      if (!n.atYXcell(y, x, c)) {
+      if (n.atYXcell(y, x, c) < 0) {
         n.releaseCell(c);
         c.destroy(null);
         return false;
