@@ -16,6 +16,7 @@ int main() {
 
   final x = notc.checkPixelSupport();
   if (x < 1) {
+    print('no pixel support');
     notc.stop();
     return -1;
   }
@@ -28,6 +29,7 @@ int main() {
     rethrow;
   }
 
+  notc.stop();
   return rc;
 }
 
@@ -135,11 +137,9 @@ int wipebitmap(NotCurses notc) {
 
   p.erase();
 
-  stderr.writeln('-- y ${geom.celldimy} - x ${geom.celldimx} - ${5 * geom.celldimy}');
   for (var i = geom.celldimy; i < 5 * geom.celldimy; ++i) {
     final start = (i * 6 * geom.celldimx * U32_SIZE) + (geom.celldimx * U32_SIZE);
     final end = start + (geom.celldimx * 4 * U32_SIZE);
-    stderr.writeln('---x loop $start - $end - dif: ${end - start}');
     i8.fillRange(start, end + 1, 0);
   }
 
@@ -163,7 +163,7 @@ int wipebitmap(NotCurses notc) {
     ncve.destroy();
     return -1;
   }
-  sleep(Duration(seconds: 4));
+  sleep(Duration(seconds: pause));
 
   // -------------------------------------------------------------------
 

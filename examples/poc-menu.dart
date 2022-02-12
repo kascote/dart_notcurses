@@ -80,6 +80,8 @@ void main() {
     }
 
     nc.miceDisable();
+  } catch (e) {
+    stderr.writeln(e);
   } finally {
     mTop.destroy();
     nc.stop();
@@ -170,7 +172,7 @@ void paintBackground(Plane p) {
   c
     ..setFgRGB(0x444444)
     ..setBgRGB(0x000000);
-  for (var y = 1; y < dim.y - 1; y++ ) {
+  for (var y = 1; y < dim.y - 1; y++) {
     p.cursorMoveYX(y, 1);
     p.hlineInterp(c, dim.x - 2, 0, 0);
   }
