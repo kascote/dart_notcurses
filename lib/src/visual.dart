@@ -151,6 +151,7 @@ class Visual {
     if (opts.transcolor != null) optsRef.transcolor = opts.transcolor!;
     if (opts.pxoffy != null) optsRef.pxoffy = opts.pxoffy!;
     if (opts.pxoffx != null) optsRef.pxoffx = opts.pxoffx!;
+    if (opts.scaling != null) optsRef.scaling = opts.scaling!;
     if (opts.plane != null && opts.plane!.ptr != ffi.nullptr) optsRef.n = opts.plane!.ptr;
 
     return optsPtr;
