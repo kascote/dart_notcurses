@@ -1,4 +1,4 @@
-output: '../lib/src/ffi/notcurses_g.dart'
+output: 'lib/src/ffi/notcurses_g.dart'
 name: 'NcFfi'
 description: 'Notcurses binding for Dart'
 headers:
