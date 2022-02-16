@@ -6,6 +6,7 @@ export './src/extensions/int.dart';
 export './src/key.dart';
 export './src/menu.dart';
 export './src/notcurses.dart';
+export './src/pixelgeom_data.dart';
 export './src/plane.dart';
 export './src/plot.dart';
 export './src/ptypes.dart';
