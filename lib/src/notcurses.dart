@@ -75,7 +75,7 @@ class Capabilities {
 class NotCurses {
   late final ffi.Pointer<notcurses> _ptr;
 
-  NotCurses(CursesOptions? opts) {
+  NotCurses([CursesOptions? opts]) {
     final ffi.Pointer<notcurses_options> optPtr = opts == null ? ffi.nullptr : _makeOptionsPtr(opts);
     _ptr = nc.notcurses_init(optPtr, ffi.nullptr);
     if (optPtr != ffi.nullptr) {
@@ -87,7 +87,7 @@ class NotCurses {
     _ptr = value;
   }
 
-  NotCurses.core(CursesOptions? opts) {
+  NotCurses.core([CursesOptions? opts]) {
     final ffi.Pointer<notcurses_options> optPtr = opts == null ? ffi.nullptr : _makeOptionsPtr(opts);
     _ptr = nc.notcurses_core_init(optPtr, ffi.nullptr);
     if (optPtr != ffi.nullptr) {
@@ -370,5 +370,23 @@ class NotCurses {
   /// value other than NCPIXEL_NONE.
   int checkPixelSupport() {
     return nc.notcurses_check_pixel_support(_ptr);
+  }
+
+  /// input functions like notcurses_get() return ucs32-encoded uint32_t. convert
+  /// a series of uint32_t to utf8. result must be at least 4 bytes per input
+  /// uint32_t (6 bytes per uint32_t will future-proof against Unicode expansion).
+  /// the number of bytes used is returned, or -1 if passed illegal ucs32, or too
+  /// small of a buffer.
+  String ucsToUtf8(int ucs) {
+    final ucsp = allocator<ffi.Uint32>();
+    ucsp.value = ucs;
+    final resultbuf = allocator<ffi.Uint8>(5);
+    final buflen = ffi.sizeOf<ffi.Uint8>();
+    nc.notcurses_ucs32_to_utf8(ucsp, 1, resultbuf, buflen);
+    final utf8 = resultbuf.cast<Utf8>().toDartString();
+
+    allocator.free(resultbuf);
+    allocator.free(ucsp);
+    return utf8;
   }
 }

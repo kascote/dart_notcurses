@@ -88,6 +88,8 @@ class Visual {
 
   Visual._(this._ptr);
 
+  /// Open a visual at 'file', extract a codec and parameters, decode the first
+  /// image to memory.
   factory Visual.fromFile(String path) {
     final i8 = path.toNativeUtf8().cast<ffi.Int8>();
     final v = nc.ncvisual_from_file(i8);
@@ -111,6 +113,18 @@ class Visual {
     return rc;
   }
 
+  /// ncvisual_from_rgba(), but the pixels are 3-byte RGB. A is filled in
+  /// throughout using 'alpha'.
+  factory Visual.fromRgbPacked(Uint8List rgb, int rows, int rowstride, int cols, int alpha) {
+    final pRgb = allocator<ffi.Uint8>(rgb.length);
+    for (var i = 0; i < rgb.length; i++) {
+      pRgb[i] = rgb[i];
+    }
+    final rc = Visual._(nc.ncvisual_from_rgb_packed(pRgb.cast(), rows, rowstride, cols, alpha));
+    allocator.free(pRgb);
+    return rc;
+  }
+
   void destroy() {
     nc.ncvisual_destroy(_ptr);
   }
@@ -125,6 +139,17 @@ class Visual {
     return nc.ncvisual_resize(_ptr, rows, cols);
   }
 
+  /// Render the decoded frame according to the provided options (which may be
+  /// NULL). The plane used for rendering depends on vopts->n and vopts->flags.
+  /// If NCVISUAL_OPTION_CHILDPLANE is set, vopts->n must not be NULL, and the
+  /// plane will always be created as a child of vopts->n. If this flag is not
+  /// set, and vopts->n is NULL, a new plane is created as root of a new pile.
+  /// If the flag is not set and vopts->n is not NULL, we render to vopts->n.
+  /// A subregion of the visual can be rendered using 'begx', 'begy', 'lenx', and
+  /// 'leny'. Negative values for any of these are an error. It is an error to
+  /// specify any region beyond the boundaries of the frame. Returns the (possibly
+  /// newly-created) plane to which we drew. Pixels may not be blitted to the
+  /// standard plane.
   NcResult<bool, Plane?> blit(NotCurses notc, VisualOptions opts) {
     final optsPtr = _optsPtr(opts);
     final planePtr = nc.ncvisual_blit(notc.ptr, _ptr, optsPtr);
@@ -155,5 +180,11 @@ class Visual {
     if (opts.plane != null && opts.plane!.ptr != ffi.nullptr) optsRef.n = opts.plane!.ptr;
 
     return optsPtr;
+  }
+
+  /// Scale the visual to 'rows' X 'columns' pixels, using non-interpolative
+  /// (naive) scaling. No new colors will be introduced as a result.
+  bool reisizeNonInterpolative(int rows, int cols) {
+    return nc.ncvisual_resize_noninterpolative(_ptr, rows, cols) == 0;
   }
 }

@@ -3,6 +3,7 @@
 // ignore_for_file: unused_element
 // ignore_for_file: unused_field
 // ignore_for_file: constant_identifier_names
+// ignore_for_file: directives_ordering
 import './notcurses_g.dart';
 
 // AUTO GENERATED FILE, DO NOT EDIT.
