@@ -22,6 +22,13 @@ class Dimensions {
   String toString() {
     return 'Dim: x $x, y $y';
   }
+
+  Dimensions copyWith({int? y, int? x}) {
+    return Dimensions(
+      y ?? this.y,
+      x ?? this.x,
+    );
+  }
 }
 
 typedef PlaneResizerCB = ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>;
@@ -30,6 +37,7 @@ typedef PlaneUserPointer = ffi.Pointer<ffi.Void>;
 class Plane {
   final ffi.Pointer<ncplane> _ptr;
 
+  // TODO: normalize pointer handling between different clases
   Plane(this._ptr);
 
   /// Create a new ncplane bound to plane 'n', at the offset 'y'x'x' (relative to
