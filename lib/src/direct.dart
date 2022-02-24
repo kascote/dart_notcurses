@@ -1,4 +1,5 @@
 import 'dart:ffi' as ffi;
+import 'package:characters/characters.dart';
 import 'package:ffi/ffi.dart';
 
 import './ffi/memory.dart';
@@ -287,7 +288,7 @@ class Direct {
   /// horizontal line, |len| cannot exceed the screen width minus the cursor's
   /// offset. All lines start at the current cursor position.
   int hlineInterp(String egc, int len, int chan1, int chan2) {
-    final i8 = egc[0].toNativeUtf8().cast<ffi.Int8>();
+    final i8 = egc.characters.elementAt(0).toNativeUtf8().cast<ffi.Int8>();
     final rc = nc.ncdirect_hline_interp(_ptr, i8, len, chan1, chan2);
     allocator.free(i8);
     return rc;
@@ -298,7 +299,7 @@ class Direct {
   /// For a vertical line, |len| may be as long as you'd like; the screen
   /// will scroll as necessary. All lines start at the current cursor position.
   int vlineInterp(String egc, int len, int chan1, int chan2) {
-    final i8 = egc[0].toNativeUtf8().cast<ffi.Int8>();
+    final i8 = egc.characters.elementAt(0).toNativeUtf8().cast<ffi.Int8>();
     final rc = nc.ncdirect_vline_interp(_ptr, i8, len, chan1, chan2);
     allocator.free(i8);
     return rc;
@@ -309,7 +310,7 @@ class Direct {
   /// minimum box size is 2x2, and it cannot be drawn off-screen. |wchars| is an
   /// array of 6 wide characters: UL, UR, LL, LR, HL, VL.
   bool box(int ul, int ur, int ll, int lr, String wchars, int ylen, int xlen, int ctlword) {
-    final i8 = wchars[0].toNativeUtf8().cast<ffi.Int32>();
+    final i8 = wchars.characters.elementAt(0).toNativeUtf8().cast<ffi.Int32>();
     final rc = nc.ncdirect_box(_ptr, ul, ur, ll, lr, i8, ylen, xlen, ctlword) == 0;
     allocator.free(i8);
     return rc;
