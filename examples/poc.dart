@@ -26,7 +26,7 @@ void main() {
   p.putStrYX(1, 0, 'Red on blue 😎👿💬');
 
   final c = Cell.init();
-  if (!p.atYXcell(1, 0, c)) {
+  if (p.atYXcell(1, 0, c) < 0) {
     p.releaseCell(c);
     c.destroy(p);
   } else {
