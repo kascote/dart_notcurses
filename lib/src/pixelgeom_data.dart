@@ -1,7 +1,8 @@
-import 'dart:ffi';
+import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './plane.dart';
 
@@ -23,12 +24,12 @@ class NcPixelGeomData {
     bool maxbmapx = false,
   }) {
     using((Arena alloc) {
-      final __pxy = pxy ? alloc<Uint32>() : nullptr;
-      final __pxx = pxx ? alloc<Uint32>() : nullptr;
-      final __celldimy = celldimy ? alloc<Uint32>() : nullptr;
-      final __celldimx = celldimx ? alloc<Uint32>() : nullptr;
-      final __maxbmapy = maxbmapy ? alloc<Uint32>() : nullptr;
-      final __maxbmapx = maxbmapx ? alloc<Uint32>() : nullptr;
+      final __pxy = pxy ? alloc<ffi.Uint32>() : ffi.nullptr;
+      final __pxx = pxx ? alloc<ffi.Uint32>() : ffi.nullptr;
+      final __celldimy = celldimy ? alloc<ffi.Uint32>() : ffi.nullptr;
+      final __celldimx = celldimx ? alloc<ffi.Uint32>() : ffi.nullptr;
+      final __maxbmapy = maxbmapy ? alloc<ffi.Uint32>() : ffi.nullptr;
+      final __maxbmapx = maxbmapx ? alloc<ffi.Uint32>() : ffi.nullptr;
 
       nc.ncplane_pixel_geom(plane.ptr, __pxy, __pxx, __celldimy, __celldimx, __maxbmapy, __maxbmapx);
 
@@ -47,4 +48,14 @@ class NcPixelGeomData {
   int get celldimx => _celldimx;
   int get maxbmapy => _maxbmapy;
   int get maxbmapx => _maxbmapx;
+
+  NcPixelGeomData.fromPtr(ffi.Pointer<ncvgeom> geom) {
+    final r = geom.ref;
+    _pxy = r.pixy;
+    _pxx = r.pixx;
+    _celldimy = r.cdimy;
+    _celldimx = r.cdimx;
+    _maxbmapy = r.maxpixely;
+    _maxbmapx = r.maxpixelx;
+  }
 }
