@@ -65,6 +65,31 @@ class VisualOptions {
     this.pxoffx,
   });
 
+  /// return a pointer to the Visual Options
+  /// take care, this pointer must be deallocated
+  /// this function is intented to be used only from the api
+  //TODO: hide this
+  ffi.Pointer<ncvisual_options> toPtr() {
+    final optsPtr = allocator<ncvisual_options>();
+    final optsRef = optsPtr.ref;
+    if (y != null) optsRef.y = y!;
+    if (x != null) optsRef.x = x!;
+    if (begy != null) optsRef.begy = begy!;
+    if (begx != null) optsRef.begx = begx!;
+    if (leny != null) optsRef.leny = leny!;
+    if (lenx != null) optsRef.lenx = lenx!;
+    if (blitter != null) optsRef.blitter = blitter!;
+    if (flags != null) optsRef.flags = flags!;
+    if (transcolor != null) optsRef.transcolor = transcolor!;
+    if (pxoffy != null) optsRef.pxoffy = pxoffy!;
+    if (pxoffx != null) optsRef.pxoffx = pxoffx!;
+    if (scaling != null) optsRef.scaling = scaling!;
+    if (plane != null && plane!.ptr != ffi.nullptr) optsRef.n = plane!.ptr;
+
+    return optsPtr;
+  }
+
+
   @override
   String toString() {
     print(' plane: $plane');
@@ -95,6 +120,10 @@ class Visual {
     final v = nc.ncvisual_from_file(i8);
     allocator.free(i8);
     return Visual._(v);
+  }
+
+  factory Visual.fromPtr(ffi.Pointer<ncvisual> vptr) {
+    return Visual._(vptr);
   }
 
   /// Prepare an ncvisual, and its underlying plane, based off RGBA content in
@@ -133,6 +162,8 @@ class Visual {
     return _ptr != ffi.nullptr;
   }
 
+  ffi.Pointer<ncvisual> get ptr => _ptr;
+
   /// Scale the visual to 'rows' X 'columns' pixels, using the best scheme
   /// available. This is a lossy transformation, unless the size is unchanged.
   int resize(int rows, int cols) {
@@ -151,35 +182,13 @@ class Visual {
   /// newly-created) plane to which we drew. Pixels may not be blitted to the
   /// standard plane.
   NcResult<bool, Plane?> blit(NotCurses notc, VisualOptions opts) {
-    final optsPtr = _optsPtr(opts);
+    final optsPtr = opts.toPtr();
     final planePtr = nc.ncvisual_blit(notc.ptr, _ptr, optsPtr);
-    if (planePtr == ffi.nullptr) {
-      allocator.free(optsPtr);
-      return NcResult(false, null);
-    }
-    final p = Plane(planePtr);
     allocator.free(optsPtr);
+    if (planePtr == ffi.nullptr) return NcResult(false, null);
+
+    final p = Plane(planePtr);
     return NcResult(true, p);
-  }
-
-  ffi.Pointer<ncvisual_options> _optsPtr(VisualOptions opts) {
-    final optsPtr = allocator<ncvisual_options>();
-    final optsRef = optsPtr.ref;
-    if (opts.y != null) optsRef.y = opts.y!;
-    if (opts.x != null) optsRef.x = opts.x!;
-    if (opts.begy != null) optsRef.begy = opts.begy!;
-    if (opts.begx != null) optsRef.begx = opts.begx!;
-    if (opts.leny != null) optsRef.leny = opts.leny!;
-    if (opts.lenx != null) optsRef.lenx = opts.lenx!;
-    if (opts.blitter != null) optsRef.blitter = opts.blitter!;
-    if (opts.flags != null) optsRef.flags = opts.flags!;
-    if (opts.transcolor != null) optsRef.transcolor = opts.transcolor!;
-    if (opts.pxoffy != null) optsRef.pxoffy = opts.pxoffy!;
-    if (opts.pxoffx != null) optsRef.pxoffx = opts.pxoffx!;
-    if (opts.scaling != null) optsRef.scaling = opts.scaling!;
-    if (opts.plane != null && opts.plane!.ptr != ffi.nullptr) optsRef.n = opts.plane!.ptr;
-
-    return optsPtr;
   }
 
   /// Scale the visual to 'rows' X 'columns' pixels, using non-interpolative
