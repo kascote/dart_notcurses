@@ -272,8 +272,12 @@ class NotCurses {
 
   /// Returns the name (and sometimes version) of the terminal, as Notcurses
   /// has been best able to determine.
-  String detectTerminal() {
-    return nc.notcurses_detected_terminal(_ptr).cast<Utf8>().toDartString();
+  String? detectTerminal() {
+    final rc = nc.notcurses_detected_terminal(_ptr);
+    if (rc == ffi.nullptr) return null;
+    final value = rc.cast<Utf8>().toDartString();
+    allocator.free(rc);
+    return value;
   }
 
   /// Returns a 16-bit bitmask of supported curses-style attributes
