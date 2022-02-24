@@ -2,6 +2,7 @@ library dart_notcurses;
 
 export './src/cell.dart';
 export './src/channels.dart';
+export './src/direct.dart';
 export './src/extensions/int.dart';
 export './src/key.dart';
 export './src/menu.dart';

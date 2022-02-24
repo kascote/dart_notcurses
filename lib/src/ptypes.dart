@@ -358,6 +358,15 @@ class NcPixelImpleE {
   static String fromValue(int v) => names[v];
 }
 
+abstract class NcDirectOptions {
+  static const inhibitSetlocale = 1;
+  static const inhibitCbreak = 2;
+  static const drainInput = 4;
+  static const noQuitSighandlers = 8;
+  static const verbose = 16;
+  static const veryVerbose = 32;
+}
+
 abstract class NcSeqs {
 // unicode box-drawing characters
   static const String boxlightw = '┌┐└┘─│';
