@@ -2580,6 +2580,40 @@ class NcFfi {
   late final _ncplane_set_channels = _ncplane_set_channelsPtr
       .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
 
+  int ncplane_set_bchannel(
+    ffi.Pointer<ncplane> n,
+    int channel,
+  ) {
+    return _ncplane_set_bchannel(
+      n,
+      channel,
+    );
+  }
+
+  late final _ncplane_set_bchannelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint64 Function(
+              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bchannel');
+  late final _ncplane_set_bchannel = _ncplane_set_bchannelPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+
+  int ncplane_set_fchannel(
+    ffi.Pointer<ncplane> n,
+    int channel,
+  ) {
+    return _ncplane_set_fchannel(
+      n,
+      channel,
+    );
+  }
+
+  late final _ncplane_set_fchannelPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint64 Function(
+              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fchannel');
+  late final _ncplane_set_fchannel = _ncplane_set_fchannelPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+
   void ncplane_set_styles(
     ffi.Pointer<ncplane> n,
     int stylebits,
@@ -2630,40 +2664,6 @@ class NcFfi {
               ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_off_styles');
   late final _ncplane_off_styles = _ncplane_off_stylesPtr
       .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
-
-  int ncplane_set_fchannel(
-    ffi.Pointer<ncplane> n,
-    int channel,
-  ) {
-    return _ncplane_set_fchannel(
-      n,
-      channel,
-    );
-  }
-
-  late final _ncplane_set_fchannelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint64 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fchannel');
-  late final _ncplane_set_fchannel = _ncplane_set_fchannelPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
-
-  int ncplane_set_bchannel(
-    ffi.Pointer<ncplane> n,
-    int channel,
-  ) {
-    return _ncplane_set_bchannel(
-      n,
-      channel,
-    );
-  }
-
-  late final _ncplane_set_bchannelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint64 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bchannel');
-  late final _ncplane_set_bchannel = _ncplane_set_bchannelPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_fg_rgb8(
     ffi.Pointer<ncplane> n,
@@ -5667,6 +5667,998 @@ class NcFfi {
               ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>>('notcurses_debug');
   late final _notcurses_debug = _notcurses_debugPtr
       .asFunction<void Function(ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>();
+
+  ffi.Pointer<ncdirect> ncdirect_init(
+    ffi.Pointer<ffi.Int8> termtype,
+    ffi.Pointer<FILE> fp,
+    int flags,
+  ) {
+    return _ncdirect_init(
+      termtype,
+      fp,
+      flags,
+    );
+  }
+
+  late final _ncdirect_initPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<FILE>, ffi.Uint64)>>('ncdirect_init');
+  late final _ncdirect_init = _ncdirect_initPtr.asFunction<
+      ffi.Pointer<ncdirect> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
+
+  ffi.Pointer<ncdirect> ncdirect_core_init(
+    ffi.Pointer<ffi.Int8> termtype,
+    ffi.Pointer<FILE> fp,
+    int flags,
+  ) {
+    return _ncdirect_core_init(
+      termtype,
+      fp,
+      flags,
+    );
+  }
+
+  late final _ncdirect_core_initPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<FILE>, ffi.Uint64)>>('ncdirect_core_init');
+  late final _ncdirect_core_init = _ncdirect_core_initPtr.asFunction<
+      ffi.Pointer<ncdirect> Function(
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
+
+  ffi.Pointer<ffi.Int8> ncdirect_readline(
+    ffi.Pointer<ncdirect> nc,
+    ffi.Pointer<ffi.Int8> prompt,
+  ) {
+    return _ncdirect_readline(
+      nc,
+      prompt,
+    );
+  }
+
+  late final _ncdirect_readlinePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>,
+              ffi.Pointer<ffi.Int8>)>>('ncdirect_readline');
+  late final _ncdirect_readline = _ncdirect_readlinePtr.asFunction<
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
+
+  int ncdirect_set_fg_rgb(
+    ffi.Pointer<ncdirect> nc,
+    int rgb,
+  ) {
+    return _ncdirect_set_fg_rgb(
+      nc,
+      rgb,
+    );
+  }
+
+  late final _ncdirect_set_fg_rgbPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_fg_rgb');
+  late final _ncdirect_set_fg_rgb = _ncdirect_set_fg_rgbPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_set_bg_rgb(
+    ffi.Pointer<ncdirect> nc,
+    int rgb,
+  ) {
+    return _ncdirect_set_bg_rgb(
+      nc,
+      rgb,
+    );
+  }
+
+  late final _ncdirect_set_bg_rgbPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_bg_rgb');
+  late final _ncdirect_set_bg_rgb = _ncdirect_set_bg_rgbPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_set_fg_palindex(
+    ffi.Pointer<ncdirect> nc,
+    int pidx,
+  ) {
+    return _ncdirect_set_fg_palindex(
+      nc,
+      pidx,
+    );
+  }
+
+  late final _ncdirect_set_fg_palindexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_fg_palindex');
+  late final _ncdirect_set_fg_palindex = _ncdirect_set_fg_palindexPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_set_bg_palindex(
+    ffi.Pointer<ncdirect> nc,
+    int pidx,
+  ) {
+    return _ncdirect_set_bg_palindex(
+      nc,
+      pidx,
+    );
+  }
+
+  late final _ncdirect_set_bg_palindexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_bg_palindex');
+  late final _ncdirect_set_bg_palindex = _ncdirect_set_bg_palindexPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_palette_size(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_palette_size(
+      nc,
+    );
+  }
+
+  late final _ncdirect_palette_sizePtr =
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_palette_size');
+  late final _ncdirect_palette_size = _ncdirect_palette_sizePtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_putstr(
+    ffi.Pointer<ncdirect> nc,
+    int channels,
+    ffi.Pointer<ffi.Int8> utf8,
+  ) {
+    return _ncdirect_putstr(
+      nc,
+      channels,
+      utf8,
+    );
+  }
+
+  late final _ncdirect_putstrPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64,
+              ffi.Pointer<ffi.Int8>)>>('ncdirect_putstr');
+  late final _ncdirect_putstr = _ncdirect_putstrPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>)>();
+
+  int ncdirect_putegc(
+    ffi.Pointer<ncdirect> nc,
+    int channels,
+    ffi.Pointer<ffi.Int8> utf8,
+    ffi.Pointer<ffi.Int32> sbytes,
+  ) {
+    return _ncdirect_putegc(
+      nc,
+      channels,
+      utf8,
+      sbytes,
+    );
+  }
+
+  late final _ncdirect_putegcPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Uint64,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int32>)>>('ncdirect_putegc');
+  late final _ncdirect_putegc = _ncdirect_putegcPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>,
+          ffi.Pointer<ffi.Int32>)>();
+
+  int ncdirect_printf_aligned(
+    ffi.Pointer<ncdirect> n,
+    int y,
+    int align,
+    ffi.Pointer<ffi.Int8> fmt,
+  ) {
+    return _ncdirect_printf_aligned(
+      n,
+      y,
+      align,
+      fmt,
+    );
+  }
+
+  late final _ncdirect_printf_alignedPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32, ffi.Int32,
+              ffi.Pointer<ffi.Int8>)>>('ncdirect_printf_aligned');
+  late final _ncdirect_printf_aligned = _ncdirect_printf_alignedPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, int, ffi.Pointer<ffi.Int8>)>();
+
+  int ncdirect_flush(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_flush(
+      nc,
+    );
+  }
+
+  late final _ncdirect_flushPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_flush');
+  late final _ncdirect_flush =
+      _ncdirect_flushPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_set_fg_default(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_set_fg_default(
+      nc,
+    );
+  }
+
+  late final _ncdirect_set_fg_defaultPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_set_fg_default');
+  late final _ncdirect_set_fg_default = _ncdirect_set_fg_defaultPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_set_bg_default(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_set_bg_default(
+      nc,
+    );
+  }
+
+  late final _ncdirect_set_bg_defaultPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_set_bg_default');
+  late final _ncdirect_set_bg_default = _ncdirect_set_bg_defaultPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_dim_x(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_dim_x(
+      nc,
+    );
+  }
+
+  late final _ncdirect_dim_xPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_dim_x');
+  late final _ncdirect_dim_x =
+      _ncdirect_dim_xPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_dim_y(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_dim_y(
+      nc,
+    );
+  }
+
+  late final _ncdirect_dim_yPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_dim_y');
+  late final _ncdirect_dim_y =
+      _ncdirect_dim_yPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_supported_styles(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_supported_styles(
+      nc,
+    );
+  }
+
+  late final _ncdirect_supported_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_supported_styles');
+  late final _ncdirect_supported_styles = _ncdirect_supported_stylesPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_set_styles(
+    ffi.Pointer<ncdirect> n,
+    int stylebits,
+  ) {
+    return _ncdirect_set_styles(
+      n,
+      stylebits,
+    );
+  }
+
+  late final _ncdirect_set_stylesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_styles');
+  late final _ncdirect_set_styles = _ncdirect_set_stylesPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_on_styles(
+    ffi.Pointer<ncdirect> n,
+    int stylebits,
+  ) {
+    return _ncdirect_on_styles(
+      n,
+      stylebits,
+    );
+  }
+
+  late final _ncdirect_on_stylesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_on_styles');
+  late final _ncdirect_on_styles = _ncdirect_on_stylesPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_off_styles(
+    ffi.Pointer<ncdirect> n,
+    int stylebits,
+  ) {
+    return _ncdirect_off_styles(
+      n,
+      stylebits,
+    );
+  }
+
+  late final _ncdirect_off_stylesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_off_styles');
+  late final _ncdirect_off_styles = _ncdirect_off_stylesPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_styles(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_styles(
+      n,
+    );
+  }
+
+  late final _ncdirect_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_styles');
+  late final _ncdirect_styles =
+      _ncdirect_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_cursor_move_yx(
+    ffi.Pointer<ncdirect> n,
+    int y,
+    int x,
+  ) {
+    return _ncdirect_cursor_move_yx(
+      n,
+      y,
+      x,
+    );
+  }
+
+  late final _ncdirect_cursor_move_yxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32,
+              ffi.Int32)>>('ncdirect_cursor_move_yx');
+  late final _ncdirect_cursor_move_yx = _ncdirect_cursor_move_yxPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int, int)>();
+
+  int ncdirect_cursor_enable(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_cursor_enable(
+      nc,
+    );
+  }
+
+  late final _ncdirect_cursor_enablePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_cursor_enable');
+  late final _ncdirect_cursor_enable = _ncdirect_cursor_enablePtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_cursor_disable(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_cursor_disable(
+      nc,
+    );
+  }
+
+  late final _ncdirect_cursor_disablePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_cursor_disable');
+  late final _ncdirect_cursor_disable = _ncdirect_cursor_disablePtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_cursor_up(
+    ffi.Pointer<ncdirect> nc,
+    int num,
+  ) {
+    return _ncdirect_cursor_up(
+      nc,
+      num,
+    );
+  }
+
+  late final _ncdirect_cursor_upPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_up');
+  late final _ncdirect_cursor_up = _ncdirect_cursor_upPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_cursor_left(
+    ffi.Pointer<ncdirect> nc,
+    int num,
+  ) {
+    return _ncdirect_cursor_left(
+      nc,
+      num,
+    );
+  }
+
+  late final _ncdirect_cursor_leftPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_left');
+  late final _ncdirect_cursor_left = _ncdirect_cursor_leftPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_cursor_right(
+    ffi.Pointer<ncdirect> nc,
+    int num,
+  ) {
+    return _ncdirect_cursor_right(
+      nc,
+      num,
+    );
+  }
+
+  late final _ncdirect_cursor_rightPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_right');
+  late final _ncdirect_cursor_right = _ncdirect_cursor_rightPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_cursor_down(
+    ffi.Pointer<ncdirect> nc,
+    int num,
+  ) {
+    return _ncdirect_cursor_down(
+      nc,
+      num,
+    );
+  }
+
+  late final _ncdirect_cursor_downPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_down');
+  late final _ncdirect_cursor_down = _ncdirect_cursor_downPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+
+  int ncdirect_cursor_yx(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Uint32> y,
+    ffi.Pointer<ffi.Uint32> x,
+  ) {
+    return _ncdirect_cursor_yx(
+      n,
+      y,
+      x,
+    );
+  }
+
+  late final _ncdirect_cursor_yxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>,
+              ffi.Pointer<ffi.Uint32>)>>('ncdirect_cursor_yx');
+  late final _ncdirect_cursor_yx = _ncdirect_cursor_yxPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>,
+          ffi.Pointer<ffi.Uint32>)>();
+
+  int ncdirect_cursor_push(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_cursor_push(
+      n,
+    );
+  }
+
+  late final _ncdirect_cursor_pushPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_cursor_push');
+  late final _ncdirect_cursor_push = _ncdirect_cursor_pushPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_cursor_pop(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_cursor_pop(
+      n,
+    );
+  }
+
+  late final _ncdirect_cursor_popPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_cursor_pop');
+  late final _ncdirect_cursor_pop =
+      _ncdirect_cursor_popPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_clear(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_clear(
+      nc,
+    );
+  }
+
+  late final _ncdirect_clearPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_clear');
+  late final _ncdirect_clear =
+      _ncdirect_clearPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  ffi.Pointer<nccapabilities> ncdirect_capabilities(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_capabilities(
+      n,
+    );
+  }
+
+  late final _ncdirect_capabilitiesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<nccapabilities> Function(
+              ffi.Pointer<ncdirect>)>>('ncdirect_capabilities');
+  late final _ncdirect_capabilities = _ncdirect_capabilitiesPtr.asFunction<
+      ffi.Pointer<nccapabilities> Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_hline_interp(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> egc,
+    int len,
+    int h1,
+    int h2,
+  ) {
+    return _ncdirect_hline_interp(
+      n,
+      egc,
+      len,
+      h1,
+      h2,
+    );
+  }
+
+  late final _ncdirect_hline_interpPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
+              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncdirect_hline_interp');
+  late final _ncdirect_hline_interp = _ncdirect_hline_interpPtr.asFunction<
+      int Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+
+  int ncdirect_vline_interp(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> egc,
+    int len,
+    int h1,
+    int h2,
+  ) {
+    return _ncdirect_vline_interp(
+      n,
+      egc,
+      len,
+      h1,
+      h2,
+    );
+  }
+
+  late final _ncdirect_vline_interpPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
+              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncdirect_vline_interp');
+  late final _ncdirect_vline_interp = _ncdirect_vline_interpPtr.asFunction<
+      int Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+
+  int ncdirect_box(
+    ffi.Pointer<ncdirect> n,
+    int ul,
+    int ur,
+    int ll,
+    int lr,
+    ffi.Pointer<wchar_t> wchars,
+    int ylen,
+    int xlen,
+    int ctlword,
+  ) {
+    return _ncdirect_box(
+      n,
+      ul,
+      ur,
+      ll,
+      lr,
+      wchars,
+      ylen,
+      xlen,
+      ctlword,
+    );
+  }
+
+  late final _ncdirect_boxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Pointer<wchar_t>,
+              ffi.Uint32,
+              ffi.Uint32,
+              ffi.Uint32)>>('ncdirect_box');
+  late final _ncdirect_box = _ncdirect_boxPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, int, int, int,
+          ffi.Pointer<wchar_t>, int, int, int)>();
+
+  int ncdirect_rounded_box(
+    ffi.Pointer<ncdirect> n,
+    int ul,
+    int ur,
+    int ll,
+    int lr,
+    int ylen,
+    int xlen,
+    int ctlword,
+  ) {
+    return _ncdirect_rounded_box(
+      n,
+      ul,
+      ur,
+      ll,
+      lr,
+      ylen,
+      xlen,
+      ctlword,
+    );
+  }
+
+  late final _ncdirect_rounded_boxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint32,
+              ffi.Uint32,
+              ffi.Uint32)>>('ncdirect_rounded_box');
+  late final _ncdirect_rounded_box = _ncdirect_rounded_boxPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
+
+  int ncdirect_double_box(
+    ffi.Pointer<ncdirect> n,
+    int ul,
+    int ur,
+    int ll,
+    int lr,
+    int ylen,
+    int xlen,
+    int ctlword,
+  ) {
+    return _ncdirect_double_box(
+      n,
+      ul,
+      ur,
+      ll,
+      lr,
+      ylen,
+      xlen,
+      ctlword,
+    );
+  }
+
+  late final _ncdirect_double_boxPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint64,
+              ffi.Uint32,
+              ffi.Uint32,
+              ffi.Uint32)>>('ncdirect_double_box');
+  late final _ncdirect_double_box = _ncdirect_double_boxPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
+
+  int ncdirect_get(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<timespec> absdl,
+    ffi.Pointer<ncinput> ni,
+  ) {
+    return _ncdirect_get(
+      n,
+      absdl,
+      ni,
+    );
+  }
+
+  late final _ncdirect_getPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>,
+              ffi.Pointer<ncinput>)>>('ncdirect_get');
+  late final _ncdirect_get = _ncdirect_getPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>,
+          ffi.Pointer<ncinput>)>();
+
+  int ncdirect_inputready_fd(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_inputready_fd(
+      n,
+    );
+  }
+
+  late final _ncdirect_inputready_fdPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_inputready_fd');
+  late final _ncdirect_inputready_fd = _ncdirect_inputready_fdPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_stop(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_stop(
+      nc,
+    );
+  }
+
+  late final _ncdirect_stopPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_stop');
+  late final _ncdirect_stop =
+      _ncdirect_stopPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_render_image(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> filename,
+    int align,
+    int blitter,
+    int scale,
+  ) {
+    return _ncdirect_render_image(
+      n,
+      filename,
+      align,
+      blitter,
+      scale,
+    );
+  }
+
+  late final _ncdirect_render_imagePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
+              ffi.Int32, ffi.Int32, ffi.Int32)>>('ncdirect_render_image');
+  late final _ncdirect_render_image = _ncdirect_render_imagePtr.asFunction<
+      int Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+
+  ffi.Pointer<ncdirectv> ncdirect_render_frame(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> filename,
+    int blitter,
+    int scale,
+    int maxy,
+    int maxx,
+  ) {
+    return _ncdirect_render_frame(
+      n,
+      filename,
+      blitter,
+      scale,
+      maxy,
+      maxx,
+    );
+  }
+
+  late final _ncdirect_render_framePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ncdirectv> Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Int32,
+              ffi.Int32,
+              ffi.Int32,
+              ffi.Int32)>>('ncdirect_render_frame');
+  late final _ncdirect_render_frame = _ncdirect_render_framePtr.asFunction<
+      ffi.Pointer<ncdirectv> Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int, int)>();
+
+  int ncdirect_raster_frame(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ncdirectv> ncdv,
+    int align,
+  ) {
+    return _ncdirect_raster_frame(
+      n,
+      ncdv,
+      align,
+    );
+  }
+
+  late final _ncdirect_raster_framePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>,
+              ffi.Int32)>>('ncdirect_raster_frame');
+  late final _ncdirect_raster_frame = _ncdirect_raster_framePtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>, int)>();
+
+  ffi.Pointer<ncdirectf> ncdirectf_from_file(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> filename,
+  ) {
+    return _ncdirectf_from_file(
+      n,
+      filename,
+    );
+  }
+
+  late final _ncdirectf_from_filePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ncdirectf> Function(ffi.Pointer<ncdirect>,
+              ffi.Pointer<ffi.Int8>)>>('ncdirectf_from_file');
+  late final _ncdirectf_from_file = _ncdirectf_from_filePtr.asFunction<
+      ffi.Pointer<ncdirectf> Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
+
+  void ncdirectf_free(
+    ffi.Pointer<ncdirectf> frame,
+  ) {
+    return _ncdirectf_free(
+      frame,
+    );
+  }
+
+  late final _ncdirectf_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncdirectf>)>>(
+          'ncdirectf_free');
+  late final _ncdirectf_free =
+      _ncdirectf_freePtr.asFunction<void Function(ffi.Pointer<ncdirectf>)>();
+
+  ffi.Pointer<ncdirectv> ncdirectf_render(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ncdirectf> frame,
+    ffi.Pointer<ncvisual_options> vopts,
+  ) {
+    return _ncdirectf_render(
+      n,
+      frame,
+      vopts,
+    );
+  }
+
+  late final _ncdirectf_renderPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ncdirectv> Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Pointer<ncdirectf>,
+              ffi.Pointer<ncvisual_options>)>>('ncdirectf_render');
+  late final _ncdirectf_render = _ncdirectf_renderPtr.asFunction<
+      ffi.Pointer<ncdirectv> Function(ffi.Pointer<ncdirect>,
+          ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>)>();
+
+  int ncdirectf_geom(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ncdirectf> frame,
+    ffi.Pointer<ncvisual_options> vopts,
+    ffi.Pointer<ncvgeom> geom,
+  ) {
+    return _ncdirectf_geom(
+      n,
+      frame,
+      vopts,
+      geom,
+    );
+  }
+
+  late final _ncdirectf_geomPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Pointer<ncdirectf>,
+              ffi.Pointer<ncvisual_options>,
+              ffi.Pointer<ncvgeom>)>>('ncdirectf_geom');
+  late final _ncdirectf_geom = _ncdirectf_geomPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>,
+          ffi.Pointer<ncvisual_options>, ffi.Pointer<ncvgeom>)>();
+
+  int ncdirect_stream(
+    ffi.Pointer<ncdirect> n,
+    ffi.Pointer<ffi.Int8> filename,
+    ncstreamcb streamer,
+    ffi.Pointer<ncvisual_options> vopts,
+    ffi.Pointer<ffi.Void> curry,
+  ) {
+    return _ncdirect_stream(
+      n,
+      filename,
+      streamer,
+      vopts,
+      curry,
+    );
+  }
+
+  late final _ncdirect_streamPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>,
+              ffi.Pointer<ffi.Int8>,
+              ncstreamcb,
+              ffi.Pointer<ncvisual_options>,
+              ffi.Pointer<ffi.Void>)>>('ncdirect_stream');
+  late final _ncdirect_stream = _ncdirect_streamPtr.asFunction<
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ncstreamcb,
+          ffi.Pointer<ncvisual_options>, ffi.Pointer<ffi.Void>)>();
+
+  ffi.Pointer<ffi.Int8> ncdirect_detected_terminal(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_detected_terminal(
+      n,
+    );
+  }
+
+  late final _ncdirect_detected_terminalPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ncdirect>)>>('ncdirect_detected_terminal');
+  late final _ncdirect_detected_terminal = _ncdirect_detected_terminalPtr
+      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_canutf8(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_canutf8(
+      n,
+    );
+  }
+
+  late final _ncdirect_canutf8Ptr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_canutf8');
+  late final _ncdirect_canutf8 =
+      _ncdirect_canutf8Ptr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_check_pixel_support(
+    ffi.Pointer<ncdirect> n,
+  ) {
+    return _ncdirect_check_pixel_support(
+      n,
+    );
+  }
+
+  late final _ncdirect_check_pixel_supportPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_check_pixel_support');
+  late final _ncdirect_check_pixel_support = _ncdirect_check_pixel_supportPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+
+  int ncdirect_canget_cursor(
+    ffi.Pointer<ncdirect> nc,
+  ) {
+    return _ncdirect_canget_cursor(
+      nc,
+    );
+  }
+
+  late final _ncdirect_canget_cursorPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>(
+          'ncdirect_canget_cursor');
+  late final _ncdirect_canget_cursor = _ncdirect_canget_cursorPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
 }
 
 class notcurses extends ffi.Opaque {}
@@ -6474,6 +7466,9 @@ class ncreader_options extends ffi.Struct {
   external int flags;
 }
 
+typedef ncdirectv = ncplane;
+typedef ncdirectf = ncvisual;
+
 const int NCALIGN_TOP = 1;
 
 const int NCALIGN_BOTTOM = 3;
@@ -6635,3 +7630,15 @@ const int NCREADER_OPTION_VERSCROLL = 2;
 const int NCREADER_OPTION_NOCMDKEYS = 4;
 
 const int NCREADER_OPTION_CURSOR = 8;
+
+const int NCDIRECT_OPTION_INHIBIT_SETLOCALE = 1;
+
+const int NCDIRECT_OPTION_INHIBIT_CBREAK = 2;
+
+const int NCDIRECT_OPTION_DRAIN_INPUT = 4;
+
+const int NCDIRECT_OPTION_NO_QUIT_SIGHANDLERS = 8;
+
+const int NCDIRECT_OPTION_VERBOSE = 16;
+
+const int NCDIRECT_OPTION_VERY_VERBOSE = 32;

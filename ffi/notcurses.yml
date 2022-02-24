@@ -4,9 +4,12 @@ description: 'Notcurses binding for Dart'
 headers:
   entry-points:
     - '/usr/local/opt/notcurses/include/notcurses/notcurses.h'
+    - '/usr/local/opt/notcurses/include/notcurses/direct.h'
   include-directives:
     - '/usr/local/opt/notcurses/include/notcurses/notcurses.h'
-# compiler-opts:
+    - '/usr/local/opt/notcurses/include/notcurses/direct.h'
+compiler-opts:
+    - '-I/usr/local/opt/notcurses/include'
 #   - '-I/usr/local/opt/llvm/include'
 compiler-opts-automatic:
   macos:
