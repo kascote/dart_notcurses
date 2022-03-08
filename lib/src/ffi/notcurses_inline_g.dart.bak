@@ -1014,7 +1014,7 @@ class NcFfiInline {
   late final _nccell_set_bg_alphaPtr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
-              ffi.Pointer<nccell>, ffi.Int32)>>('nccell_set_bg_alpha');
+              ffi.Pointer<nccell>, ffi.Uint32)>>('nccell_set_bg_alpha');
   late final _nccell_set_bg_alpha = _nccell_set_bg_alphaPtr
       .asFunction<int Function(ffi.Pointer<nccell>, int)>();
 
@@ -1086,7 +1086,7 @@ class NcFfiInline {
   late final _nccell_set_fg_alphaPtr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
-              ffi.Pointer<nccell>, ffi.Int32)>>('nccell_set_fg_alpha');
+              ffi.Pointer<nccell>, ffi.Uint32)>>('nccell_set_fg_alpha');
   late final _nccell_set_fg_alpha = _nccell_set_fg_alphaPtr
       .asFunction<int Function(ffi.Pointer<nccell>, int)>();
 
@@ -3554,6 +3554,20 @@ class NcFfiInline {
   late final _notcurses_get_nblock = _notcurses_get_nblockPtr
       .asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncinput>)>();
 
+  int nccell_channels(
+    ffi.Pointer<nccell> c,
+  ) {
+    return _nccell_channels(
+      c,
+    );
+  }
+
+  late final _nccell_channelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Pointer<nccell>)>>(
+          'nccell_channels');
+  late final _nccell_channels =
+      _nccell_channelsPtr.asFunction<int Function(ffi.Pointer<nccell>)>();
+
   int nccell_set_bchannel(
     ffi.Pointer<nccell> c,
     int channel,
@@ -3569,6 +3583,23 @@ class NcFfiInline {
           ffi.Uint64 Function(
               ffi.Pointer<nccell>, ffi.Uint32)>>('nccell_set_bchannel');
   late final _nccell_set_bchannel = _nccell_set_bchannelPtr
+      .asFunction<int Function(ffi.Pointer<nccell>, int)>();
+
+  int nccell_set_channels(
+    ffi.Pointer<nccell> c,
+    int channels,
+  ) {
+    return _nccell_set_channels(
+      c,
+      channels,
+    );
+  }
+
+  late final _nccell_set_channelsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint64 Function(
+              ffi.Pointer<nccell>, ffi.Uint64)>>('nccell_set_channels');
+  late final _nccell_set_channels = _nccell_set_channelsPtr
       .asFunction<int Function(ffi.Pointer<nccell>, int)>();
 
   int nccell_set_fchannel(
@@ -3587,6 +3618,20 @@ class NcFfiInline {
               ffi.Pointer<nccell>, ffi.Uint32)>>('nccell_set_fchannel');
   late final _nccell_set_fchannel = _nccell_set_fchannelPtr
       .asFunction<int Function(ffi.Pointer<nccell>, int)>();
+
+  int ncchannels_channels(
+    int channels,
+  ) {
+    return _ncchannels_channels(
+      channels,
+    );
+  }
+
+  late final _ncchannels_channelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Uint64)>>(
+          'ncchannels_channels');
+  late final _ncchannels_channels =
+      _ncchannels_channelsPtr.asFunction<int Function(int)>();
 
   int ncchannels_combine(
     int fchan,
@@ -3648,6 +3693,23 @@ class NcFfiInline {
           'ncchannels_set_bg_default');
   late final _ncchannels_set_bg_default = _ncchannels_set_bg_defaultPtr
       .asFunction<int Function(ffi.Pointer<ffi.Uint64>)>();
+
+  int ncchannels_set_channels(
+    ffi.Pointer<ffi.Uint64> dst,
+    int channels,
+  ) {
+    return _ncchannels_set_channels(
+      dst,
+      channels,
+    );
+  }
+
+  late final _ncchannels_set_channelsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint64 Function(
+              ffi.Pointer<ffi.Uint64>, ffi.Uint64)>>('ncchannels_set_channels');
+  late final _ncchannels_set_channels = _ncchannels_set_channelsPtr
+      .asFunction<int Function(ffi.Pointer<ffi.Uint64>, int)>();
 
   int ncchannels_set_fchannel(
     ffi.Pointer<ffi.Uint64> channels,

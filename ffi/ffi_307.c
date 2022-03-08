@@ -1,29 +1,9 @@
 // Contains all inline functions in include/notcurses/*.h
 // This file is auto generated from tools/generate_ffi.py
-#include <ctype.h>
-// #include <wchar.h>
-#include <stdio.h>
-#include <stdint.h>
-// #include <stdlib.h>
+#include <notcurses/notcurses.h>
+#include <notcurses/direct.h>
 
-// #include <./notcurses.h>
-// #include <notcurses/direct.h>
-
-//#include <notcurses/nckeys.h>
-
-typedef struct nccell {} nccell;
-typedef struct ncplane {} ncplane;
-typedef struct ncdirect {} ncdirect;
-typedef struct notcurses {} notcurses;
-typedef struct ncplane_options {} ncplane_options;
-typedef struct ncvisual {} ncvisual;
-typedef struct ncvisual_options {} ncvisual_options;
-typedef struct nctabbed {} nctabbed;
-typedef struct nccapabilities {} nccapabilities;
-typedef struct ncinput {} ncinput;
-typedef struct ncpalette {} ncpalette;
-
-typedef unsigned short bool;
+#include <notcurses/nckeys.h>
 
 bool nccapability_canchangecolor(const nccapabilities* caps);
 bool nccell_bg_default_p(const nccell* cl);
