@@ -10,11 +10,11 @@ import './plane.dart';
 
 
 class CellData {
-  String egc;
-  int stylemask;
-  int channels;
+  final String egc;
+  final int stylemask;
+  final int channels;
 
-  CellData(this.egc, this.stylemask, this.channels);
+  const CellData(this.egc, this.stylemask, this.channels);
 }
 
 /// An nccell corresponds to a single character cell on some plane, which can be
