@@ -56,7 +56,7 @@ int blts(NotCurses notc, List<String> args) {
         final fname = args[i];
         stderr.writeln('--- load file');
         final ncv = Visual.fromFile(fname);
-        if (!ncv.initialized()) {
+        if (ncv.notInitialized) {
           stderr.writeln('ERROR: creating visual');
           return -1;
         }

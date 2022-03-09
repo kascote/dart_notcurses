@@ -35,7 +35,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   }
 
   var ncv = Visual.fromRgbPacked(randrgb, geom.celldimy, geom.celldimx * 3, geom.celldimx, 0xff);
-  if (!ncv.initialized()) {
+  if (ncv.notInitialized) {
     stderr.writeln('can not initialize visual from rgb');
     return false;
   }
@@ -100,7 +100,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
     return false;
   }
 
-  if (ncv.resize(rows * geom.celldimy, cols * geom.celldimx) != 0) {
+  if (!ncv.resize(rows * geom.celldimy, cols * geom.celldimx)) {
     stderr.writeln('can not resize plane');
     blitScale.value!.destroy();
     blitScaleNo.value!.destroy();

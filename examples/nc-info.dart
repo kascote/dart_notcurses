@@ -519,10 +519,10 @@ int emojiViz(Plane plane) {
 void displayLogo(NotCurses nc, Plane plane) {
   final geom = plane.pixelGeom(celldimy: true, celldimx: true);
   final visual = Visual.fromFile('./resources/notcurses.png');
-  if (!visual.initialized()) {
+  if (visual.notInitialized) {
     return;
   }
-  if (visual.resize(3 * geom.celldimy, 24 * geom.celldimx) < 0) {
+  if (!visual.resize(3 * geom.celldimy, 24 * geom.celldimx)) {
     visual.destroy();
   }
   final dim = plane.cursorYX();

@@ -44,7 +44,7 @@ int wipebitmap(NotCurses notc) {
 
   final ncv = Visual.fromRGBA(i8, rows, cols * 4, cols);
 
-  if (!ncv.initialized()) {
+  if (ncv.notInitialized) {
     return -1;
   }
 
@@ -144,7 +144,7 @@ int wipebitmap(NotCurses notc) {
   }
 
   final ncve = Visual.fromRGBA(i8, rows, cols * 4, cols);
-  if (!ncve.initialized()) {
+  if (ncve.notInitialized) {
     ncv.destroy();
     return -1;
   }
