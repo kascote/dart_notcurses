@@ -66,7 +66,7 @@ Future<void> main() async {
       if (key.id == 0) {
         key.destroy();
         // needed for event loop to not stuck. there is another way ?
-        return Future.delayed(Duration(), () => true); 
+        return Future.delayed(Duration(), () => true);
       }
 
       // CTRL+D exit app
@@ -245,13 +245,15 @@ bool dimRows(Plane n, Dimensions dim) {
         return false;
       }
 
-      final rgb = c.fgRGB8();
-      rgb.r -= (rgb.r / 32).floor();
-      rgb.g -= (rgb.g / 32).floor();
-      rgb.b -= (rgb.b / 32).floor();
-      if (rgb.r > 247) rgb.r = 0;
-      if (rgb.g > 247) rgb.g = 0;
-      if (rgb.b > 247) rgb.b = 0;
+      final _rgb = c.fgRGB8();
+      final r = _rgb.r - (_rgb.r / 32).floor();
+      final g = _rgb.g - (_rgb.g / 32).floor();
+      final b = _rgb.b - (_rgb.b / 32).floor();
+      final rgb = RGB(
+        r > 247 ? 0 : r,
+        g > 247 ? 0 : g,
+        b > 247 ? 0 : b,
+      );
 
       if (!c.setFgRGB8(rgb)) {
         n.releaseCell(c);
