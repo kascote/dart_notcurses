@@ -5,7 +5,7 @@ int main(List<String> args) {
   final opts = CursesOptions(loglevel: NcLogLevel.trace, flags: NcOptions.drainInput | NcOptions.noAlternateScreen);
   final notc = NotCurses(opts);
 
-  if (!notc.initialized()) {
+  if (notc.notInitialized) {
     stderr.writeln('errir initializing notcurses');
     return -1;
   }

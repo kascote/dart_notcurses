@@ -8,7 +8,7 @@ int main() {
     flags: NcOptions.cliMode, // | NcOptions.inhibitSetlocale,
   );
   final nc = NotCurses.core(opts);
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     stderr.writeln('can not intialize notcurses');
     return -1;
   }

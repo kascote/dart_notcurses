@@ -11,7 +11,7 @@ void main() {
     loglevel: NcLogLevel.error,
   ));
 
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     stderr.writeln('error initializing nocurses');
     return;
   }

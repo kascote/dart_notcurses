@@ -6,7 +6,7 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
   final nc = NotCurses();
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     stderr.writeln('can not intialize notcurses');
     return -1;
   }

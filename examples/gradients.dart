@@ -8,7 +8,7 @@ int main() {
     flags: NcOptions.drainInput,
   );
   final nc = NotCurses(opts);
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     return -1;
   }
 

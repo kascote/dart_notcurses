@@ -28,12 +28,12 @@ int main(List<String> args) {
     }
     rc = handle(nc, args[0]) ? 0 : -1;
   } catch (e, s) {
-    if (nc != null) nc.initialized() & nc.stop();
+    if (nc != null) nc.initialized & nc.stop();
     print(e);
     print(s);
     rc = -1;
   } finally {
-    if (nc != null) nc.initialized() & nc.stop();
+    if (nc != null) nc.initialized & nc.stop();
     rc = 0;
   }
 

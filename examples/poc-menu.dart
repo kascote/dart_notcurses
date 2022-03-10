@@ -7,7 +7,7 @@ const bgChar = '\u28ff';
 void main() {
   final nc = NotCurses(CursesOptions(loglevel: NcLogLevel.error));
 
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     stderr.writeln('error initializing nocurses');
     return;
   }

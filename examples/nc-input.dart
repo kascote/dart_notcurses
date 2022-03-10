@@ -20,7 +20,7 @@ Future<void> main() async {
     flags: NcOptions.inhibitSetlocale,
   ));
 
-  if (!nc.initialized()) {
+  if (nc.notInitialized) {
     stderr.writeln('error initializing nocurses');
     return;
   }
