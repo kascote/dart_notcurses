@@ -111,9 +111,9 @@ class NotCurses {
   }
 
   /// Returns true if NotCurses was initialized without problems
-  bool initialized() {
-    return _ptr != ffi.nullptr;
-  }
+  bool get initialized => _ptr != ffi.nullptr;
+  /// Returns true if NotCurses was not initialized
+  bool get notInitialized => _ptr == ffi.nullptr;
 
   /// Renders and rasterizes the standard pile in one shot. Blocking call.
   bool render() {
