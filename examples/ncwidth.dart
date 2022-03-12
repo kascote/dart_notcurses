@@ -22,14 +22,14 @@ int main(List<String> args) {
       final hex = code.toStrHex(padding: 4);
       final width = chr.characters.length;
       final bytes = chr.runes.length;
-      nc.putStr('$hex $width ${String.fromCharCode(code)}\t', 0);
+      nc.putStr('$hex $width ${String.fromCharCode(code)}\t');
       if (++i % 4 == 0) {
-        nc.putStr('\n', 0);
+        nc.putStr('\n');
       }
       totalCols += width;
       totalBytes += bytes;
     }
-    nc.putStr('\n', 0);
+    nc.putStr('\n');
     var origDim = nc.cursorYX();
     if (origDim == null) {
       return -1;
@@ -41,8 +41,7 @@ int main(List<String> args) {
     }
     final realcols = (finalDim.x - origDim.x) + nc.dimx() * (finalDim.y - origDim.y);
     nc.putStr(
-        '\niterated wcwidth: $totalCols total bytes: $totalBytes wcswidth: ${characters.length} true width: $realcols\n\n',
-        0);
+        '\niterated wcwidth: $totalCols total bytes: $totalBytes wcswidth: ${characters.length} true width: $realcols\n\n');
 
     // throw up a background color for invisible glyphs
     origDim = nc.cursorYX();
@@ -83,17 +82,17 @@ int main(List<String> args) {
       origDim = newyx.copyWith(y: newyx.y + newscrolls, x: newyx.x);
     }
     for (i = 0; i < scrolls + 1; ++i) {
-      nc.putStr('\n', 0);
+      nc.putStr('\n');
     }
 
     nc.setFgDefault();
     nc.setBgDefault();
 
     for (var z = 0; z < realcols && z < nc.dimx(); ++z) {
-      nc.putStr('${z % 10}', 0);
+      nc.putStr('${z % 10}');
     }
     if (realcols < nc.dimx()) {
-      nc.putStr('\n', 0);
+      nc.putStr('\n');
     }
     if (realcols > 20) {
       for (var z = 0; z < realcols && z < nc.dimx(); ++z) {

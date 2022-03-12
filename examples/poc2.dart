@@ -20,7 +20,7 @@ void main() {
 
   try {
     p.cursorMoveYX(2, 2);
-    final c1 = p.primeCell('\u{1F982}', 0, 0);
+    final c1 = p.primeCell('\u{1F982}');
     if (c1.result < 0) {
       stderr.writeln('error creating cell1');
     } else {
@@ -29,7 +29,7 @@ void main() {
       x.destroy(p);
     }
 
-    final c2 = p.primeCell('|', 0, 0);
+    final c2 = p.primeCell('|');
     if (c2.result < 0) {
       stderr.writeln('error creating cell2');
     } else {
@@ -65,7 +65,7 @@ void main() {
     hline.destroy(p); vline.destroy(p);
 
     p.cursorMoveYX(5, 5);
-    p.roundedBox(0, 0, 10, 10, 0);
+    p.roundedBox(0, Channels.zero(), 10, 10, 0);
 
     p.cursorMoveYX(5, 50);
     p.putStr('\u5f62'); // (形)
@@ -73,7 +73,7 @@ void main() {
     p.atYXcell(5, 50, cx);
     p.cursorMoveYX(5, 30);
 
-    p.roundedBoxSized(0, 0, 10, 10, 0);
+    p.roundedBoxSized(0, Channels.zero(), 10, 10, 0);
 
     final gcluster = p.extendedGcluster(cx);
     stderr.writeln(gcluster);

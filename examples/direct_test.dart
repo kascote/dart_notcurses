@@ -30,25 +30,25 @@ void main() {
   void pLabel(String value) {
     nc.setFgDefault();
     nc.setBgDefault();
-    nc.putStr(value.padRight(15), 0);
+    nc.putStr(value.padRight(15));
   }
 
   void pCap(bool value) {
     if (canUtf8) {
-      nc.putEgc(value ? ok : no, 0);
+      nc.putEgc(value ? ok : no);
     } else {
       nc.putStr(value ? 'true' : 'false', value ? okChannel : noChannel);
     }
   }
 
   pLabel('Terminal: ');
-  nc.putStr('${nc.detectTerminal() ?? ''}\n' , 0);
+  nc.putStr('${nc.detectTerminal() ?? ''}\n');
 
   final labels = capabilities.keys;
   for (final label in labels) {
     pLabel('$label: ');
     pCap(capabilities[label]!);
-    nc.putStr('\n', 0);
+    nc.putStr('\n');
   }
 
   nc.stop();

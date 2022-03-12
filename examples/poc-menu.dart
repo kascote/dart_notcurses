@@ -18,7 +18,7 @@ void main() {
     mTop.create(p);
     mTop.itemSetStatus('File', 'Close', false);
 
-    p.perimeterDouble();
+    p.perimeterDouble(0, Channels.zero(), 0);
     nc.miceEnable(NcMiceEvents.allEvents);
 
     paintBackground(p);
@@ -121,13 +121,15 @@ Menu topMenu() {
       shortcutKey: 'W',
       shortcutModifier: NcKeyMod.ctrl);
 
-  var secChan = Channels.setFgRGB(0, 0xff0000).value; //#ffccaa
-  secChan = Channels.setBgRGB(secChan, 0x7f347f).value;
-  secChan = Channels.setFgAlpha(secChan, NcAlpha.highcontrast).value;
-  secChan = Channels.setBgAlpha(secChan, NcAlpha.blend).value;
-  var headChan = Channels.setFgRGB(0, 0xffffff).value;
-  headChan = Channels.setBgRGB(headChan, 0x7f347f).value; // #7f347f
-  headChan = Channels.setBgAlpha(headChan, NcAlpha.blend).value;
+  final secChan = Channels.zero()
+    ..setFgRGB(0xff0000)  // #ffccaa
+    ..setBgRGB(0x7f347f) // #7f347f
+    ..setFgAlpha(NcAlpha.highcontrast)
+    ..setBgAlpha(NcAlpha.blend);
+  final headChan = Channels.zero()
+    ..setFgRGB(0xffffff)
+    ..setBgRGB(0x7f347f) // #7f347f
+    ..setBgAlpha(NcAlpha.blend);
 
   return Menu(
       [ms, ms2, ms3],

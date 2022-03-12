@@ -31,10 +31,10 @@ void main() {
       stderr.writeln('error creating input plane');
     }
     /* pInput!.perimeterDouble(0, 0, 16 | 64 | 32 | 128); */
-    pInput!.setBase('░', 0, Channel.initializer(0xaa, 0x44, 0x44)); // #aa4444
+    pInput!.setBase('░', 0, Channels.initializerBg(0xaa, 0x44, 0x44)); // #aa4444
 
     final opts = ReaderOptions(
-      Channel.initializer(0xcc, 0xaa, 0xff), // #ccaaff
+      Channels.initializerFg(0xcc, 0xaa, 0xff), // #ccaaff
       NcStyle.italic,
       NcReaderOptions.cursor | NcReaderOptions.horscroll,
     );

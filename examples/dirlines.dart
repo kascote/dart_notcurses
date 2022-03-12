@@ -5,26 +5,20 @@ int main() {
 
   try {
     for (int i = 1; i < 15; ++i) {
-      final c1 = Channels.setFgRGB8(0, 0x0, 0x10 * i, 0xff);
-      final c2 = Channels.setFgRGB8(0, 0x10 * i, 0x0, 0x0);
-      if (!c1.result | !c2.result) {
-        return -1;
-      }
-      if (nc.hlineInterp('-', i, c1.value, c2.value) < i) {
+      final c1 = Channels.zero()..setFgRGB8(0x0, 0x10 * i, 0xff);
+      final c2 = Channels.zero()..setFgRGB8(0x10 * i, 0x0, 0x0);
+      if (nc.hlineInterp('-', i, c1, c2) < i) {
         return -1;
       }
       nc.setFgDefault();
       nc.setBgDefault();
-      nc.putStr('\n', 0);
+      nc.putStr('\n');
     }
 
     for (int i = 1; i < 15; ++i) {
-      final c1 = Channels.setFgRGB8(0, 0x0, 0x10 * i, 0xff);
-      final c2 = Channels.setFgRGB8(0, 0x10 * i, 0x0, 0x0);
-      if (!c1.result | !c2.result) {
-        return -1;
-      }
-      if (nc.vlineInterp('|', i, c1.value, c2.value) < i) {
+      final c1 = Channels.zero()..setFgRGB8(0x0, 0x10 * i, 0xff);
+      final c2 = Channels.zero()..setFgRGB8(0x10 * i, 0x0, 0x0);
+      if (nc.vlineInterp('|', i, c1, c2) < i) {
         return -1;
       }
       nc.setFgDefault();
@@ -36,21 +30,21 @@ int main() {
         }
       }
     }
-    nc.putStr('\n', 0);
-    final ul = Channels.setFgRGB8(0, 0xff, 0x0, 0xff);
-    final ur = Channels.setFgRGB8(0, 0x0, 0xff, 0x0);
-    final ll = Channels.setFgRGB8(0, 0x0, 0x0, 0xff);
-    final lr = Channels.setFgRGB8(0, 0xff, 0x0, 0x0);
+    nc.putStr('\n');
+    final ul = Channels.zero()..setFgRGB8(0xff, 0x0, 0xff);
+    final ur = Channels.zero()..setFgRGB8(0x0, 0xff, 0x0);
+    final ll = Channels.zero()..setFgRGB8(0x0, 0x0, 0xff);
+    final lr = Channels.zero()..setFgRGB8(0xff, 0x0, 0x0);
 
-    if (!nc.roundedBox(ul.value, ur.value, ll.value, lr.value, 10, 10, 0)) {
+    if (!nc.roundedBox(ul, ur, ll, lr, ylen: 10, xlen: 10)) {
       return -1;
     }
     nc.cursorUp(9);
-    if (!nc.doubleBox(ul.value, ur.value, ll.value, lr.value, 10, 20, 0)) {
+    if (!nc.doubleBox(ul, ur, ll, lr, ylen: 10, xlen: 20)) {
       return -1;
     }
 
-    nc.putStr('\n', 0);
+    nc.putStr('\n');
   } catch (e, stackTrace) {
     print(e);
     print(stackTrace);

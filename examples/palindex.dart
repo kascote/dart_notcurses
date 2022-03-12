@@ -32,16 +32,17 @@ void showUsage() {
 
 void indexed(Direct nc) {
   baseColors(nc);
-  nc.putStr('\n', 0);
+  nc.putStr('\n');
 
   for (var i = 16; i <= 231; i++) {
     final color = colorCube[i]!;
     final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-    final res = Channels.setBgPalindex(0, i);
-    final chn = Channels.setFgPalindex(res.value, textColor(color));
-    nc.putStr(' ${i.toString().padLeft(3)} #$colorStr ', chn.value);
-    nc.putStr(' ', 0); // TODO: use deffault FG/BG
-    if ((i - 15) % 6 == 0) nc.putStr('\n', 0);
+    final chn = Channels.zero()
+      ..setBgPalindex(i)
+      ..setFgPalindex(textColor(color));
+    nc.putStr(' ${i.toString().padLeft(3)} #$colorStr ', chn);
+    nc.putStr(' ');
+    if ((i - 15) % 6 == 0) nc.putStr('\n');
   }
 
   grayscale(nc);
@@ -49,19 +50,20 @@ void indexed(Direct nc) {
 
 void gradient(Direct nc) {
   baseColors(nc);
-  nc.putStr('\n', 0);
+  nc.putStr('\n');
 
   for (var i = 16; i <= 46; i += 6) {
     for (var j = i; j <= (i + 185); j += 36) {
       for (var h = j; h <= (j + 5); h++) {
         final color = colorCube[h]!;
         final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-        final res = Channels.setBgPalindex(0, h);
-        final chn = Channels.setFgPalindex(res.value, textColor(color));
-        nc.putStr(' ${h.toString().padLeft(3)} #$colorStr ', chn.value);
-        nc.putStr(' ', 0);
+        final chn = Channels.zero()
+          ..setBgPalindex(h)
+          ..setFgPalindex(textColor(color));
+        nc.putStr(' ${h.toString().padLeft(3)} #$colorStr ', chn);
+        nc.putStr(' ');
       }
-      nc.putStr('\n', 0);
+      nc.putStr('\n');
     }
   }
 
@@ -70,11 +72,12 @@ void gradient(Direct nc) {
 
 void baseColors(Direct nc) {
   for (var i = 0; i <= 15; i++) {
-    final res = Channels.setBgPalindex(0, i);
-    final chn = Channels.setFgPalindex(res.value, i % 8 == 0 ? 15 : 0);
-    nc.putStr('  ${i.toString().padLeft(2)}  ', chn.value);
-    nc.putStr(' ', 0); // TODO: use deffault FG/BG
-    if ((i + 1) % 8 == 0) nc.putStr('\n', 0);
+    final chn = Channels.zero()
+      ..setBgPalindex(i)
+      ..setFgPalindex(i % 8 == 0 ? 15 : 0);
+    nc.putStr('  ${i.toString().padLeft(2)}  ', chn);
+    nc.putStr(' ');
+    if ((i + 1) % 8 == 0) nc.putStr('\n');
   }
 }
 
@@ -84,11 +87,12 @@ void grayscale(Direct nc) {
     final idx = i + 232;
     final color = colorCube[idx]!;
     final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-    final res = Channels.setBgPalindex(0, idx);
-    final chn = Channels.setFgPalindex(res.value, textColor(color));
-    nc.putStr(' ${idx.toString().padLeft(3)} #$colorStr ', chn.value);
-    nc.putStr(' ', 0); // TODO: use deffault FG/BG
-    if ((i + 1) % 6 == 0) nc.putStr('\n', 0);
+    final chn = Channels.zero()
+      ..setBgPalindex(idx)
+      ..setFgPalindex(textColor(color));
+    nc.putStr(' ${idx.toString().padLeft(3)} #$colorStr ', chn);
+    nc.putStr(' ');
+    if ((i + 1) % 6 == 0) nc.putStr('\n');
   }
 }
 

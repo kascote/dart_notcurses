@@ -80,9 +80,11 @@ int wipebitmap(NotCurses notc) {
     }
   }
 
-  var channels = Channels.setBgAlpha(0, NcAlpha.transparent);
-  channels = Channels.setFgAlpha(channels.value, NcAlpha.transparent);
-  p.setBase('', 0, channels.value);
+  final channels = Channels.zero()
+    ..setBgAlpha(NcAlpha.transparent)
+    ..setFgAlpha(NcAlpha.transparent);
+
+  p.setBase('', 0, channels);
   p.moveTop();
 
   emit(p, 'Ought see 16 *s');
