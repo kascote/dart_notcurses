@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 
+import './channels.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './key.dart';
@@ -17,15 +18,16 @@ abstract class NcMenuFlags {
 }
 
 class MenuOptions {
-  int headerChannels;
-  int sectionChannels;
+  Channels headerChannels;
+  Channels sectionChannels;
   int flags;
 
   MenuOptions({
-    this.headerChannels = 0,
-    this.sectionChannels = 0,
+    Channels? headerChannels,
+    Channels? sectionChannels,
     this.flags = NcMenuFlags.top,
-  });
+  })  : headerChannels = headerChannels ?? Channels.zero(),
+        sectionChannels = sectionChannels ?? Channels.zero();
 }
 
 class MenuItem {
@@ -108,8 +110,8 @@ class Menu {
       opts.ref
         ..sections = pSections
         ..sectioncount = sections.length
-        ..headerchannels = options.headerChannels
-        ..sectionchannels = options.sectionChannels
+        ..headerchannels = options.headerChannels.value
+        ..sectionchannels = options.sectionChannels.value
         ..flags = options.flags;
 
       _ptr = nc.ncmenu_create(plane.ptr, opts);

@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import './channels.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './key.dart';
@@ -9,7 +10,7 @@ import './load_library.dart';
 import './plane.dart';
 
 class ReaderOptions {
-  int channels;
+  Channels channels;
 
   /// StyleMask
   int attrWord;
@@ -31,7 +32,7 @@ class Reader {
   factory Reader.create(Plane plane, ReaderOptions opts) {
     final op = allocator<ncreader_options>();
     op.ref
-      ..tchannels = opts.channels
+      ..tchannels = opts.channels.value
       ..tattrword = opts.attrWord
       ..flags = opts.flags;
     return Reader._(nc.ncreader_create(plane.ptr, op));

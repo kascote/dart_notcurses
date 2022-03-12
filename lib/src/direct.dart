@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 import 'package:characters/characters.dart';
 import 'package:ffi/ffi.dart';
 
+import './channels.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './key.dart';
@@ -140,9 +141,9 @@ class Direct {
   /// Output the string |utf8| according to the channels |channels|. Note that
   /// ncdirect_putstr() does not explicitly flush output buffers, so it will not
   /// necessarily be immediately visible. Returns EOF on error.
-  int putStr(String value, int channels) {
+  int putStr(String value, [Channels? channels]) {
     final i8 = value.toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncdirect_putstr(_ptr, channels, i8);
+    final rc = nc.ncdirect_putstr(_ptr, channels != null ? channels.value : 0, i8);
     allocator.free(i8);
     return rc;
   }
@@ -154,10 +155,10 @@ class Direct {
   /// NcResult.result will be < 0 if error or the totals of columns
   /// the cursor moved
   /// NcResult.value will be the total bytes of the string printed
-  NcResult<int, int> putEgc(String value, int channels) {
+  NcResult<int, int> putEgc(String value, [Channels? channels]) {
     final i8 = value.toNativeUtf8().cast<ffi.Int8>();
     final sbytes = allocator<ffi.Int32>();
-    final rc = nc.ncdirect_putegc(_ptr, channels, i8, sbytes);
+    final rc = nc.ncdirect_putegc(_ptr, channels != null ? channels.value : 0, i8, sbytes);
     final bytesLen = sbytes.value;
 
     allocator.free(i8);
@@ -287,9 +288,9 @@ class Direct {
   /// between them as we go. The EGC may not use more than one column. For a
   /// horizontal line, |len| cannot exceed the screen width minus the cursor's
   /// offset. All lines start at the current cursor position.
-  int hlineInterp(String egc, int len, int chan1, int chan2) {
+  int hlineInterp(String egc, int len, Channels chan1, Channels chan2) {
     final i8 = egc.characters.elementAt(0).toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncdirect_hline_interp(_ptr, i8, len, chan1, chan2);
+    final rc = nc.ncdirect_hline_interp(_ptr, i8, len, chan1.value, chan2.value);
     allocator.free(i8);
     return rc;
   }
@@ -298,9 +299,9 @@ class Direct {
   /// between them as we go. The EGC may not use more than one column.
   /// For a vertical line, |len| may be as long as you'd like; the screen
   /// will scroll as necessary. All lines start at the current cursor position.
-  int vlineInterp(String egc, int len, int chan1, int chan2) {
+  int vlineInterp(String egc, int len, Channels chan1, Channels chan2) {
     final i8 = egc.characters.elementAt(0).toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncdirect_vline_interp(_ptr, i8, len, chan1, chan2);
+    final rc = nc.ncdirect_vline_interp(_ptr, i8, len, chan1.value, chan2.value);
     allocator.free(i8);
     return rc;
   }
@@ -328,12 +329,12 @@ class Direct {
     return ncInline.ncdirect_ascii_box(_ptr, ul, ur, ll, lr, ylen, xlen, ctlword) == 0;
   }
 
-  bool roundedBox(int ul, int ur, int ll, int lr, int ylen, int xlen, int ctlword) {
-    return nc.ncdirect_rounded_box(_ptr, ul, ur, ll, lr, ylen, xlen, ctlword) == 0;
+  bool roundedBox(Channels ul, Channels ur, Channels ll, Channels lr, {int ylen = 1, int xlen = 1, int ctlword = 0}) {
+    return nc.ncdirect_rounded_box(_ptr, ul.value, ur.value, ll.value, lr.value, ylen, xlen, ctlword) == 0;
   }
 
-  bool doubleBox(int ul, int ur, int ll, int lr, int ylen, int xlen, int ctlword) {
-    return nc.ncdirect_double_box(_ptr, ul, ur, ll, lr, ylen, xlen, ctlword) == 0;
+  bool doubleBox(Channels ul, Channels ur, Channels ll, Channels lr, {int ylen = 1, int xlen = 1, int ctlword = 0}) {
+    return nc.ncdirect_double_box(_ptr, ul.value, ur.value, ll.value, lr.value, ylen, xlen, ctlword) == 0;
   }
 
   /// Provide a NULL 'ts' to block at length, a 'ts' of 0 for non-blocking

@@ -482,7 +482,7 @@ class Plane {
   /// This works whether the underlying char is signed or unsigned.
   int putCharYX(int y, int x, String value) {
     final styles = nc.ncplane_styles(_ptr);
-    final channels = nc.ncplane_channels(_ptr);
+    final channels = Channels.from(nc.ncplane_channels(_ptr));
     final res = primeCell(value, styles, channels);
     if (res.result < 0) return res.result;
     final cell = res.value!;
@@ -586,9 +586,9 @@ class Plane {
   /// anywhere that the ncplane's gcluster is 0. Note that the base cell is not
   /// affected by ncplane_erase(). 'egc' must be an extended grapheme cluster.
   /// Returns the number of bytes copied out of 'gcluster', or -1 on failure.
-  int setBase(String char, int stylemask, int channels) {
+  int setBase(String char, int stylemask, Channels channels) {
     final egc = char.toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncplane_set_base(_ptr, egc, stylemask, channels);
+    final rc = nc.ncplane_set_base(_ptr, egc, stylemask, channels.value);
     allocator.free(egc);
     return rc;
   }
@@ -934,8 +934,8 @@ class Plane {
   }
 
   /// Set the current channels or attribute word for ncplane 'n'.
-  void setChannels(int channels) {
-    nc.ncplane_set_channels(_ptr, channels);
+  void setChannels(Channels channels) {
+    nc.ncplane_set_channels(_ptr, channels.value);
   }
 
   /// Extract the background alpha and coloring bits from a 64-bit channel
@@ -1118,51 +1118,51 @@ class Plane {
   /// success, -1 on error. on error, any cells this function might
   /// have loaded before the error are nccell_release()d. There must be at least
   /// six EGCs in gcluster.
-  bool cellsLoadBox(int styles, int channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl, String gclusters) {
+  bool cellsLoadBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl, String gclusters) {
     final u8 = gclusters.toNativeUtf8().cast<ffi.Int8>();
     final rc =
-        ncInline.nccells_load_box(_ptr, styles, channels, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr, u8) != 0;
+        ncInline.nccells_load_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr, u8) != 0;
     allocator.free(u8);
     return rc;
   }
 
   // cellsRoundedBox
-  bool cellsRoundedBox(int styles, int channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
-    return ncInline.nccells_rounded_box(_ptr, styles, channels, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
+  bool cellsRoundedBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
+    return ncInline.nccells_rounded_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
   }
 
-  int roundedBox(int styles, int channels, int ystop, int xstop, int ctlword) {
-    return ncInline.ncplane_rounded_box(_ptr, styles, channels, ystop, xstop, ctlword);
+  int roundedBox(int styles, Channels channels, int ystop, int xstop, int ctlword) {
+    return ncInline.ncplane_rounded_box(_ptr, styles, channels.value, ystop, xstop, ctlword);
   }
 
-  int roundedBoxSized(int styles, int channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_rounded_box_sized(_ptr, styles, channels, ylen, xlen, ctlword);
+  int roundedBoxSized(int styles, Channels channels, int ylen, int xlen, int ctlword) {
+    return ncInline.ncplane_rounded_box_sized(_ptr, styles, channels.value, ylen, xlen, ctlword);
   }
 
-  bool cellsDoubleBox(int styles, int channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
-    return ncInline.nccells_double_box(_ptr, styles, channels, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
+  bool cellsDoubleBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
+    return ncInline.nccells_double_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
   }
 
-  int doubleBox(int styles, int channels, int ystop, int xstop, int ctlword) {
-    return ncInline.ncplane_double_box(_ptr, styles, channels, ystop, xstop, ctlword);
+  int doubleBox(int styles, Channels channels, int ystop, int xstop, int ctlword) {
+    return ncInline.ncplane_double_box(_ptr, styles, channels.value, ystop, xstop, ctlword);
   }
 
-  int doubleBoxSized(int styles, int channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_double_box_sized(_ptr, styles, channels, ylen, xlen, ctlword);
+  int doubleBoxSized(int styles, Channels channels, int ylen, int xlen, int ctlword) {
+    return ncInline.ncplane_double_box_sized(_ptr, styles, channels.value, ylen, xlen, ctlword);
   }
 
-  int perimeterRounded(int styles, int channels, int ctlword) {
-    return ncInline.ncplane_perimeter_rounded(_ptr, styles, channels, ctlword);
+  int perimeterRounded(int styles, Channels  channels, int ctlword) {
+    return ncInline.ncplane_perimeter_rounded(_ptr, styles, channels.value , ctlword);
   }
 
   /// Draw a with a double line around the Plane borders
   /// with ctlword can disable some borders
-  int perimeterDouble({int styles = 0, int channels = 0, int ctlword = 0}) {
-    return ncInline.ncplane_perimeter_double(_ptr, styles, channels, ctlword);
+  int perimeterDouble(int styles, Channels channels, int ctlword) {
+    return ncInline.ncplane_perimeter_double(_ptr, styles, channels.value, ctlword);
   }
 
-  int asciiBox(int styles, int channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_ascii_box(_ptr, styles, channels, ylen, xlen, ctlword);
+  int asciiBox(int styles, Channels channels, int ylen, int xlen, int ctlword) {
+    return ncInline.ncplane_ascii_box(_ptr, styles, channels.value, ylen, xlen, ctlword);
   }
 
   /// Starting at the specified coordinate, if its glyph is different from that of
@@ -1194,9 +1194,10 @@ class Plane {
   ///  1x1: all four colors must be the same
   ///  1xN: both top and both bottom colors must be the same (vertical gradient)
   ///  Nx1: both left and both right colors must be the same (horizontal gradient)
-  int gradient(int y, int x, int ylen, int xlen, String egc, int styles, int ul, int ur, int ll, int lr) {
+  int gradient(
+      int y, int x, int ylen, int xlen, String egc, int styles, Channels ul, Channels ur, Channels ll, Channels lr) {
     final u8 = egc.characters.elementAt(0).toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncplane_gradient(_ptr, y, x, ylen, xlen, u8, styles, ul, ur, ll, lr);
+    final rc = nc.ncplane_gradient(_ptr, y, x, ylen, xlen, u8, styles, ul.value, ur.value, ll.value, lr.value);
     allocator.free(u8);
     return rc;
   }
@@ -1205,8 +1206,8 @@ class Plane {
   /// This doubles the number of vertical gradations, but restricts you to
   /// half blocks (appearing to be full blocks). Returns the number of cells
   /// filled on success, or -1 on error.
-  int gradient2x1(int y, int x, int ylen, int xlen, int ul, int ur, int ll, int lr) {
-    return nc.ncplane_gradient2x1(_ptr, y, x, ylen, xlen, ul, ur, ll, lr);
+  int gradient2x1(int y, int x, int ylen, int xlen, Channel ul, Channel ur, Channel ll, Channel lr) {
+    return nc.ncplane_gradient2x1(_ptr, y, x, ylen, xlen, ul.value, ur.value, ll.value, lr.value);
   }
 
   /// Set the given style throughout the specified region, keeping content and
@@ -1227,8 +1228,8 @@ class Plane {
   /// remaining to the right and below, respectively. It is an error for any
   /// coordinate to be outside the plane. Returns the number of cells set,
   /// or -1 on failure.
-  int stain(int y, int x, int ylen, int xlen, int ul, int ur, int ll, int lr) {
-    return nc.ncplane_stain(_ptr, y, x, ylen, xlen, ul, ur, ll, lr);
+  int stain(int y, int x, int ylen, int xlen, Channels ul, Channels ur, Channels ll, Channels lr) {
+    return nc.ncplane_stain(_ptr, y, x, ylen, xlen, ul.value, ur.value, ll.value, lr.value);
   }
 
   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -1255,10 +1256,10 @@ class Plane {
   }
 
   /// nccell_load(), plus blast the styling with 'attr' and 'channels'.
-  NcResult<int, Cell?> primeCell(String value, int stylemask, int channels) {
+  NcResult<int, Cell?> primeCell(String value, [int stylemask = 0, Channels? channels]) {
     final c = Cell.init();
     final u8 = value.toNativeUtf8().cast<ffi.Int8>();
-    final rc = ncInline.nccell_prime(_ptr, c.ptr, u8, stylemask, channels);
+    final rc = ncInline.nccell_prime(_ptr, c.ptr, u8, stylemask, channels == null ? 0 : channels.value);
     allocator.free(u8);
     if (rc < 0) {
       c.destroy(this);
