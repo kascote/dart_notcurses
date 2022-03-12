@@ -34,6 +34,41 @@ class Dimensions {
 typedef PlaneResizerCB = ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>;
 typedef PlaneUserPointer = ffi.Pointer<ffi.Void>;
 
+class PlaneOptions {
+    /// vertical placement relative to parent plane
+  int y;
+    /// horizontal placement relative to parent plane
+  int x;
+    /// rows, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+  int rows;
+    /// columns, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+  int cols;
+    /// user curry, may be NULL
+  PlaneUserPointer? userptr;
+    /// name (used only for debugging), may be NULL
+  String name;
+    /// callback when parent is resized
+  PlaneResizerCB? resizerCB;
+    /// closure over NCPLANE_OPTION_*
+  int flags;
+    /// margins (require NCPLANE_OPTION_MARGINALIZED)
+  int marginB;
+    /// margins (require NCPLANE_OPTION_MARGINALIZED)
+  int marginR;
+
+  PlaneOptions({
+    this.y = 0,
+    this.x = 0,
+    this.rows = 0,
+    this.cols = 0,
+    this.name = '',
+    this.flags = 0,
+    this.marginB = 0,
+    this.marginR = 0,
+  });
+
+}
+
 class Plane {
   final ffi.Pointer<ncplane> _ptr;
 
@@ -45,50 +80,20 @@ class Plane {
   /// must both be positive. This plane is initially at the top of the z-buffer,
   /// as if ncplane_move_top() had been called on it. The void* 'userptr' can be
   /// retrieved (and reset) later. A 'name' can be set, used in debugging.
-  Plane? create({
-    /// vertical placement relative to parent plane
-    int? y,
-
-    /// horizontal placement relative to parent plane
-    int? x,
-
-    /// rows, must be >0 unless NCPLANE_OPTION_MARGINALIZED
-    int? rows,
-
-    /// columns, must be >0 unless NCPLANE_OPTION_MARGINALIZED
-    int? cols,
-
-    /// user curry, may be NULL
-    PlaneUserPointer? userptr,
-
-    /// name (used only for debugging), may be NULL
-    String? name,
-
-    /// callback when parent is resized
-    PlaneResizerCB? resizerCB,
-
-    /// closure over NCPLANE_OPTION_*
-    int? flags,
-
-    /// margins (require NCPLANE_OPTION_MARGINALIZED)
-    int? marginB,
-
-    /// margins (require NCPLANE_OPTION_MARGINALIZED)
-    int? marginR,
-  }) {
+  Plane? create(PlaneOptions opts) {
     final optsPtr = allocator<ncplane_options>();
-    final opts = optsPtr.ref;
-    if (y != null) opts.y = y;
-    if (x != null) opts.x = x;
-    if (rows != null) opts.rows = rows;
-    if (cols != null) opts.cols = cols;
-    if (name != null) opts.name = name.toNativeUtf8().cast<ffi.Int8>();
-    if (flags != null) opts.flags = flags;
-    if (marginB != null) opts.margin_b = marginB;
-    if (marginR != null) opts.margin_r = marginR;
+    final ref = optsPtr.ref;
+    ref.y = opts.y;
+    ref.x = opts.x;
+    ref.rows = opts.rows;
+    ref.cols = opts.cols;
+    ref.name = opts.name.toNativeUtf8().cast<ffi.Int8>();
+    ref.flags = opts.flags;
+    ref.margin_b = opts.marginB;
+    ref.margin_r = opts.marginR;
 
     final p = Plane(nc.ncplane_create(_ptr, optsPtr));
-    allocator.free(opts.name);
+    allocator.free(ref.name);
     allocator.free(optsPtr);
 
     if (p._ptr == ffi.nullptr) {
