@@ -50,7 +50,7 @@ bool handle(NotCurses nc, String fname) {
   }
   final vopts = VisualOptions(plane: n);
   final blt = visual.blit(nc, vopts);
-  if (!blt.result) {
+  if (blt == null) {
     visual.destroy();
     return false;
   }
@@ -70,7 +70,7 @@ bool handle(NotCurses nc, String fname) {
     return false;
   }
   final blit = visual.blit(nc, vopts);
-  if (!blit.result) {
+  if (blit == null) {
     visual.destroy();
     return false;
   }
@@ -91,19 +91,19 @@ bool handle(NotCurses nc, String fname) {
     }
 
     final newn = visual.blit(nc, vopts);
-    if (!newn.result) {
+    if (newn == null) {
       stderr.writeln('error blit after rotate');
       failed = true;
       break;
     }
 
     if (!nc.render()) {
-      newn.value!.destroy();
+      newn.destroy();
       stderr.writeln('error render rotate');
       failed = true;
       break;
     }
-    newn.value!.destroy();
+    newn.destroy();
   }
 
   /* blit.value!.destroy(); */

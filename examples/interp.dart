@@ -48,7 +48,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   );
 
   final ncvp = ncv.blit(nc, vopts);
-  if (!ncvp.result) {
+  if (ncvp == null) {
     stderr.writeln('can not blit visual');
     ncv.destroy();
     return false;
@@ -61,10 +61,10 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   vopts.scaling = NcScale.stretch;
 
   final blitScale = ncv.blit(nc, vopts);
-  if (!blitScale.result) {
+  if (blitScale == null) {
     stderr.writeln('can not blit scale');
     scalep!.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
@@ -76,12 +76,12 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   vopts.flags = NcVisualOptFlags.nointerpolate;
 
   final blitScaleNo = ncv.blit(nc, vopts);
-  if (!blitScaleNo.result) {
+  if (blitScaleNo == null) {
     stderr.writeln('can not blit scale no');
-    blitScale.value!.destroy();
+    blitScale.destroy();
     scalep.destroy();
     scalepni!.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
@@ -91,22 +91,22 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   final resizep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   if (resizep == null) {
     stderr.writeln('can not create resized plane');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
     scalep.destroy();
     scalepni.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
 
   if (!ncv.resize(rows * geom.celldimy, cols * geom.celldimx)) {
     stderr.writeln('can not resize plane');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
     scalep.destroy();
     scalepni.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
@@ -115,13 +115,13 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   vopts.plane = resizep;
   vopts.scaling = NcScale.none;
   final blitResize = ncv.blit(nc, vopts);
-  if (!blitResize.result) {
+  if (blitResize == null) {
     stderr.writeln('can not blit resize');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
     scalep.destroy();
     scalepni.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
@@ -134,34 +134,34 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   final inflatep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   if (inflatep == null) {
     stderr.writeln('can not create resized plane 2');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
-    blitResize.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
+    blitResize.destroy();
     scalep.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
   vopts.plane = inflatep;
   if (!ncv.reisizeNonInterpolative(rows * geom.celldimy, cols * geom.celldimx)) {
     stderr.writeln('can not resize non interpolative');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
-    blitResize.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
+    blitResize.destroy();
     scalep.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
 
   final blitResizeNo = ncv.blit(nc, vopts);
-  if (!blitResizeNo.result) {
+  if (blitResizeNo == null) {
     stderr.writeln('can not blit resize no');
-    blitScale.value!.destroy();
-    blitScaleNo.value!.destroy();
-    blitResize.value!.destroy();
+    blitScale.destroy();
+    blitScaleNo.destroy();
+    blitResize.destroy();
     scalep.destroy();
-    ncvp.value!.destroy();
+    ncvp.destroy();
     ncv.destroy();
     return false;
   }
@@ -174,11 +174,11 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   k.value!.destroy();
 
   ncv.destroy();
-  ncvp.value!.destroy();
-  blitScale.value!.destroy();
-  blitScaleNo.value!.destroy();
-  blitResize.value!.destroy();
-  blitResizeNo.value!.destroy();
+  ncvp.destroy();
+  blitScale.destroy();
+  blitScaleNo.destroy();
+  blitResize.destroy();
+  blitResizeNo.destroy();
   scalep.destroy();
 
   return true;

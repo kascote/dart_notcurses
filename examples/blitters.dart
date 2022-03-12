@@ -70,7 +70,7 @@ int blts(NotCurses notc, List<String> args) {
 
         stderr.writeln('--- blit $blitter $scaling ${i+1}');
         final cn = ncv.blit(notc, vopts);
-        if (!cn.result) {
+        if (cn == null) {
           ncv.destroy();
           stderr.writeln('ERROR: creating blitting visual');
           return -1;
@@ -81,7 +81,7 @@ int blts(NotCurses notc, List<String> args) {
         sleep(Duration(milliseconds: 500));
 
         stderr.writeln('--- destroy 1');
-        cn.value!.destroy();
+        cn.destroy();
         stderr.writeln('--- destroy 2');
         ncv.destroy();
       }

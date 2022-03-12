@@ -55,7 +55,7 @@ int wipebitmap(NotCurses notc) {
   );
 
   final pBlit = ncv.blit(notc, vopts);
-  if (!pBlit.result) {
+  if (pBlit == null) {
     ncv.destroy();
     return -1;
   }
@@ -64,7 +64,7 @@ int wipebitmap(NotCurses notc) {
 
   if (!notc.render()) {
     ncv.destroy();
-    pBlit.value!.destroy();
+    pBlit.destroy();
     return -1;
   }
 
@@ -126,7 +126,7 @@ int wipebitmap(NotCurses notc) {
   // -------------------------------------------------------------------
 
   p.erase();
-  pBlit.value!.destroy();
+  pBlit.destroy();
 
   emit(p, 'Ought see nothing');
   if (!notc.render()) {
@@ -152,7 +152,7 @@ int wipebitmap(NotCurses notc) {
   }
 
   final sBlit = ncve.blit(notc, vopts);
-  if (!sBlit.result) {
+  if (sBlit == null) {
     ncv.destroy();
     ncve.destroy();
     return -1;
@@ -160,7 +160,7 @@ int wipebitmap(NotCurses notc) {
 
   emit(p, 'Ought see empty square');
   if (!notc.render()) {
-    sBlit.value!.destroy();
+    sBlit.destroy();
     ncv.destroy();
     ncve.destroy();
     return -1;
@@ -169,12 +169,12 @@ int wipebitmap(NotCurses notc) {
 
   // -------------------------------------------------------------------
 
-  vopts.plane = sBlit.value;
+  vopts.plane = sBlit;
   p.moveTop();
 
   final rBlit = ncv.blit(notc, vopts);
-  if (!rBlit.result) {
-    sBlit.value!.destroy();
+  if (rBlit == null) {
+    sBlit.destroy();
     ncv.destroy();
     ncve.destroy();
     return -1;
@@ -182,8 +182,8 @@ int wipebitmap(NotCurses notc) {
 
   emit(p, 'Ought see full square');
   if (!notc.render()) {
-    sBlit.value!.destroy();
-    rBlit.value!.destroy();
+    sBlit.destroy();
+    rBlit.destroy();
     ncv.destroy();
     ncve.destroy();
     return -1;
@@ -200,8 +200,8 @@ int wipebitmap(NotCurses notc) {
 
   emit(p, 'Ought see 16 *s');
   if (!notc.render()) {
-    sBlit.value!.destroy();
-    rBlit.value!.destroy();
+    sBlit.destroy();
+    rBlit.destroy();
     ncv.destroy();
     ncve.destroy();
     return -1;
@@ -211,9 +211,9 @@ int wipebitmap(NotCurses notc) {
   // -------------------------------------------------------------------
 
   final zPlane = ncv.blit(notc, vopts);
-  if (!zPlane.result) {
-    sBlit.value!.destroy();
-    rBlit.value!.destroy();
+  if (zPlane == null) {
+    sBlit.destroy();
+    rBlit.destroy();
     ncv.destroy();
     ncve.destroy();
   }
@@ -224,21 +224,21 @@ int wipebitmap(NotCurses notc) {
 
   // -------------------------------------------------------------------
 
-  sBlit.value!.moveYX(0, 7);
+  sBlit.moveYX(0, 7);
   emit(p, 'Full square on right');
   notc.render();
   sleep(Duration(seconds: pause));
 
   // -------------------------------------------------------------------
 
-  sBlit.value!.moveYX(0, 0);
+  sBlit.moveYX(0, 0);
   emit(p, 'Ought see 16 *s');
   notc.render();
   sleep(Duration(seconds: pause));
 
   // -------------------------------------------------------------------
 
-  sBlit.value!.moveYX(0, 7);
+  sBlit.moveYX(0, 7);
   emit(p, 'Full square on right');
   notc.render();
   sleep(Duration(seconds: pause));
@@ -247,9 +247,9 @@ int wipebitmap(NotCurses notc) {
 
   ncve.destroy();
   ncv.destroy();
-  sBlit.value!.destroy();
-  rBlit.value!.destroy();
-  zPlane.value!.destroy();
+  sBlit.destroy();
+  rBlit.destroy();
+  zPlane?.destroy();
   return 0;
 }
 

@@ -319,14 +319,14 @@ class Visual {
   /// specify any region beyond the boundaries of the frame. Returns the (possibly
   /// newly-created) plane to which we drew. Pixels may not be blitted to the
   /// standard plane.
-  NcResult<bool, Plane?> blit(NotCurses notc, VisualOptions opts) {
+  Plane? blit(NotCurses notc, VisualOptions opts) {
     final optsPtr = opts.toPtr();
     final planePtr = nc.ncvisual_blit(notc.ptr, _ptr, optsPtr);
     allocator.free(optsPtr);
-    if (planePtr == ffi.nullptr) return NcResult(false, null);
+    if (planePtr == ffi.nullptr) return null;
 
     final p = Plane.fromPtr(planePtr);
-    return NcResult(true, p);
+    return p;
   }
 
   /// Scale the visual to 'rows' X 'columns' pixels, using non-interpolative

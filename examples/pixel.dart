@@ -72,7 +72,7 @@ int handle(NotCurses nc, String fname) {
       );
 
       final nv = visual.blit(nc, vopts);
-      if (!nv.result) {
+      if (nv == null) {
         visual.destroy();
         return -1;
       }
@@ -90,7 +90,7 @@ int handle(NotCurses nc, String fname) {
       std.setBase('a', 0, channels);
       nc.render();
       sleep(Duration(milliseconds: 500));
-      nv.value!.destroy();
+      nv.destroy();
     }
   }
 
