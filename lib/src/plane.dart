@@ -1102,67 +1102,255 @@ class Plane {
   /// and are interpreted as the number of connecting edges necessary to draw a
   /// given corner. At 0 (the default), corners are always drawn. At 3, corners
   /// are never drawn (since at most 2 edges can touch a box's corner).
-  int box(Cell ul, Cell ur, Cell ll, Cell lr, Cell hline, Cell vline, int ystop, int xstop, int ctlword) {
-    return nc.ncplane_box(_ptr, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hline.ptr, vline.ptr, ystop, xstop, ctlword);
+  int box(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine,
+    int ystop,
+    int xstop,
+    int ctlword,
+  ) {
+    return nc.ncplane_box(
+      _ptr,
+      upperLeft.ptr,
+      upperRight.ptr,
+      lowerLeft.ptr,
+      lowerRight.ptr,
+      horizontalLine.ptr,
+      verticalLine.ptr,
+      ystop,
+      xstop,
+      ctlword,
+    );
   }
 
-  int boxSized(Cell ul, Cell ur, Cell ll, Cell lr, Cell hline, Cell vline, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_box_sized(_ptr, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hline.ptr, vline.ptr, ylen, xlen, ctlword);
+  /// Draw a box with its upper-left corner at the current cursor position, having
+  /// dimensions 'ylen'x'xlen'. See ncplane_box() for more information. The
+  /// minimum box size is 2x2, and it cannot be drawn off-plane.
+  int boxSized(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine,
+    int ylen,
+    int xlen,
+    int ctlword,
+  ) {
+    return ncInline.ncplane_box_sized(
+      _ptr,
+      upperLeft.ptr,
+      upperRight.ptr,
+      lowerLeft.ptr,
+      lowerRight.ptr,
+      horizontalLine.ptr,
+      verticalLine.ptr,
+      ylen,
+      xlen,
+      ctlword,
+    );
   }
 
-  int perimeter(Cell ul, Cell ur, Cell ll, Cell lr, Cell hline, Cell vline, int ctlword) {
-    return ncInline.ncplane_perimeter(_ptr, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hline.ptr, vline.ptr, ctlword);
+  int perimeter(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine,
+    int ctlword,
+  ) {
+    return ncInline.ncplane_perimeter(
+      _ptr,
+      upperLeft.ptr,
+      upperRight.ptr,
+      lowerLeft.ptr,
+      lowerRight.ptr,
+      horizontalLine.ptr,
+      verticalLine.ptr,
+      ctlword,
+    );
   }
 
   /// load up six cells with the EGCs necessary to draw a box. returns 0 on
   /// success, -1 on error. on error, any cells this function might
   /// have loaded before the error are nccell_release()d. There must be at least
   /// six EGCs in gcluster.
-  bool cellsLoadBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl, String gclusters) {
+  bool cellsLoadBox(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine,
+    String gclusters, [
+    int styles = 0,
+    Channels? channels,
+  ]) {
     final u8 = gclusters.toNativeUtf8().cast<ffi.Int8>();
-    final rc =
-        ncInline.nccells_load_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr, u8) != 0;
+    final rc = ncInline.nccells_load_box(
+          _ptr,
+          styles,
+          channels == null ? 0 : channels.value,
+          upperLeft.ptr,
+          upperRight.ptr,
+          lowerLeft.ptr,
+          lowerRight.ptr,
+          horizontalLine.ptr,
+          verticalLine.ptr,
+          u8,
+        ) !=
+        0;
     allocator.free(u8);
     return rc;
   }
 
   // cellsRoundedBox
-  bool cellsRoundedBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
-    return ncInline.nccells_rounded_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
+  bool cellsRoundedBox(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine, [
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.nccells_rounded_box(
+          _ptr,
+          styles,
+          channels == null ? 0 : channels.value,
+          upperLeft.ptr,
+          upperRight.ptr,
+          lowerLeft.ptr,
+          lowerRight.ptr,
+          horizontalLine.ptr,
+          verticalLine.ptr,
+        ) !=
+        0;
   }
 
-  int roundedBox(int styles, Channels channels, int ystop, int xstop, int ctlword) {
-    return ncInline.ncplane_rounded_box(_ptr, styles, channels.value, ystop, xstop, ctlword);
+  int roundedBox(
+    int ystop,
+    int xstop, [
+    int ctlword = 0,
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.ncplane_rounded_box(
+      _ptr,
+      styles,
+      channels == null ? 0 : channels.value,
+      ystop,
+      xstop,
+      ctlword,
+    );
   }
 
-  int roundedBoxSized(int styles, Channels channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_rounded_box_sized(_ptr, styles, channels.value, ylen, xlen, ctlword);
+  int roundedBoxSized(
+    int ylen,
+    int xlen, [
+    int ctlword = 0,
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.ncplane_rounded_box_sized(
+      _ptr,
+      styles,
+      channels == null ? 0 : channels.value,
+      ylen,
+      xlen,
+      ctlword,
+    );
   }
 
-  bool cellsDoubleBox(int styles, Channels channels, Cell ul, Cell ur, Cell ll, Cell lr, Cell hl, Cell vl) {
-    return ncInline.nccells_double_box(_ptr, styles, channels.value, ul.ptr, ur.ptr, ll.ptr, lr.ptr, hl.ptr, vl.ptr) != 0;
+  bool cellsDoubleBox(
+    Cell upperLeft,
+    Cell upperRight,
+    Cell lowerLeft,
+    Cell lowerRight,
+    Cell horizontalLine,
+    Cell verticalLine, [
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.nccells_double_box(
+          _ptr,
+          styles,
+          channels == null ? 0 : channels.value,
+          upperLeft.ptr,
+          upperRight.ptr,
+          lowerLeft.ptr,
+          lowerRight.ptr,
+          horizontalLine.ptr,
+          verticalLine.ptr,
+        ) !=
+        0;
   }
 
-  int doubleBox(int styles, Channels channels, int ystop, int xstop, int ctlword) {
-    return ncInline.ncplane_double_box(_ptr, styles, channels.value, ystop, xstop, ctlword);
+  int doubleBox(
+    int ystop,
+    int xstop, [
+    int ctlword = 0,
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.ncplane_double_box(
+      _ptr,
+      styles,
+      channels == null ? 0 : channels.value,
+      ystop,
+      xstop,
+      ctlword,
+    );
   }
 
-  int doubleBoxSized(int styles, Channels channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_double_box_sized(_ptr, styles, channels.value, ylen, xlen, ctlword);
+  int doubleBoxSized(
+    int ylen,
+    int xlen, [
+    int ctlword = 0,
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.ncplane_double_box_sized(
+      _ptr,
+      styles,
+      channels == null ? 0 : channels.value,
+      ylen,
+      xlen,
+      ctlword,
+    );
   }
 
-  int perimeterRounded(int styles, Channels  channels, int ctlword) {
-    return ncInline.ncplane_perimeter_rounded(_ptr, styles, channels.value , ctlword);
+  int perimeterRounded([int styles = 0, Channels? channels, int ctlword = 0]) {
+    return ncInline.ncplane_perimeter_rounded(_ptr, styles, channels == null ? 0 : channels.value, ctlword);
   }
 
   /// Draw a with a double line around the Plane borders
   /// with ctlword can disable some borders
-  int perimeterDouble(int styles, Channels channels, int ctlword) {
-    return ncInline.ncplane_perimeter_double(_ptr, styles, channels.value, ctlword);
+  int perimeterDouble([int styles = 0, Channels? channels, int ctlword = 0]) {
+    return ncInline.ncplane_perimeter_double(_ptr, styles, channels == null ? 0 : channels.value, ctlword);
   }
 
-  int asciiBox(int styles, Channels channels, int ylen, int xlen, int ctlword) {
-    return ncInline.ncplane_ascii_box(_ptr, styles, channels.value, ylen, xlen, ctlword);
+  int asciiBox(
+    int ylen,
+    int xlen, [
+    int ctlword = 0,
+    int styles = 0,
+    Channels? channels,
+  ]) {
+    return ncInline.ncplane_ascii_box(
+      _ptr,
+      styles,
+      channels == null ? 0 : channels.value,
+      ylen,
+      xlen,
+      ctlword,
+    );
   }
 
   /// Starting at the specified coordinate, if its glyph is different from that of
