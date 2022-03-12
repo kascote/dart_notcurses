@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 
+import './channels.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './load_library.dart';
@@ -11,8 +12,8 @@ import './shared.dart';
 class PlotOptions {
   late int miny;
   late int maxy;
-  late int minchannels;
-  late int maxchannels;
+  late Channels? minchannels;
+  late Channels? maxchannels;
   late int legendstyle;
   late int gridtype;
   late int rangex;
@@ -25,30 +26,30 @@ class PlotOptions {
 
     /// channels for the minimum levels. linear or exponential
     /// interpolation will be applied across the domain between these two.
-    this.minchannels = -1,
+    this.minchannels,
 
     /// channels for the maximum levels. linear or exponential
     /// interpolation will be applied across the domain between these two.
-    this.maxchannels = -1,
+    this.maxchannels,
 
     /// styling used for the legend, if NCPLOT_OPTION_LABELTICKSD is set
-    this.legendstyle = -1,
+    this.legendstyle = 0,
 
     /// if you don't care, pass NCBLIT_DEFAULT and get NCBLIT_8x1 (assuming
     /// UTF8) or NCBLIT_1x1 (in an ASCII environment)
-    this.gridtype = -1,
+    this.gridtype = 0,
 
     /// independent variable can either be a contiguous range, or a finite set
     /// of keys. for a time range, say the previous hour sampled with second
     /// resolution, the independent variable would be the range [0..3600): 3600.
     /// if rangex is 0, it is dynamically set to the number of columns.
-    this.rangex = -1,
+    this.rangex = 0,
 
     /// optional, printed by the labels
     this.title = '',
 
     /// bitfield over NCPLOT_OPTION_*
-    this.flags = -1,
+    this.flags = 0,
   });
 }
 
@@ -60,16 +61,16 @@ class Plot {
   static Plot? create(Plane plane, PlotOptions po) {
     final optsPtr = allocator<ncplot_options>();
     final opts = optsPtr.ref;
-    if (po.maxchannels >= 0) opts.maxchannels = po.maxchannels;
-    if (po.minchannels >= 0) opts.minchannels = po.minchannels;
-    if (po.legendstyle >= 0) opts.legendstyle = po.legendstyle;
-    if (po.gridtype >= 0) opts.gridtype = po.gridtype;
-    if (po.rangex >= 0) opts.rangex = po.rangex;
-    if (po.flags >= 0) opts.flags = po.flags;
-    if (po.title.isNotEmpty) opts.title = po.title.toNativeUtf8().cast<Int8>();
+    opts.maxchannels = po.maxchannels == null ? 0 : po.maxchannels!.value;
+    opts.minchannels = po.minchannels == null ? 0 : po.minchannels!.value;
+    opts.legendstyle = po.legendstyle;
+    opts.gridtype = po.gridtype;
+    opts.rangex = po.rangex;
+    opts.flags = po.flags;
+    opts.title = po.title.toNativeUtf8().cast<Int8>();
 
     final p = Plot._(nc.ncuplot_create(plane.ptr, optsPtr, po.miny, po.maxy));
-    if (po.title.isNotEmpty) allocator.free(opts.title);
+    allocator.free(opts.title);
     allocator.free(optsPtr);
 
     if (p._ptr == nullptr) {

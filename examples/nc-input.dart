@@ -159,15 +159,13 @@ Plot? setupPlotPlane(Plane stdPlane) {
     return null;
   }
 
-  final minc = Channels.zero()..setFgRGB8(0x40, 0x50, 0xb0); // #4050b0
-  final maxc = Channels.zero()..setFgRGB8(0x40, 0xff, 0xd0); // #40ffd0
+  final minc = Channels.initializerFg(0x40, 0x50, 0xb0); // #4050b0
+  final maxc = Channels.initializerFg(0x40, 0xff, 0xd0); // #40ffd0
   final plot = Plot.create(
       pplane,
       PlotOptions(
-        miny: 0,
-        maxy: 0,
-        minchannels: minc.value,
-        maxchannels: maxc.value,
+        minchannels: minc,
+        maxchannels: maxc,
         gridtype: NcBlitterE.pixel,
         flags: NcPlotOptionsFlags.labelTickSD | NcPlotOptionsFlags.printSample,
       ));
