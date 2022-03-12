@@ -55,7 +55,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   }
 
   var leftMargin = 1;
-  final scalep = std.create(y: 3, x: leftMargin, rows: rows, cols: cols);
+  final scalep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   vopts.y = 0;
   vopts.plane = scalep;
   vopts.scaling = NcScale.stretch;
@@ -71,7 +71,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
 
   std.putStrYX(2, 4, 'scale');
   leftMargin += scalep!.dimx() + 1;
-  final scalepni = std.create(y: 3, x: leftMargin, rows: rows, cols: cols);
+  final scalepni = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   vopts.plane = scalepni;
   vopts.flags = NcVisualOptFlags.nointerpolate;
 
@@ -88,7 +88,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
 
   std.putStrYX(2, 15, 'scale(no)');
   leftMargin += scalepni!.dimx() + 1;
-  final resizep = std.create(y: 3, x: leftMargin, rows: rows, cols: cols);
+  final resizep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   if (resizep == null) {
     stderr.writeln('can not create resized plane');
     blitScale.value!.destroy();
@@ -131,7 +131,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   ncv = Visual.fromRgbPacked(randrgb, geom.celldimy, geom.celldimx * 3, geom.celldimx, 0xff);
   leftMargin += scalepni.dimx() + 1;
 
-  final inflatep = std.create(y: 3, x: leftMargin, rows: rows, cols: cols);
+  final inflatep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   if (inflatep == null) {
     stderr.writeln('can not create resized plane 2');
     blitScale.value!.destroy();

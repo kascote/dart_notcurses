@@ -143,7 +143,7 @@ Plot? setupPlotPlane(Plane stdPlane) {
   const plotWidth = 56;
   final dim = stdPlane.dimyx();
 
-  final pplane = stdPlane.create(
+  final pplane = stdPlane.create(PlaneOptions(
     y: dim.y - plotHeight - 1,
     x: NcAlignE.center,
     rows: plotHeight,
@@ -152,7 +152,7 @@ Plot? setupPlotPlane(Plane stdPlane) {
     flags: NcPlaneOptionFlags.horaligned,
     marginB: 0,
     marginR: 0,
-  );
+  ));
 
   if (pplane == null) {
     stderr.writeln('error creating plane');

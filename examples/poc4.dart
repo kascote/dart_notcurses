@@ -19,14 +19,14 @@ void main() {
   final p = nc.stdplane();
 
   try {
-    final pInput = p.create(
+    final pInput = p.create(PlaneOptions(
       y: 10,
       x: 10,
       rows: 1,
       cols: 30,
       name: 'input1',
       flags: NcPlaneOptionFlags.fixed,
-    );
+    ));
     if (pInput == null) {
       stderr.writeln('error creating input plane');
     }
