@@ -423,7 +423,7 @@ class Direct {
     final rc = nc.ncdirect_render_frame(_ptr, fname, blitter, scale, maxy, maxx);
     allocator.free(fname);
     if (rc == ffi.nullptr) return null;
-    return Plane(rc);
+    return Plane.fromPtr(rc);
   }
 
   /// Takes the result of ncdirect_render_frame() and writes it to the output,
@@ -460,7 +460,7 @@ class Direct {
     final pp = nc.ncdirectf_render(_ptr, frame.ptr, optr);
     allocator.free(optr);
     if (pp == ffi.nullptr) return null;
-    return Plane(pp);
+    return Plane.fromPtr(pp);
   }
 
   /// Having loaded the frame 'frame', get the geometry of a potential render.

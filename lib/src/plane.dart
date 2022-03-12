@@ -35,25 +35,34 @@ typedef PlaneResizerCB = ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.P
 typedef PlaneUserPointer = ffi.Pointer<ffi.Void>;
 
 class PlaneOptions {
-    /// vertical placement relative to parent plane
+  /// vertical placement relative to parent plane
   int y;
-    /// horizontal placement relative to parent plane
+
+  /// horizontal placement relative to parent plane
   int x;
-    /// rows, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+
+  /// rows, must be >0 unless NCPLANE_OPTION_MARGINALIZED
   int rows;
-    /// columns, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+
+  /// columns, must be >0 unless NCPLANE_OPTION_MARGINALIZED
   int cols;
-    /// user curry, may be NULL
+
+  /// user curry, may be NULL
   PlaneUserPointer? userptr;
-    /// name (used only for debugging), may be NULL
+
+  /// name (used only for debugging), may be NULL
   String name;
-    /// callback when parent is resized
+
+  /// callback when parent is resized
   PlaneResizerCB? resizerCB;
-    /// closure over NCPLANE_OPTION_*
+
+  /// closure over NCPLANE_OPTION_*
   int flags;
-    /// margins (require NCPLANE_OPTION_MARGINALIZED)
+
+  /// margins (require NCPLANE_OPTION_MARGINALIZED)
   int marginB;
-    /// margins (require NCPLANE_OPTION_MARGINALIZED)
+
+  /// margins (require NCPLANE_OPTION_MARGINALIZED)
   int marginR;
 
   PlaneOptions({
@@ -67,13 +76,29 @@ class PlaneOptions {
     this.marginR = 0,
   });
 
+  ffi.Pointer<ncplane_options> toPtr([ffi.Allocator alloc = allocator]) {
+    final optr = alloc<ncplane_options>();
+    optr.ref
+      ..y = y
+      ..x = x
+      ..rows = rows
+      ..cols = cols
+      ..name = name.toNativeUtf8(allocator: alloc).cast()
+      ..flags = flags
+      ..margin_b = marginB
+      ..margin_r = marginR;
+    return optr;
+  }
 }
 
 class Plane {
   final ffi.Pointer<ncplane> _ptr;
 
-  // TODO: normalize pointer handling between different clases
-  Plane(this._ptr);
+  Plane._(this._ptr);
+
+  factory Plane.fromPtr(ffi.Pointer<ncplane> planePtr) {
+    return Plane._(planePtr);
+  }
 
   /// Create a new ncplane bound to plane 'n', at the offset 'y'x'x' (relative to
   /// the origin of 'n') and the specified size. The number of 'rows' and 'cols'
@@ -81,25 +106,14 @@ class Plane {
   /// as if ncplane_move_top() had been called on it. The void* 'userptr' can be
   /// retrieved (and reset) later. A 'name' can be set, used in debugging.
   Plane? create(PlaneOptions opts) {
-    final optsPtr = allocator<ncplane_options>();
-    final ref = optsPtr.ref;
-    ref.y = opts.y;
-    ref.x = opts.x;
-    ref.rows = opts.rows;
-    ref.cols = opts.cols;
-    ref.name = opts.name.toNativeUtf8().cast<ffi.Int8>();
-    ref.flags = opts.flags;
-    ref.margin_b = opts.marginB;
-    ref.margin_r = opts.marginR;
-
-    final p = Plane(nc.ncplane_create(_ptr, optsPtr));
-    allocator.free(ref.name);
-    allocator.free(optsPtr);
-
-    if (p._ptr == ffi.nullptr) {
-      return null;
-    }
-    return p;
+    return using<Plane?>((Arena alloc) {
+      final popts = opts.toPtr(alloc);
+      final p = Plane._(nc.ncplane_create(_ptr, popts));
+      if (p._ptr == ffi.nullptr) {
+        return null;
+      }
+      return p;
+    });
   }
 
   /// Returns a pointer to NcPlane to be used by the NotCurses API
@@ -601,13 +615,13 @@ class Plane {
   /// Return the plane above this one, or NULL if this is at the top.
   Plane? above() {
     final rc = nc.ncplane_above(_ptr);
-    return rc == ffi.nullptr ? null : Plane(rc);
+    return rc == ffi.nullptr ? null : Plane._(rc);
   }
 
   // Return the plane below this one, or NULL if this is at the bottom.
   Plane? below() {
     final rc = nc.ncplane_below(_ptr);
-    return rc == ffi.nullptr ? null : Plane(rc);
+    return rc == ffi.nullptr ? null : Plane._(rc);
   }
 
   /// Splice ncplane 'n' out of the z-buffer, and reinsert it below 'below'.
@@ -739,14 +753,14 @@ class Plane {
   Plane? reparent(Plane newparent) {
     final newp = nc.ncplane_reparent(_ptr, newparent.ptr);
     if (newp == ffi.nullptr) return null;
-    return Plane(newp);
+    return Plane._(newp);
   }
 
   /// Move a Plane and to a another one. The new parent can not be a child of the current plane.
   Plane? reparentFamily(Plane newparent) {
     final newp = nc.ncplane_reparent_family(_ptr, newparent.ptr);
     if (newp == ffi.nullptr) return null;
-    return Plane(newp);
+    return Plane._(newp);
   }
 
   /// Return true iff 'n' is a proper descendent of 'ancestor'.
@@ -804,14 +818,14 @@ class Plane {
   Plane dup(Plane plane) {
     // TODO: figure how send the 'opaque' param that is a Void* to let the user
     // store some information on the pane
-    return Plane(nc.ncplane_dup(plane.ptr, ffi.nullptr));
+    return Plane._(nc.ncplane_dup(plane.ptr, ffi.nullptr));
   }
 
   /// Get the plane to which the plane 'n' is bound, if any.
   Plane? parent() {
     final p = nc.ncplane_parent(_ptr);
     if (p == ffi.nullptr) return null;
-    return Plane(p);
+    return Plane._(p);
   }
 
   /// Set the ncplane's base nccell to 'c'. The base cell is used for purposes of

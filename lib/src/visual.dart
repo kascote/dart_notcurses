@@ -325,7 +325,7 @@ class Visual {
     allocator.free(optsPtr);
     if (planePtr == ffi.nullptr) return NcResult(false, null);
 
-    final p = Plane(planePtr);
+    final p = Plane.fromPtr(planePtr);
     return NcResult(true, p);
   }
 
@@ -396,8 +396,12 @@ class Visual {
   /// or the root of a new pile if 'vopts->n' is NULL (or 'vopts' itself is NULL).
   /// Blit 'ncv' to the created plane according to 'vopts'. If 'vopts->n' is
   /// non-NULL, NCVISUAL_OPTION_CHILDPLANE must be supplied.
-  /* Plane planeCreate(NotCurses notc, PlaneOptions opts, VisualOptions vopts) {
-    final pvopt = vopts.toPtr();
-    return ncInline.ncvisualplane_create(notc.ptr, opts, _ptr, pvopt);
-  } */
+  Plane planeCreate(NotCurses notc, PlaneOptions opts, VisualOptions vopts) {
+    return using<Plane>((Arena alloc) {
+      final vptr = vopts.toPtr(alloc);
+      final pptr = opts.toPtr(alloc);
+      final p = Plane.fromPtr(ncInline.ncvisualplane_create(notc.ptr, pptr, _ptr, vptr));
+      return p;
+    });
+  }
 }

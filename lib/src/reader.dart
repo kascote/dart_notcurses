@@ -52,7 +52,7 @@ class Reader {
   }
 
   Plane readerPlane() {
-    return Plane(nc.ncreader_plane(_ptr));
+    return Plane.fromPtr(nc.ncreader_plane(_ptr));
   }
 
   /// Atttempt to move in the specified direction. Returns 0 if a move was

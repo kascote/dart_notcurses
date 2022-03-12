@@ -82,7 +82,7 @@ class Plot {
 
   /// Returns the plane for this plot
   Plane plane() {
-    return Plane(nc.ncuplot_plane(_ptr));
+    return Plane.fromPtr(nc.ncuplot_plane(_ptr));
   }
 
   /// Add the value corresponding to this x. If x is beyond the current

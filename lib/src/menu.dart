@@ -205,7 +205,7 @@ class Menu {
 
   /// Return the ncplane backing this ncmenu.
   Plane plane() {
-    return Plane(nc.ncmenu_plane(_ptr));
+    return Plane.fromPtr(nc.ncmenu_plane(_ptr));
   }
 
   /// Offer the input to the ncmenu. If it's relevant, this function returns true,

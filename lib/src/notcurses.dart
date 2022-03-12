@@ -129,7 +129,7 @@ class NotCurses {
   /// terminal size) for this terminal. The standard plane always exists, and its
   /// origin is always at the uppermost, leftmost cell of the terminal.
   Plane stdplane() {
-    return Plane(nc.notcurses_stdplane(_ptr));
+    return Plane.fromPtr(nc.notcurses_stdplane(_ptr));
   }
 
   /// Enable or disable the terminal's cursor, if supported, placing it at
