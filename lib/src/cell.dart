@@ -8,7 +8,6 @@ import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './plane.dart';
 
-
 class CellData {
   final String egc;
   final int stylemask;

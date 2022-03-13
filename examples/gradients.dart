@@ -31,13 +31,13 @@ bool gradientA(NotCurses nc) {
   final ll = Channels.initializer(0xff, 0, 0, 0, 0xff, 0xff);
   final lr = Channels.initializer(0xff, 0xff, 0xff, 0, 0, 0);
 
-  if (p.gradient(0, 0, 0, 0, 'A', NcStyle.none,ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, 'A', NcStyle.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
   if (!nc.render()) return false;
 
-  sleep(Duration(seconds:1));
+  sleep(Duration(seconds: 1));
 
   return true;
 }
@@ -49,25 +49,23 @@ bool gradStriations(NotCurses nc) {
   final ll = Channels.initializer(0xff, 0, 0, 0, 0xff, 0xff);
   final lr = Channels.initializer(0xff, 0xff, 0xff, 0, 0, 0);
 
-  if (p.gradient(0, 0, 0, 0, '▄', NcStyle.none,ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, '▄', NcStyle.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
-  if(!nc.render()) {
+  if (!nc.render()) {
     return false;
   }
-  sleep(Duration(seconds:1));
+  sleep(Duration(seconds: 1));
 
-
-  if (p.gradient(0, 0, 0, 0, '▀', NcStyle.none,ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, '▀', NcStyle.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
-
-  if(!nc.render()) {
+  if (!nc.render()) {
     return false;
   }
-  sleep(Duration(seconds:1));
+  sleep(Duration(seconds: 1));
 
   return true;
 }

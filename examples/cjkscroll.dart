@@ -27,7 +27,7 @@ int main() {
       break;
     }
 
-    if(++wc == 0x9fa5){
+    if (++wc == 0x9fa5) {
       wc = 0x4e00;
     }
 

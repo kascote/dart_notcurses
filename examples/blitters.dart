@@ -68,7 +68,7 @@ int blts(NotCurses notc, List<String> args) {
           flags: NcVisualOptFlags.childplane,
         );
 
-        stderr.writeln('--- blit $blitter $scaling ${i+1}');
+        stderr.writeln('--- blit $blitter $scaling ${i + 1}');
         final cn = ncv.blit(notc, vopts);
         if (cn == null) {
           ncv.destroy();

@@ -32,7 +32,6 @@ int main() {
   return 0;
 }
 
-
 String keyView(Key key) {
   final keys = StringBuffer();
   keys.write(key.hasShift() ? 'S' : 's');

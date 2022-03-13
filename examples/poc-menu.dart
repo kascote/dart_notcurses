@@ -122,7 +122,7 @@ Menu topMenu() {
       shortcutModifier: NcKeyMod.ctrl);
 
   final secChan = Channels.zero()
-    ..setFgRGB(0xff0000)  // #ffccaa
+    ..setFgRGB(0xff0000) // #ffccaa
     ..setBgRGB(0x7f347f) // #7f347f
     ..setFgAlpha(NcAlpha.highcontrast)
     ..setBgAlpha(NcAlpha.blend);

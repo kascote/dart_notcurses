@@ -11,4 +11,3 @@ const allocator = calloc;
 // borrow from sqlite3.dart
 @pragma('vm:prefer-inline')
 Pointer<T> nullPtr<T extends NativeType>() => nullptr.cast<T>();
-

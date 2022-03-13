@@ -12,27 +12,20 @@ import 'dart:ffi' as ffi;
 /// Notcurses binding for Dart
 class NcFfi {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
   NcFfi(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  NcFfi.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
-      : _lookup = lookup;
+  NcFfi.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup) : _lookup = lookup;
 
   ffi.Pointer<ffi.Int8> notcurses_version() {
     return _notcurses_version();
   }
 
-  late final _notcurses_versionPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>(
-          'notcurses_version');
-  late final _notcurses_version =
-      _notcurses_versionPtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
+  late final _notcurses_versionPtr = _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>('notcurses_version');
+  late final _notcurses_version = _notcurses_versionPtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
 
   void notcurses_version_components(
     ffi.Pointer<ffi.Int32> major,
@@ -50,15 +43,10 @@ class NcFfi {
 
   late final _notcurses_version_componentsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>,
+          ffi.Void Function(ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>,
               ffi.Pointer<ffi.Int32>)>>('notcurses_version_components');
-  late final _notcurses_version_components =
-      _notcurses_version_componentsPtr.asFunction<
-          void Function(ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
+  late final _notcurses_version_components = _notcurses_version_componentsPtr.asFunction<
+      void Function(ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int ncstrwidth(
     ffi.Pointer<ffi.Int8> egcs,
@@ -74,11 +62,9 @@ class NcFfi {
 
   late final _ncstrwidthPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('ncstrwidth');
-  late final _ncstrwidth = _ncstrwidthPtr.asFunction<
-      int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>('ncstrwidth');
+  late final _ncstrwidth =
+      _ncstrwidthPtr.asFunction<int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int notcurses_ucs32_to_utf8(
     ffi.Pointer<ffi.Uint32> ucs32,
@@ -95,12 +81,10 @@ class NcFfi {
   }
 
   late final _notcurses_ucs32_to_utf8Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Uint32>, ffi.Uint32,
-              ffi.Pointer<ffi.Uint8>, size_t)>>('notcurses_ucs32_to_utf8');
-  late final _notcurses_ucs32_to_utf8 = _notcurses_ucs32_to_utf8Ptr.asFunction<
-      int Function(
-          ffi.Pointer<ffi.Uint32>, int, ffi.Pointer<ffi.Uint8>, int)>();
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Uint32>, ffi.Uint32, ffi.Pointer<ffi.Uint8>, size_t)>>(
+      'notcurses_ucs32_to_utf8');
+  late final _notcurses_ucs32_to_utf8 =
+      _notcurses_ucs32_to_utf8Ptr.asFunction<int Function(ffi.Pointer<ffi.Uint32>, int, ffi.Pointer<ffi.Uint8>, int)>();
 
   int nccell_load(
     ffi.Pointer<ncplane> n,
@@ -114,13 +98,11 @@ class NcFfi {
     );
   }
 
-  late final _nccell_loadPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>,
-              ffi.Pointer<ffi.Int8>)>>('nccell_load');
-  late final _nccell_load = _nccell_loadPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<ffi.Int8>)>();
+  late final _nccell_loadPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<ffi.Int8>)>>(
+          'nccell_load');
+  late final _nccell_load =
+      _nccell_loadPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<ffi.Int8>)>();
 
   int nccell_duplicate(
     ffi.Pointer<ncplane> n,
@@ -134,13 +116,11 @@ class NcFfi {
     );
   }
 
-  late final _nccell_duplicatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>,
-              ffi.Pointer<nccell>)>>('nccell_duplicate');
-  late final _nccell_duplicate = _nccell_duplicatePtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<nccell>)>();
+  late final _nccell_duplicatePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<nccell>)>>(
+          'nccell_duplicate');
+  late final _nccell_duplicate =
+      _nccell_duplicatePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<nccell>)>();
 
   void nccell_release(
     ffi.Pointer<ncplane> n,
@@ -152,12 +132,10 @@ class NcFfi {
     );
   }
 
-  late final _nccell_releasePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>('nccell_release');
-  late final _nccell_release = _nccell_releasePtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
+  late final _nccell_releasePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>('nccell_release');
+  late final _nccell_release =
+      _nccell_releasePtr.asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
 
   ffi.Pointer<ffi.Int8> nccell_extended_gcluster(
     ffi.Pointer<ncplane> n,
@@ -169,14 +147,11 @@ class NcFfi {
     );
   }
 
-  late final _nccell_extended_gclusterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<nccell>)>>('nccell_extended_gcluster');
-  late final _nccell_extended_gcluster =
-      _nccell_extended_gclusterPtr.asFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
+  late final _nccell_extended_gclusterPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>(
+          'nccell_extended_gcluster');
+  late final _nccell_extended_gcluster = _nccell_extended_gclusterPtr
+      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
 
   int notcurses_lex_margins(
     ffi.Pointer<ffi.Int8> op,
@@ -188,12 +163,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_lex_marginsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<notcurses_options>)>>('notcurses_lex_margins');
-  late final _notcurses_lex_margins = _notcurses_lex_marginsPtr.asFunction<
-      int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<notcurses_options>)>();
+  late final _notcurses_lex_marginsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<notcurses_options>)>>(
+          'notcurses_lex_margins');
+  late final _notcurses_lex_margins =
+      _notcurses_lex_marginsPtr.asFunction<int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<notcurses_options>)>();
 
   int notcurses_lex_blitter(
     ffi.Pointer<ffi.Int8> op,
@@ -205,12 +179,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_lex_blitterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Int32>)>>('notcurses_lex_blitter');
-  late final _notcurses_lex_blitter = _notcurses_lex_blitterPtr.asFunction<
-      int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>();
+  late final _notcurses_lex_blitterPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>>(
+          'notcurses_lex_blitter');
+  late final _notcurses_lex_blitter =
+      _notcurses_lex_blitterPtr.asFunction<int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>();
 
   ffi.Pointer<ffi.Int8> notcurses_str_blitter(
     int blitter,
@@ -221,10 +194,8 @@ class NcFfi {
   }
 
   late final _notcurses_str_blitterPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>(
-          'notcurses_str_blitter');
-  late final _notcurses_str_blitter = _notcurses_str_blitterPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(int)>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>('notcurses_str_blitter');
+  late final _notcurses_str_blitter = _notcurses_str_blitterPtr.asFunction<ffi.Pointer<ffi.Int8> Function(int)>();
 
   int notcurses_lex_scalemode(
     ffi.Pointer<ffi.Int8> op,
@@ -236,12 +207,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_lex_scalemodePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Int32>)>>('notcurses_lex_scalemode');
-  late final _notcurses_lex_scalemode = _notcurses_lex_scalemodePtr.asFunction<
-      int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>();
+  late final _notcurses_lex_scalemodePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>>(
+          'notcurses_lex_scalemode');
+  late final _notcurses_lex_scalemode =
+      _notcurses_lex_scalemodePtr.asFunction<int Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>();
 
   ffi.Pointer<ffi.Int8> notcurses_str_scalemode(
     int scalemode,
@@ -252,10 +222,8 @@ class NcFfi {
   }
 
   late final _notcurses_str_scalemodePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>(
-          'notcurses_str_scalemode');
-  late final _notcurses_str_scalemode = _notcurses_str_scalemodePtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(int)>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Int32)>>('notcurses_str_scalemode');
+  late final _notcurses_str_scalemode = _notcurses_str_scalemodePtr.asFunction<ffi.Pointer<ffi.Int8> Function(int)>();
 
   ffi.Pointer<notcurses> notcurses_init(
     ffi.Pointer<notcurses_options> opts,
@@ -267,13 +235,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_initPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>,
-              ffi.Pointer<FILE>)>>('notcurses_init');
-  late final _notcurses_init = _notcurses_initPtr.asFunction<
-      ffi.Pointer<notcurses> Function(
-          ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>();
+  late final _notcurses_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>>(
+          'notcurses_init');
+  late final _notcurses_init = _notcurses_initPtr
+      .asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>();
 
   ffi.Pointer<notcurses> notcurses_core_init(
     ffi.Pointer<notcurses_options> opts,
@@ -285,13 +251,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_core_initPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>,
-              ffi.Pointer<FILE>)>>('notcurses_core_init');
-  late final _notcurses_core_init = _notcurses_core_initPtr.asFunction<
-      ffi.Pointer<notcurses> Function(
-          ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>();
+  late final _notcurses_core_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>>(
+          'notcurses_core_init');
+  late final _notcurses_core_init = _notcurses_core_initPtr
+      .asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<notcurses_options>, ffi.Pointer<FILE>)>();
 
   int notcurses_stop(
     ffi.Pointer<notcurses> nc,
@@ -302,10 +266,8 @@ class NcFfi {
   }
 
   late final _notcurses_stopPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_stop');
-  late final _notcurses_stop =
-      _notcurses_stopPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_stop');
+  late final _notcurses_stop = _notcurses_stopPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_enter_alternate_screen(
     ffi.Pointer<notcurses> nc,
@@ -316,11 +278,9 @@ class NcFfi {
   }
 
   late final _notcurses_enter_alternate_screenPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_enter_alternate_screen');
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_enter_alternate_screen');
   late final _notcurses_enter_alternate_screen =
-      _notcurses_enter_alternate_screenPtr
-          .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _notcurses_enter_alternate_screenPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_leave_alternate_screen(
     ffi.Pointer<notcurses> nc,
@@ -331,11 +291,9 @@ class NcFfi {
   }
 
   late final _notcurses_leave_alternate_screenPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_leave_alternate_screen');
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_leave_alternate_screen');
   late final _notcurses_leave_alternate_screen =
-      _notcurses_leave_alternate_screenPtr
-          .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _notcurses_leave_alternate_screenPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<ncplane> notcurses_stdplane(
     ffi.Pointer<notcurses> nc,
@@ -345,12 +303,10 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_stdplanePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<notcurses>)>>('notcurses_stdplane');
-  late final _notcurses_stdplane = _notcurses_stdplanePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>();
+  late final _notcurses_stdplanePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>>('notcurses_stdplane');
+  late final _notcurses_stdplane =
+      _notcurses_stdplanePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<ncplane> notcurses_stdplane_const(
     ffi.Pointer<notcurses> nc,
@@ -360,12 +316,10 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_stdplane_constPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<notcurses>)>>('notcurses_stdplane_const');
-  late final _notcurses_stdplane_const = _notcurses_stdplane_constPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>();
+  late final _notcurses_stdplane_constPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>>('notcurses_stdplane_const');
+  late final _notcurses_stdplane_const =
+      _notcurses_stdplane_constPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<ncplane> ncpile_top(
     ffi.Pointer<ncplane> n,
@@ -375,11 +329,9 @@ class NcFfi {
     );
   }
 
-  late final _ncpile_topPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncpile_top');
-  late final _ncpile_top = _ncpile_topPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncpile_topPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncpile_top');
+  late final _ncpile_top = _ncpile_topPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncpile_bottom(
     ffi.Pointer<ncplane> n,
@@ -389,12 +341,9 @@ class NcFfi {
     );
   }
 
-  late final _ncpile_bottomPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>)>>('ncpile_bottom');
-  late final _ncpile_bottom = _ncpile_bottomPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncpile_bottomPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncpile_bottom');
+  late final _ncpile_bottom = _ncpile_bottomPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   int ncpile_render(
     ffi.Pointer<ncplane> n,
@@ -404,11 +353,8 @@ class NcFfi {
     );
   }
 
-  late final _ncpile_renderPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncpile_render');
-  late final _ncpile_render =
-      _ncpile_renderPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+  late final _ncpile_renderPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncpile_render');
+  late final _ncpile_render = _ncpile_renderPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncpile_rasterize(
     ffi.Pointer<ncplane> n,
@@ -419,10 +365,8 @@ class NcFfi {
   }
 
   late final _ncpile_rasterizePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncpile_rasterize');
-  late final _ncpile_rasterize =
-      _ncpile_rasterizePtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncpile_rasterize');
+  late final _ncpile_rasterize = _ncpile_rasterizePtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncpile_render_to_buffer(
     ffi.Pointer<ncplane> p,
@@ -438,13 +382,10 @@ class NcFfi {
 
   late final _ncpile_render_to_bufferPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Pointer<ffi.Int8>>,
               ffi.Pointer<size_t>)>>('ncpile_render_to_buffer');
-  late final _ncpile_render_to_buffer = _ncpile_render_to_bufferPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Pointer<ffi.Int8>>,
-          ffi.Pointer<size_t>)>();
+  late final _ncpile_render_to_buffer = _ncpile_render_to_bufferPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Pointer<ffi.Int8>>, ffi.Pointer<size_t>)>();
 
   int ncpile_render_to_file(
     ffi.Pointer<ncplane> p,
@@ -456,12 +397,10 @@ class NcFfi {
     );
   }
 
-  late final _ncpile_render_to_filePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<FILE>)>>('ncpile_render_to_file');
-  late final _ncpile_render_to_file = _ncpile_render_to_filePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<FILE>)>();
+  late final _ncpile_render_to_filePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<FILE>)>>('ncpile_render_to_file');
+  late final _ncpile_render_to_file =
+      _ncpile_render_to_filePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<FILE>)>();
 
   void notcurses_drop_planes(
     ffi.Pointer<notcurses> nc,
@@ -472,10 +411,8 @@ class NcFfi {
   }
 
   late final _notcurses_drop_planesPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_drop_planes');
-  late final _notcurses_drop_planes = _notcurses_drop_planesPtr
-      .asFunction<void Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<notcurses>)>>('notcurses_drop_planes');
+  late final _notcurses_drop_planes = _notcurses_drop_planesPtr.asFunction<void Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_get(
     ffi.Pointer<notcurses> n,
@@ -490,12 +427,10 @@ class NcFfi {
   }
 
   late final _notcurses_getPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint32 Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>,
-              ffi.Pointer<ncinput>)>>('notcurses_get');
-  late final _notcurses_get = _notcurses_getPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>,
-          ffi.Pointer<ncinput>)>();
+          ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>)>>(
+      'notcurses_get');
+  late final _notcurses_get =
+      _notcurses_getPtr.asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>)>();
 
   int notcurses_getvec(
     ffi.Pointer<notcurses> n,
@@ -513,11 +448,10 @@ class NcFfi {
 
   late final _notcurses_getvecPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>,
-              ffi.Pointer<ncinput>, ffi.Int32)>>('notcurses_getvec');
-  late final _notcurses_getvec = _notcurses_getvecPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>,
-          ffi.Pointer<ncinput>, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<notcurses>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>, ffi.Int32)>>('notcurses_getvec');
+  late final _notcurses_getvec = _notcurses_getvecPtr
+      .asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>, int)>();
 
   int notcurses_inputready_fd(
     ffi.Pointer<notcurses> n,
@@ -528,10 +462,8 @@ class NcFfi {
   }
 
   late final _notcurses_inputready_fdPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_inputready_fd');
-  late final _notcurses_inputready_fd = _notcurses_inputready_fdPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_inputready_fd');
+  late final _notcurses_inputready_fd = _notcurses_inputready_fdPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_mice_enable(
     ffi.Pointer<notcurses> n,
@@ -543,12 +475,9 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_mice_enablePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<notcurses>, ffi.Uint32)>>('notcurses_mice_enable');
-  late final _notcurses_mice_enable = _notcurses_mice_enablePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>, int)>();
+  late final _notcurses_mice_enablePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Uint32)>>('notcurses_mice_enable');
+  late final _notcurses_mice_enable = _notcurses_mice_enablePtr.asFunction<int Function(ffi.Pointer<notcurses>, int)>();
 
   int notcurses_linesigs_disable(
     ffi.Pointer<notcurses> n,
@@ -559,10 +488,9 @@ class NcFfi {
   }
 
   late final _notcurses_linesigs_disablePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_linesigs_disable');
-  late final _notcurses_linesigs_disable = _notcurses_linesigs_disablePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_linesigs_disable');
+  late final _notcurses_linesigs_disable =
+      _notcurses_linesigs_disablePtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_linesigs_enable(
     ffi.Pointer<notcurses> n,
@@ -573,10 +501,9 @@ class NcFfi {
   }
 
   late final _notcurses_linesigs_enablePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_linesigs_enable');
-  late final _notcurses_linesigs_enable = _notcurses_linesigs_enablePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_linesigs_enable');
+  late final _notcurses_linesigs_enable =
+      _notcurses_linesigs_enablePtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_refresh(
     ffi.Pointer<notcurses> n,
@@ -592,11 +519,10 @@ class NcFfi {
 
   late final _notcurses_refreshPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('notcurses_refresh');
-  late final _notcurses_refresh = _notcurses_refreshPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>('notcurses_refresh');
+  late final _notcurses_refresh = _notcurses_refreshPtr
+      .asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   ffi.Pointer<notcurses> ncplane_notcurses(
     ffi.Pointer<ncplane> n,
@@ -606,12 +532,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_notcursesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<notcurses> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_notcurses');
-  late final _ncplane_notcurses = _ncplane_notcursesPtr
-      .asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_notcursesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>>('ncplane_notcurses');
+  late final _ncplane_notcurses =
+      _ncplane_notcursesPtr.asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<notcurses> ncplane_notcurses_const(
     ffi.Pointer<ncplane> n,
@@ -621,12 +545,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_notcurses_constPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<notcurses> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_notcurses_const');
-  late final _ncplane_notcurses_const = _ncplane_notcurses_constPtr
-      .asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_notcurses_constPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>>('ncplane_notcurses_const');
+  late final _ncplane_notcurses_const =
+      _ncplane_notcurses_constPtr.asFunction<ffi.Pointer<notcurses> Function(ffi.Pointer<ncplane>)>();
 
   void ncplane_dim_yx(
     ffi.Pointer<ncplane> n,
@@ -642,11 +564,9 @@ class NcFfi {
 
   late final _ncplane_dim_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('ncplane_dim_yx');
-  late final _ncplane_dim_yx = _ncplane_dim_yxPtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>)>();
+          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>('ncplane_dim_yx');
+  late final _ncplane_dim_yx = _ncplane_dim_yxPtr
+      .asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   void ncplane_pixel_geom(
     ffi.Pointer<ncplane> n,
@@ -679,14 +599,8 @@ class NcFfi {
               ffi.Pointer<ffi.Uint32>,
               ffi.Pointer<ffi.Uint32>)>>('ncplane_pixel_geom');
   late final _ncplane_pixel_geom = _ncplane_pixel_geomPtr.asFunction<
-      void Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>)>();
+      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>,
+          ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   ffi.Pointer<ffi.Int8> notcurses_at_yx(
     ffi.Pointer<notcurses> nc,
@@ -706,15 +620,11 @@ class NcFfi {
 
   late final _notcurses_at_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<notcurses>,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Pointer<ffi.Uint16>,
+          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<notcurses>, ffi.Uint32, ffi.Uint32, ffi.Pointer<ffi.Uint16>,
               ffi.Pointer<ffi.Uint64>)>>('notcurses_at_yx');
   late final _notcurses_at_yx = _notcurses_at_yxPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<notcurses>, int, int,
-          ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<notcurses>, int, int, ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
 
   ffi.Pointer<ncplane> ncplane_create(
     ffi.Pointer<ncplane> n,
@@ -726,13 +636,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane_options>)>>('ncplane_create');
-  late final _ncplane_create = _ncplane_createPtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncplane_options>)>();
+  late final _ncplane_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane_options>)>>(
+          'ncplane_create');
+  late final _ncplane_create = _ncplane_createPtr
+      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane_options>)>();
 
   ffi.Pointer<ncplane> ncpile_create(
     ffi.Pointer<notcurses> nc,
@@ -744,13 +652,11 @@ class NcFfi {
     );
   }
 
-  late final _ncpile_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ncplane_options>)>>('ncpile_create');
-  late final _ncpile_create = _ncpile_createPtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<notcurses>, ffi.Pointer<ncplane_options>)>();
+  late final _ncpile_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>, ffi.Pointer<ncplane_options>)>>(
+          'ncpile_create');
+  late final _ncpile_create = _ncpile_createPtr
+      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>, ffi.Pointer<ncplane_options>)>();
 
   int ncplane_resize_maximize(
     ffi.Pointer<ncplane> n,
@@ -761,10 +667,8 @@ class NcFfi {
   }
 
   late final _ncplane_resize_maximizePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_resize_maximize');
-  late final _ncplane_resize_maximize = _ncplane_resize_maximizePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_resize_maximize');
+  late final _ncplane_resize_maximize = _ncplane_resize_maximizePtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_resize_marginalized(
     ffi.Pointer<ncplane> n,
@@ -775,10 +679,9 @@ class NcFfi {
   }
 
   late final _ncplane_resize_marginalizedPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_resize_marginalized');
-  late final _ncplane_resize_marginalized = _ncplane_resize_marginalizedPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_resize_marginalized');
+  late final _ncplane_resize_marginalized =
+      _ncplane_resize_marginalizedPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_resize_realign(
     ffi.Pointer<ncplane> n,
@@ -789,10 +692,8 @@ class NcFfi {
   }
 
   late final _ncplane_resize_realignPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_resize_realign');
-  late final _ncplane_resize_realign = _ncplane_resize_realignPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_resize_realign');
+  late final _ncplane_resize_realign = _ncplane_resize_realignPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_resize_placewithin(
     ffi.Pointer<ncplane> n,
@@ -803,15 +704,13 @@ class NcFfi {
   }
 
   late final _ncplane_resize_placewithinPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_resize_placewithin');
-  late final _ncplane_resize_placewithin = _ncplane_resize_placewithinPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_resize_placewithin');
+  late final _ncplane_resize_placewithin =
+      _ncplane_resize_placewithinPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   void ncplane_set_resizecb(
     ffi.Pointer<ncplane> n,
-    ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>
-        resizecb,
+    ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>> resizecb,
   ) {
     return _ncplane_set_resizecb(
       n,
@@ -821,20 +720,12 @@ class NcFfi {
 
   late final _ncplane_set_resizecbPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<
-                  ffi.NativeFunction<
-                      ffi.Int32 Function(
-                          ffi.Pointer<ncplane>)>>)>>('ncplane_set_resizecb');
+          ffi.Void Function(ffi.Pointer<ncplane>,
+              ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>)>>('ncplane_set_resizecb');
   late final _ncplane_set_resizecb = _ncplane_set_resizecbPtr.asFunction<
-      void Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<
-              ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>)>();
+      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>)>();
 
-  ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>
-      ncplane_resizecb(
+  ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>> ncplane_resizecb(
     ffi.Pointer<ncplane> n,
   ) {
     return _ncplane_resizecb(
@@ -844,12 +735,10 @@ class NcFfi {
 
   late final _ncplane_resizecbPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<
-                  ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>
-              Function(ffi.Pointer<ncplane>)>>('ncplane_resizecb');
+          ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>> Function(
+              ffi.Pointer<ncplane>)>>('ncplane_resizecb');
   late final _ncplane_resizecb = _ncplane_resizecbPtr.asFunction<
-      ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>
-          Function(ffi.Pointer<ncplane>)>();
+      ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>> Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_set_name(
     ffi.Pointer<ncplane> n,
@@ -861,12 +750,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_namePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Int8>)>>('ncplane_set_name');
-  late final _ncplane_set_name = _ncplane_set_namePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>)>();
+  late final _ncplane_set_namePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>)>>('ncplane_set_name');
+  late final _ncplane_set_name =
+      _ncplane_set_namePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ffi.Int8> ncplane_name(
     ffi.Pointer<ncplane> n,
@@ -876,12 +763,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_namePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_name');
-  late final _ncplane_name = _ncplane_namePtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_namePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>)>>('ncplane_name');
+  late final _ncplane_name = _ncplane_namePtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_reparent(
     ffi.Pointer<ncplane> n,
@@ -893,13 +777,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_reparentPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>('ncplane_reparent');
-  late final _ncplane_reparent = _ncplane_reparentPtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_reparentPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_reparent');
+  late final _ncplane_reparent =
+      _ncplane_reparentPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_reparent_family(
     ffi.Pointer<ncplane> n,
@@ -911,13 +793,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_reparent_familyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_reparent_family');
-  late final _ncplane_reparent_family = _ncplane_reparent_familyPtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_reparent_familyPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_reparent_family');
+  late final _ncplane_reparent_family = _ncplane_reparent_familyPtr
+      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_dup(
     ffi.Pointer<ncplane> n,
@@ -929,13 +809,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_dupPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>>('ncplane_dup');
-  late final _ncplane_dup = _ncplane_dupPtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>();
+  late final _ncplane_dupPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>>(
+          'ncplane_dup');
+  late final _ncplane_dup =
+      _ncplane_dupPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>();
 
   void ncplane_translate(
     ffi.Pointer<ncplane> src,
@@ -953,14 +831,10 @@ class NcFfi {
 
   late final _ncplane_translatePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Int32>,
+          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
               ffi.Pointer<ffi.Int32>)>>('ncplane_translate');
   late final _ncplane_translate = _ncplane_translatePtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>,
-          ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
+      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int ncplane_translate_abs(
     ffi.Pointer<ncplane> n,
@@ -975,12 +849,10 @@ class NcFfi {
   }
 
   late final _ncplane_translate_absPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('ncplane_translate_abs');
-  late final _ncplane_translate_abs = _ncplane_translate_absPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>(
+      'ncplane_translate_abs');
+  late final _ncplane_translate_abs = _ncplane_translate_absPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int ncplane_set_scrolling(
     ffi.Pointer<ncplane> n,
@@ -992,12 +864,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_scrollingPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_scrolling');
-  late final _ncplane_set_scrolling = _ncplane_set_scrollingPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_scrollingPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_scrolling');
+  late final _ncplane_set_scrolling = _ncplane_set_scrollingPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_scrolling_p(
     ffi.Pointer<ncplane> n,
@@ -1008,10 +877,8 @@ class NcFfi {
   }
 
   late final _ncplane_scrolling_pPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_scrolling_p');
-  late final _ncplane_scrolling_p =
-      _ncplane_scrolling_pPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>)>>('ncplane_scrolling_p');
+  late final _ncplane_scrolling_p = _ncplane_scrolling_pPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_set_autogrow(
     ffi.Pointer<ncplane> n,
@@ -1023,12 +890,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_autogrowPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_autogrow');
-  late final _ncplane_set_autogrow = _ncplane_set_autogrowPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_autogrowPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_autogrow');
+  late final _ncplane_set_autogrow = _ncplane_set_autogrowPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_autogrow_p(
     ffi.Pointer<ncplane> n,
@@ -1039,10 +903,8 @@ class NcFfi {
   }
 
   late final _ncplane_autogrow_pPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_autogrow_p');
-  late final _ncplane_autogrow_p =
-      _ncplane_autogrow_pPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncplane>)>>('ncplane_autogrow_p');
+  late final _ncplane_autogrow_p = _ncplane_autogrow_pPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncpalette> ncpalette_new(
     ffi.Pointer<notcurses> nc,
@@ -1052,12 +914,9 @@ class NcFfi {
     );
   }
 
-  late final _ncpalette_newPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncpalette> Function(
-              ffi.Pointer<notcurses>)>>('ncpalette_new');
-  late final _ncpalette_new = _ncpalette_newPtr
-      .asFunction<ffi.Pointer<ncpalette> Function(ffi.Pointer<notcurses>)>();
+  late final _ncpalette_newPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncpalette> Function(ffi.Pointer<notcurses>)>>('ncpalette_new');
+  late final _ncpalette_new = _ncpalette_newPtr.asFunction<ffi.Pointer<ncpalette> Function(ffi.Pointer<notcurses>)>();
 
   int ncpalette_use(
     ffi.Pointer<notcurses> nc,
@@ -1069,12 +928,10 @@ class NcFfi {
     );
   }
 
-  late final _ncpalette_usePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ncpalette>)>>('ncpalette_use');
-  late final _ncpalette_use = _ncpalette_usePtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncpalette>)>();
+  late final _ncpalette_usePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ncpalette>)>>('ncpalette_use');
+  late final _ncpalette_use =
+      _ncpalette_usePtr.asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncpalette>)>();
 
   void ncpalette_free(
     ffi.Pointer<ncpalette> p,
@@ -1085,10 +942,8 @@ class NcFfi {
   }
 
   late final _ncpalette_freePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncpalette>)>>(
-          'ncpalette_free');
-  late final _ncpalette_free =
-      _ncpalette_freePtr.asFunction<void Function(ffi.Pointer<ncpalette>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncpalette>)>>('ncpalette_free');
+  late final _ncpalette_free = _ncpalette_freePtr.asFunction<void Function(ffi.Pointer<ncpalette>)>();
 
   int notcurses_supported_styles(
     ffi.Pointer<notcurses> nc,
@@ -1099,10 +954,9 @@ class NcFfi {
   }
 
   late final _notcurses_supported_stylesPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_supported_styles');
-  late final _notcurses_supported_styles = _notcurses_supported_stylesPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<notcurses>)>>('notcurses_supported_styles');
+  late final _notcurses_supported_styles =
+      _notcurses_supported_stylesPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_palette_size(
     ffi.Pointer<notcurses> nc,
@@ -1113,10 +967,8 @@ class NcFfi {
   }
 
   late final _notcurses_palette_sizePtr =
-      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_palette_size');
-  late final _notcurses_palette_size = _notcurses_palette_sizePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<notcurses>)>>('notcurses_palette_size');
+  late final _notcurses_palette_size = _notcurses_palette_sizePtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<ffi.Int8> notcurses_detected_terminal(
     ffi.Pointer<notcurses> nc,
@@ -1126,12 +978,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_detected_terminalPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<notcurses>)>>('notcurses_detected_terminal');
-  late final _notcurses_detected_terminal = _notcurses_detected_terminalPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<notcurses>)>();
+  late final _notcurses_detected_terminalPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<notcurses>)>>(
+          'notcurses_detected_terminal');
+  late final _notcurses_detected_terminal =
+      _notcurses_detected_terminalPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<nccapabilities> notcurses_capabilities(
     ffi.Pointer<notcurses> n,
@@ -1141,12 +992,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_capabilitiesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nccapabilities> Function(
-              ffi.Pointer<notcurses>)>>('notcurses_capabilities');
-  late final _notcurses_capabilities = _notcurses_capabilitiesPtr.asFunction<
-      ffi.Pointer<nccapabilities> Function(ffi.Pointer<notcurses>)>();
+  late final _notcurses_capabilitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nccapabilities> Function(ffi.Pointer<notcurses>)>>(
+          'notcurses_capabilities');
+  late final _notcurses_capabilities =
+      _notcurses_capabilitiesPtr.asFunction<ffi.Pointer<nccapabilities> Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_check_pixel_support(
     ffi.Pointer<notcurses> nc,
@@ -1157,10 +1007,9 @@ class NcFfi {
   }
 
   late final _notcurses_check_pixel_supportPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_check_pixel_support');
-  late final _notcurses_check_pixel_support = _notcurses_check_pixel_supportPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_check_pixel_support');
+  late final _notcurses_check_pixel_support =
+      _notcurses_check_pixel_supportPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_canopen_images(
     ffi.Pointer<notcurses> nc,
@@ -1171,10 +1020,9 @@ class NcFfi {
   }
 
   late final _notcurses_canopen_imagesPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_canopen_images');
-  late final _notcurses_canopen_images = _notcurses_canopen_imagesPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<notcurses>)>>('notcurses_canopen_images');
+  late final _notcurses_canopen_images =
+      _notcurses_canopen_imagesPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_canopen_videos(
     ffi.Pointer<notcurses> nc,
@@ -1185,10 +1033,9 @@ class NcFfi {
   }
 
   late final _notcurses_canopen_videosPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_canopen_videos');
-  late final _notcurses_canopen_videos = _notcurses_canopen_videosPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<notcurses>)>>('notcurses_canopen_videos');
+  late final _notcurses_canopen_videos =
+      _notcurses_canopen_videosPtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   ffi.Pointer<ncstats> notcurses_stats_alloc(
     ffi.Pointer<notcurses> nc,
@@ -1198,12 +1045,10 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_stats_allocPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncstats> Function(
-              ffi.Pointer<notcurses>)>>('notcurses_stats_alloc');
-  late final _notcurses_stats_alloc = _notcurses_stats_allocPtr
-      .asFunction<ffi.Pointer<ncstats> Function(ffi.Pointer<notcurses>)>();
+  late final _notcurses_stats_allocPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncstats> Function(ffi.Pointer<notcurses>)>>('notcurses_stats_alloc');
+  late final _notcurses_stats_alloc =
+      _notcurses_stats_allocPtr.asFunction<ffi.Pointer<ncstats> Function(ffi.Pointer<notcurses>)>();
 
   void notcurses_stats(
     ffi.Pointer<notcurses> nc,
@@ -1215,12 +1060,10 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_statsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ncstats>)>>('notcurses_stats');
-  late final _notcurses_stats = _notcurses_statsPtr.asFunction<
-      void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>();
+  late final _notcurses_statsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>>('notcurses_stats');
+  late final _notcurses_stats =
+      _notcurses_statsPtr.asFunction<void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>();
 
   void notcurses_stats_reset(
     ffi.Pointer<notcurses> nc,
@@ -1232,12 +1075,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_stats_resetPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ncstats>)>>('notcurses_stats_reset');
-  late final _notcurses_stats_reset = _notcurses_stats_resetPtr.asFunction<
-      void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>();
+  late final _notcurses_stats_resetPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>>(
+          'notcurses_stats_reset');
+  late final _notcurses_stats_reset =
+      _notcurses_stats_resetPtr.asFunction<void Function(ffi.Pointer<notcurses>, ffi.Pointer<ncstats>)>();
 
   int ncplane_resize(
     ffi.Pointer<ncplane> n,
@@ -1265,19 +1107,10 @@ class NcFfi {
 
   late final _ncplane_resizePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncplane_resize');
-  late final _ncplane_resize = _ncplane_resizePtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32, ffi.Int32, ffi.Int32,
+              ffi.Uint32, ffi.Uint32)>>('ncplane_resize');
+  late final _ncplane_resize =
+      _ncplane_resizePtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
 
   int ncplane_destroy(
     ffi.Pointer<ncplane> n,
@@ -1288,10 +1121,8 @@ class NcFfi {
   }
 
   late final _ncplane_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_destroy');
-  late final _ncplane_destroy =
-      _ncplane_destroyPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_destroy');
+  late final _ncplane_destroy = _ncplane_destroyPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_set_base_cell(
     ffi.Pointer<ncplane> n,
@@ -1303,12 +1134,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_base_cellPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<nccell>)>>('ncplane_set_base_cell');
-  late final _ncplane_set_base_cell = _ncplane_set_base_cellPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
+  late final _ncplane_set_base_cellPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>(
+          'ncplane_set_base_cell');
+  late final _ncplane_set_base_cell =
+      _ncplane_set_base_cellPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
 
   int ncplane_set_base(
     ffi.Pointer<ncplane> n,
@@ -1325,11 +1155,10 @@ class NcFfi {
   }
 
   late final _ncplane_set_basePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>,
-              ffi.Uint16, ffi.Uint64)>>('ncplane_set_base');
-  late final _ncplane_set_base = _ncplane_set_basePtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, int, int)>();
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Uint16, ffi.Uint64)>>(
+      'ncplane_set_base');
+  late final _ncplane_set_base =
+      _ncplane_set_basePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, int, int)>();
 
   int ncplane_base(
     ffi.Pointer<ncplane> n,
@@ -1341,12 +1170,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_basePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>('ncplane_base');
-  late final _ncplane_base = _ncplane_basePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
+  late final _ncplane_basePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>('ncplane_base');
+  late final _ncplane_base = _ncplane_basePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
 
   void ncplane_yx(
     ffi.Pointer<ncplane> n,
@@ -1361,12 +1187,10 @@ class NcFfi {
   }
 
   late final _ncplane_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('ncplane_yx');
-  late final _ncplane_yx = _ncplane_yxPtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>(
+      'ncplane_yx');
+  late final _ncplane_yx =
+      _ncplane_yxPtr.asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int ncplane_y(
     ffi.Pointer<ncplane> n,
@@ -1376,11 +1200,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_yPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_y');
-  late final _ncplane_y =
-      _ncplane_yPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_yPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_y');
+  late final _ncplane_y = _ncplane_yPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_x(
     ffi.Pointer<ncplane> n,
@@ -1390,11 +1211,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_xPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_x');
-  late final _ncplane_x =
-      _ncplane_xPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_xPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_x');
+  late final _ncplane_x = _ncplane_xPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_move_yx(
     ffi.Pointer<ncplane> n,
@@ -1408,12 +1226,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_move_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32)>>('ncplane_move_yx');
-  late final _ncplane_move_yx = _ncplane_move_yxPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
+  late final _ncplane_move_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32)>>('ncplane_move_yx');
+  late final _ncplane_move_yx = _ncplane_move_yxPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
 
   void ncplane_abs_yx(
     ffi.Pointer<ncplane> n,
@@ -1428,12 +1243,10 @@ class NcFfi {
   }
 
   late final _ncplane_abs_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('ncplane_abs_yx');
-  late final _ncplane_abs_yx = _ncplane_abs_yxPtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>(
+      'ncplane_abs_yx');
+  late final _ncplane_abs_yx = _ncplane_abs_yxPtr
+      .asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   int ncplane_abs_y(
     ffi.Pointer<ncplane> n,
@@ -1443,11 +1256,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_abs_yPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_abs_y');
-  late final _ncplane_abs_y =
-      _ncplane_abs_yPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_abs_yPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_abs_y');
+  late final _ncplane_abs_y = _ncplane_abs_yPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_abs_x(
     ffi.Pointer<ncplane> n,
@@ -1457,11 +1267,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_abs_xPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_abs_x');
-  late final _ncplane_abs_x =
-      _ncplane_abs_xPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_abs_xPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_abs_x');
+  late final _ncplane_abs_x = _ncplane_abs_xPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_parent(
     ffi.Pointer<ncplane> n,
@@ -1471,12 +1278,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_parentPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_parent');
-  late final _ncplane_parent = _ncplane_parentPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_parentPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncplane_parent');
+  late final _ncplane_parent = _ncplane_parentPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_parent_const(
     ffi.Pointer<ncplane> n,
@@ -1486,12 +1290,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_parent_constPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_parent_const');
-  late final _ncplane_parent_const = _ncplane_parent_constPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_parent_constPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncplane_parent_const');
+  late final _ncplane_parent_const =
+      _ncplane_parent_constPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_move_above(
     ffi.Pointer<ncplane> n,
@@ -1503,12 +1305,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_move_abovePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_move_above');
-  late final _ncplane_move_above = _ncplane_move_abovePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_move_abovePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>('ncplane_move_above');
+  late final _ncplane_move_above =
+      _ncplane_move_abovePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   int ncplane_move_below(
     ffi.Pointer<ncplane> n,
@@ -1520,12 +1320,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_move_belowPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_move_below');
-  late final _ncplane_move_below = _ncplane_move_belowPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_move_belowPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>('ncplane_move_below');
+  late final _ncplane_move_below =
+      _ncplane_move_belowPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   int ncplane_move_family_above(
     ffi.Pointer<ncplane> n,
@@ -1537,12 +1335,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_move_family_abovePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_move_family_above');
-  late final _ncplane_move_family_above = _ncplane_move_family_abovePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_move_family_abovePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_move_family_above');
+  late final _ncplane_move_family_above =
+      _ncplane_move_family_abovePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   int ncplane_move_family_below(
     ffi.Pointer<ncplane> n,
@@ -1554,12 +1351,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_move_family_belowPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_move_family_below');
-  late final _ncplane_move_family_below = _ncplane_move_family_belowPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_move_family_belowPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_move_family_below');
+  late final _ncplane_move_family_below =
+      _ncplane_move_family_belowPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_below(
     ffi.Pointer<ncplane> n,
@@ -1569,12 +1365,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_belowPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_below');
-  late final _ncplane_below = _ncplane_belowPtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_belowPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncplane_below');
+  late final _ncplane_below = _ncplane_belowPtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncplane> ncplane_above(
     ffi.Pointer<ncplane> n,
@@ -1584,12 +1377,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_abovePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_above');
-  late final _ncplane_above = _ncplane_abovePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_abovePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>>('ncplane_above');
+  late final _ncplane_above = _ncplane_abovePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_scrollup(
     ffi.Pointer<ncplane> n,
@@ -1601,12 +1391,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_scrollupPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_scrollup');
-  late final _ncplane_scrollup = _ncplane_scrollupPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_scrollupPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_scrollup');
+  late final _ncplane_scrollup = _ncplane_scrollupPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_scrollup_child(
     ffi.Pointer<ncplane> n,
@@ -1618,12 +1405,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_scrollup_childPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_scrollup_child');
-  late final _ncplane_scrollup_child = _ncplane_scrollup_childPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_scrollup_childPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_scrollup_child');
+  late final _ncplane_scrollup_child =
+      _ncplane_scrollup_childPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   int ncplane_rotate_cw(
     ffi.Pointer<ncplane> n,
@@ -1634,10 +1420,8 @@ class NcFfi {
   }
 
   late final _ncplane_rotate_cwPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_rotate_cw');
-  late final _ncplane_rotate_cw =
-      _ncplane_rotate_cwPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_rotate_cw');
+  late final _ncplane_rotate_cw = _ncplane_rotate_cwPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_rotate_ccw(
     ffi.Pointer<ncplane> n,
@@ -1648,10 +1432,8 @@ class NcFfi {
   }
 
   late final _ncplane_rotate_ccwPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_rotate_ccw');
-  late final _ncplane_rotate_ccw =
-      _ncplane_rotate_ccwPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>('ncplane_rotate_ccw');
+  late final _ncplane_rotate_ccw = _ncplane_rotate_ccwPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ffi.Int8> ncplane_at_cursor(
     ffi.Pointer<ncplane> n,
@@ -1668,12 +1450,9 @@ class NcFfi {
   late final _ncplane_at_cursorPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Uint16>,
-              ffi.Pointer<ffi.Uint64>)>>('ncplane_at_cursor');
+              ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>>('ncplane_at_cursor');
   late final _ncplane_at_cursor = _ncplane_at_cursorPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>,
-          ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
+      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
 
   int ncplane_at_cursor_cell(
     ffi.Pointer<ncplane> n,
@@ -1685,12 +1464,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_at_cursor_cellPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<nccell>)>>('ncplane_at_cursor_cell');
-  late final _ncplane_at_cursor_cell = _ncplane_at_cursor_cellPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
+  late final _ncplane_at_cursor_cellPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>>(
+          'ncplane_at_cursor_cell');
+  late final _ncplane_at_cursor_cell =
+      _ncplane_at_cursor_cellPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>)>();
 
   ffi.Pointer<ffi.Int8> ncplane_at_yx(
     ffi.Pointer<ncplane> n,
@@ -1710,15 +1488,11 @@ class NcFfi {
 
   late final _ncplane_at_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Pointer<ffi.Uint16>,
+          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Uint16>,
               ffi.Pointer<ffi.Uint64>)>>('ncplane_at_yx');
   late final _ncplane_at_yx = _ncplane_at_yxPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, int, int,
-          ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
+      ffi.Pointer<ffi.Int8> Function(
+          ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Uint16>, ffi.Pointer<ffi.Uint64>)>();
 
   int ncplane_at_yx_cell(
     ffi.Pointer<ncplane> n,
@@ -1734,12 +1508,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_at_yx_cellPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Pointer<nccell>)>>('ncplane_at_yx_cell');
-  late final _ncplane_at_yx_cell = _ncplane_at_yx_cellPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
+  late final _ncplane_at_yx_cellPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<nccell>)>>(
+          'ncplane_at_yx_cell');
+  late final _ncplane_at_yx_cell =
+      _ncplane_at_yx_cellPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
 
   ffi.Pointer<ffi.Int8> ncplane_contents(
     ffi.Pointer<ncplane> n,
@@ -1759,11 +1532,10 @@ class NcFfi {
 
   late final _ncplane_contentsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, ffi.Int32,
-              ffi.Int32, ffi.Uint32, ffi.Uint32)>>('ncplane_contents');
-  late final _ncplane_contents = _ncplane_contentsPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(
-          ffi.Pointer<ncplane>, int, int, int, int)>();
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32)>>('ncplane_contents');
+  late final _ncplane_contents =
+      _ncplane_contentsPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncplane>, int, int, int, int)>();
 
   ffi.Pointer<ffi.Void> ncplane_set_userptr(
     ffi.Pointer<ncplane> n,
@@ -1775,13 +1547,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_userptrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Void>)>>('ncplane_set_userptr');
-  late final _ncplane_set_userptr = _ncplane_set_userptrPtr.asFunction<
-      ffi.Pointer<ffi.Void> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>();
+  late final _ncplane_set_userptrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>>(
+          'ncplane_set_userptr');
+  late final _ncplane_set_userptr =
+      _ncplane_set_userptrPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<ffi.Void> ncplane_userptr(
     ffi.Pointer<ncplane> n,
@@ -1791,12 +1561,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_userptrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(
-              ffi.Pointer<ncplane>)>>('ncplane_userptr');
-  late final _ncplane_userptr = _ncplane_userptrPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_userptrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>)>>('ncplane_userptr');
+  late final _ncplane_userptr = _ncplane_userptrPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ncplane>)>();
 
   void ncplane_center_abs(
     ffi.Pointer<ncplane> n,
@@ -1811,12 +1578,10 @@ class NcFfi {
   }
 
   late final _ncplane_center_absPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('ncplane_center_abs');
-  late final _ncplane_center_abs = _ncplane_center_absPtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>(
+      'ncplane_center_abs');
+  late final _ncplane_center_abs = _ncplane_center_absPtr
+      .asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   ffi.Pointer<ffi.Uint32> ncplane_as_rgba(
     ffi.Pointer<ncplane> n,
@@ -1842,18 +1607,11 @@ class NcFfi {
 
   late final _ncplane_as_rgbaPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Uint32> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('ncplane_as_rgba');
+          ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Uint32,
+              ffi.Uint32, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>('ncplane_as_rgba');
   late final _ncplane_as_rgba = _ncplane_as_rgbaPtr.asFunction<
-      ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<ncplane>, int, int, int, int,
-          int, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
+      ffi.Pointer<ffi.Uint32> Function(
+          ffi.Pointer<ncplane>, int, int, int, int, int, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   int ncplane_cursor_move_yx(
     ffi.Pointer<ncplane> n,
@@ -1867,12 +1625,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_cursor_move_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32,
-              ffi.Int32)>>('ncplane_cursor_move_yx');
-  late final _ncplane_cursor_move_yx = _ncplane_cursor_move_yxPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
+  late final _ncplane_cursor_move_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32)>>(
+          'ncplane_cursor_move_yx');
+  late final _ncplane_cursor_move_yx =
+      _ncplane_cursor_move_yxPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
 
   int ncplane_cursor_move_rel(
     ffi.Pointer<ncplane> n,
@@ -1886,12 +1643,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_cursor_move_relPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32,
-              ffi.Int32)>>('ncplane_cursor_move_rel');
-  late final _ncplane_cursor_move_rel = _ncplane_cursor_move_relPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
+  late final _ncplane_cursor_move_relPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32)>>(
+          'ncplane_cursor_move_rel');
+  late final _ncplane_cursor_move_rel =
+      _ncplane_cursor_move_relPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int)>();
 
   void ncplane_home(
     ffi.Pointer<ncplane> n,
@@ -1901,11 +1657,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_homePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_home');
-  late final _ncplane_home =
-      _ncplane_homePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_homePtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>('ncplane_home');
+  late final _ncplane_home = _ncplane_homePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
 
   void ncplane_cursor_yx(
     ffi.Pointer<ncplane> n,
@@ -1921,11 +1674,10 @@ class NcFfi {
 
   late final _ncplane_cursor_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('ncplane_cursor_yx');
-  late final _ncplane_cursor_yx = _ncplane_cursor_yxPtr.asFunction<
-      void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>)>();
+          ffi.Void Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>('ncplane_cursor_yx');
+  late final _ncplane_cursor_yx = _ncplane_cursor_yxPtr
+      .asFunction<void Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   int ncplane_channels(
     ffi.Pointer<ncplane> n,
@@ -1936,10 +1688,8 @@ class NcFfi {
   }
 
   late final _ncplane_channelsPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_channels');
-  late final _ncplane_channels =
-      _ncplane_channelsPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Pointer<ncplane>)>>('ncplane_channels');
+  late final _ncplane_channels = _ncplane_channelsPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_styles(
     ffi.Pointer<ncplane> n,
@@ -1950,10 +1700,8 @@ class NcFfi {
   }
 
   late final _ncplane_stylesPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_styles');
-  late final _ncplane_styles =
-      _ncplane_stylesPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncplane>)>>('ncplane_styles');
+  late final _ncplane_styles = _ncplane_stylesPtr.asFunction<int Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_putc_yx(
     ffi.Pointer<ncplane> n,
@@ -1969,12 +1717,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_putc_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Pointer<nccell>)>>('ncplane_putc_yx');
-  late final _ncplane_putc_yx = _ncplane_putc_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
+  late final _ncplane_putc_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<nccell>)>>(
+          'ncplane_putc_yx');
+  late final _ncplane_putc_yx =
+      _ncplane_putc_yxPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
 
   int ncplane_putchar_stained(
     ffi.Pointer<ncplane> n,
@@ -1986,12 +1733,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_putchar_stainedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Int8)>>('ncplane_putchar_stained');
-  late final _ncplane_putchar_stained = _ncplane_putchar_stainedPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_putchar_stainedPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int8)>>('ncplane_putchar_stained');
+  late final _ncplane_putchar_stained =
+      _ncplane_putchar_stainedPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_putegc_yx(
     ffi.Pointer<ncplane> n,
@@ -2011,15 +1756,10 @@ class NcFfi {
 
   late final _ncplane_putegc_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Pointer<ffi.Int8>,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<size_t>)>>('ncplane_putegc_yx');
-  late final _ncplane_putegc_yx = _ncplane_putegc_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<size_t>)>();
+  late final _ncplane_putegc_yx = _ncplane_putegc_yxPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>();
 
   int ncplane_putegc_stained(
     ffi.Pointer<ncplane> n,
@@ -2033,13 +1773,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_putegc_stainedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<size_t>)>>('ncplane_putegc_stained');
-  late final _ncplane_putegc_stained = _ncplane_putegc_stainedPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>();
+  late final _ncplane_putegc_stainedPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>>(
+          'ncplane_putegc_stained');
+  late final _ncplane_putegc_stained = _ncplane_putegc_stainedPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>();
 
   int ncplane_putwegc_stained(
     ffi.Pointer<ncplane> n,
@@ -2053,13 +1791,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_putwegc_stainedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>,
-              ffi.Pointer<size_t>)>>('ncplane_putwegc_stained');
-  late final _ncplane_putwegc_stained = _ncplane_putwegc_stainedPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>, ffi.Pointer<size_t>)>();
+  late final _ncplane_putwegc_stainedPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>, ffi.Pointer<size_t>)>>(
+          'ncplane_putwegc_stained');
+  late final _ncplane_putwegc_stained = _ncplane_putwegc_stainedPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>, ffi.Pointer<size_t>)>();
 
   int ncplane_putnstr_aligned(
     ffi.Pointer<ncplane> n,
@@ -2079,11 +1815,10 @@ class NcFfi {
 
   late final _ncplane_putnstr_alignedPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, size_t,
-              ffi.Pointer<ffi.Int8>)>>('ncplane_putnstr_aligned');
-  late final _ncplane_putnstr_aligned = _ncplane_putnstr_alignedPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, int, int, int, ffi.Pointer<ffi.Int8>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, size_t, ffi.Pointer<ffi.Int8>)>>('ncplane_putnstr_aligned');
+  late final _ncplane_putnstr_aligned = _ncplane_putnstr_alignedPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, ffi.Pointer<ffi.Int8>)>();
 
   int ncplane_putwstr_stained(
     ffi.Pointer<ncplane> n,
@@ -2095,12 +1830,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_putwstr_stainedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<wchar_t>)>>('ncplane_putwstr_stained');
-  late final _ncplane_putwstr_stained = _ncplane_putwstr_stainedPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>)>();
+  late final _ncplane_putwstr_stainedPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>)>>(
+          'ncplane_putwstr_stained');
+  late final _ncplane_putwstr_stained =
+      _ncplane_putwstr_stainedPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<wchar_t>)>();
 
   int ncplane_vprintf_aligned(
     ffi.Pointer<ncplane> n,
@@ -2120,15 +1854,10 @@ class NcFfi {
 
   late final _ncplane_vprintf_alignedPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Pointer<ffi.Int8>,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<__va_list_tag>)>>('ncplane_vprintf_aligned');
-  late final _ncplane_vprintf_aligned = _ncplane_vprintf_alignedPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<__va_list_tag>)>();
+  late final _ncplane_vprintf_aligned = _ncplane_vprintf_alignedPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>, ffi.Pointer<__va_list_tag>)>();
 
   int ncplane_vprintf_yx(
     ffi.Pointer<ncplane> n,
@@ -2148,15 +1877,10 @@ class NcFfi {
 
   late final _ncplane_vprintf_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Pointer<ffi.Int8>,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>,
               ffi.Pointer<__va_list_tag>)>>('ncplane_vprintf_yx');
-  late final _ncplane_vprintf_yx = _ncplane_vprintf_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<__va_list_tag>)>();
+  late final _ncplane_vprintf_yx = _ncplane_vprintf_yxPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>, ffi.Pointer<__va_list_tag>)>();
 
   int ncplane_vprintf_stained(
     ffi.Pointer<ncplane> n,
@@ -2172,11 +1896,10 @@ class NcFfi {
 
   late final _ncplane_vprintf_stainedPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<__va_list_tag>)>>('ncplane_vprintf_stained');
-  late final _ncplane_vprintf_stained = _ncplane_vprintf_stainedPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<__va_list_tag>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Pointer<__va_list_tag>)>>('ncplane_vprintf_stained');
+  late final _ncplane_vprintf_stained = _ncplane_vprintf_stainedPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Int8>, ffi.Pointer<__va_list_tag>)>();
 
   int ncplane_puttext(
     ffi.Pointer<ncplane> n,
@@ -2196,11 +1919,10 @@ class NcFfi {
 
   late final _ncplane_puttextPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>>('ncplane_puttext');
-  late final _ncplane_puttext = _ncplane_puttextPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<size_t>)>();
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<size_t>)>>('ncplane_puttext');
+  late final _ncplane_puttext = _ncplane_puttextPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<ffi.Int8>, ffi.Pointer<size_t>)>();
 
   int ncplane_hline_interp(
     ffi.Pointer<ncplane> n,
@@ -2220,10 +1942,10 @@ class NcFfi {
 
   late final _ncplane_hline_interpPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>,
-              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncplane_hline_interp');
-  late final _ncplane_hline_interp = _ncplane_hline_interpPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, int, int, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncplane_hline_interp');
+  late final _ncplane_hline_interp =
+      _ncplane_hline_interpPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, int, int, int)>();
 
   int ncplane_vline_interp(
     ffi.Pointer<ncplane> n,
@@ -2243,10 +1965,10 @@ class NcFfi {
 
   late final _ncplane_vline_interpPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>,
-              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncplane_vline_interp');
-  late final _ncplane_vline_interp = _ncplane_vline_interpPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, int, int, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncplane_vline_interp');
+  late final _ncplane_vline_interp =
+      _ncplane_vline_interpPtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, int, int, int)>();
 
   int ncplane_box(
     ffi.Pointer<ncplane> n,
@@ -2288,17 +2010,8 @@ class NcFfi {
               ffi.Uint32,
               ffi.Uint32)>>('ncplane_box');
   late final _ncplane_box = _ncplane_boxPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<nccell>,
-          ffi.Pointer<nccell>,
-          ffi.Pointer<nccell>,
-          ffi.Pointer<nccell>,
-          ffi.Pointer<nccell>,
-          ffi.Pointer<nccell>,
-          int,
-          int,
-          int)>();
+      int Function(ffi.Pointer<ncplane>, ffi.Pointer<nccell>, ffi.Pointer<nccell>, ffi.Pointer<nccell>,
+          ffi.Pointer<nccell>, ffi.Pointer<nccell>, ffi.Pointer<nccell>, int, int, int)>();
 
   int ncplane_polyfill_yx(
     ffi.Pointer<ncplane> n,
@@ -2314,12 +2027,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_polyfill_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Pointer<nccell>)>>('ncplane_polyfill_yx');
-  late final _ncplane_polyfill_yx = _ncplane_polyfill_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
+  late final _ncplane_polyfill_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Pointer<nccell>)>>(
+          'ncplane_polyfill_yx');
+  late final _ncplane_polyfill_yx =
+      _ncplane_polyfill_yxPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, ffi.Pointer<nccell>)>();
 
   int ncplane_gradient(
     ffi.Pointer<ncplane> n,
@@ -2351,21 +2063,10 @@ class NcFfi {
 
   late final _ncplane_gradientPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Uint16,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64)>>('ncplane_gradient');
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32, ffi.Pointer<ffi.Int8>,
+              ffi.Uint16, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint64)>>('ncplane_gradient');
   late final _ncplane_gradient = _ncplane_gradientPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, int, int,
-          ffi.Pointer<ffi.Int8>, int, int, int, int, int)>();
+      int Function(ffi.Pointer<ncplane>, int, int, int, int, ffi.Pointer<ffi.Int8>, int, int, int, int, int)>();
 
   int ncplane_gradient2x1(
     ffi.Pointer<ncplane> n,
@@ -2393,19 +2094,10 @@ class NcFfi {
 
   late final _ncplane_gradient2x1Ptr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncplane_gradient2x1');
-  late final _ncplane_gradient2x1 = _ncplane_gradient2x1Ptr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32, ffi.Uint32, ffi.Uint32,
+              ffi.Uint32, ffi.Uint32)>>('ncplane_gradient2x1');
+  late final _ncplane_gradient2x1 =
+      _ncplane_gradient2x1Ptr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
 
   int ncplane_format(
     ffi.Pointer<ncplane> n,
@@ -2427,10 +2119,10 @@ class NcFfi {
 
   late final _ncplane_formatPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Uint32, ffi.Uint32, ffi.Uint16)>>('ncplane_format');
-  late final _ncplane_format = _ncplane_formatPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, int, int, int, int, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32, ffi.Uint16)>>('ncplane_format');
+  late final _ncplane_format =
+      _ncplane_formatPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int, int)>();
 
   int ncplane_stain(
     ffi.Pointer<ncplane> n,
@@ -2458,19 +2150,10 @@ class NcFfi {
 
   late final _ncplane_stainPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64)>>('ncplane_stain');
-  late final _ncplane_stain = _ncplane_stainPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32, ffi.Uint64, ffi.Uint64,
+              ffi.Uint64, ffi.Uint64)>>('ncplane_stain');
+  late final _ncplane_stain =
+      _ncplane_stainPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int, int, int, int, int)>();
 
   int ncplane_mergedown_simple(
     ffi.Pointer<ncplane> src,
@@ -2482,12 +2165,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_mergedown_simplePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>)>>('ncplane_mergedown_simple');
-  late final _ncplane_mergedown_simple = _ncplane_mergedown_simplePtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
+  late final _ncplane_mergedown_simplePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>>(
+          'ncplane_mergedown_simple');
+  late final _ncplane_mergedown_simple =
+      _ncplane_mergedown_simplePtr.asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>)>();
 
   int ncplane_mergedown(
     ffi.Pointer<ncplane> src,
@@ -2513,18 +2195,10 @@ class NcFfi {
 
   late final _ncplane_mergedownPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Int32,
-              ffi.Int32)>>('ncplane_mergedown');
-  late final _ncplane_mergedown = _ncplane_mergedownPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>, int, int, int,
-          int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32,
+              ffi.Int32, ffi.Int32)>>('ncplane_mergedown');
+  late final _ncplane_mergedown = _ncplane_mergedownPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplane>, int, int, int, int, int, int)>();
 
   void ncplane_erase(
     ffi.Pointer<ncplane> n,
@@ -2534,11 +2208,8 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_erasePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_erase');
-  late final _ncplane_erase =
-      _ncplane_erasePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
+  late final _ncplane_erasePtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>('ncplane_erase');
+  late final _ncplane_erase = _ncplane_erasePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_erase_region(
     ffi.Pointer<ncplane> n,
@@ -2556,12 +2227,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_erase_regionPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Int32, ffi.Int32)>>('ncplane_erase_region');
-  late final _ncplane_erase_region = _ncplane_erase_regionPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int)>();
+  late final _ncplane_erase_regionPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Int32)>>(
+          'ncplane_erase_region');
+  late final _ncplane_erase_region =
+      _ncplane_erase_regionPtr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int, int)>();
 
   void ncplane_set_channels(
     ffi.Pointer<ncplane> n,
@@ -2573,12 +2243,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_channelsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>, ffi.Uint64)>>('ncplane_set_channels');
-  late final _ncplane_set_channels = _ncplane_set_channelsPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_channelsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Uint64)>>('ncplane_set_channels');
+  late final _ncplane_set_channels = _ncplane_set_channelsPtr.asFunction<void Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_bchannel(
     ffi.Pointer<ncplane> n,
@@ -2590,12 +2257,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bchannelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint64 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bchannel');
-  late final _ncplane_set_bchannel = _ncplane_set_bchannelPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_bchannelPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bchannel');
+  late final _ncplane_set_bchannel = _ncplane_set_bchannelPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_fchannel(
     ffi.Pointer<ncplane> n,
@@ -2607,12 +2271,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fchannelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint64 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fchannel');
-  late final _ncplane_set_fchannel = _ncplane_set_fchannelPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_fchannelPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint64 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fchannel');
+  late final _ncplane_set_fchannel = _ncplane_set_fchannelPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   void ncplane_set_styles(
     ffi.Pointer<ncplane> n,
@@ -2624,12 +2285,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_styles');
-  late final _ncplane_set_styles = _ncplane_set_stylesPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_styles');
+  late final _ncplane_set_styles = _ncplane_set_stylesPtr.asFunction<void Function(ffi.Pointer<ncplane>, int)>();
 
   void ncplane_on_styles(
     ffi.Pointer<ncplane> n,
@@ -2641,12 +2299,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_on_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_on_styles');
-  late final _ncplane_on_styles = _ncplane_on_stylesPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_on_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_on_styles');
+  late final _ncplane_on_styles = _ncplane_on_stylesPtr.asFunction<void Function(ffi.Pointer<ncplane>, int)>();
 
   void ncplane_off_styles(
     ffi.Pointer<ncplane> n,
@@ -2658,12 +2313,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_off_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_off_styles');
-  late final _ncplane_off_styles = _ncplane_off_stylesPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_off_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_off_styles');
+  late final _ncplane_off_styles = _ncplane_off_stylesPtr.asFunction<void Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_fg_rgb8(
     ffi.Pointer<ncplane> n,
@@ -2679,12 +2331,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fg_rgb8Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32, ffi.Uint32,
-              ffi.Uint32)>>('ncplane_set_fg_rgb8');
-  late final _ncplane_set_fg_rgb8 = _ncplane_set_fg_rgb8Ptr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, int)>();
+  late final _ncplane_set_fg_rgb8Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32, ffi.Uint32, ffi.Uint32)>>(
+          'ncplane_set_fg_rgb8');
+  late final _ncplane_set_fg_rgb8 =
+      _ncplane_set_fg_rgb8Ptr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int)>();
 
   int ncplane_set_bg_rgb8(
     ffi.Pointer<ncplane> n,
@@ -2700,12 +2351,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bg_rgb8Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32, ffi.Uint32,
-              ffi.Uint32)>>('ncplane_set_bg_rgb8');
-  late final _ncplane_set_bg_rgb8 = _ncplane_set_bg_rgb8Ptr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int, int, int)>();
+  late final _ncplane_set_bg_rgb8Ptr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32, ffi.Uint32, ffi.Uint32)>>(
+          'ncplane_set_bg_rgb8');
+  late final _ncplane_set_bg_rgb8 =
+      _ncplane_set_bg_rgb8Ptr.asFunction<int Function(ffi.Pointer<ncplane>, int, int, int)>();
 
   void ncplane_set_bg_rgb8_clipped(
     ffi.Pointer<ncplane> n,
@@ -2721,12 +2371,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bg_rgb8_clippedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Int32)>>('ncplane_set_bg_rgb8_clipped');
-  late final _ncplane_set_bg_rgb8_clipped = _ncplane_set_bg_rgb8_clippedPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int, int, int)>();
+  late final _ncplane_set_bg_rgb8_clippedPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Int32)>>(
+          'ncplane_set_bg_rgb8_clipped');
+  late final _ncplane_set_bg_rgb8_clipped =
+      _ncplane_set_bg_rgb8_clippedPtr.asFunction<void Function(ffi.Pointer<ncplane>, int, int, int)>();
 
   void ncplane_set_fg_rgb8_clipped(
     ffi.Pointer<ncplane> n,
@@ -2742,12 +2391,11 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fg_rgb8_clippedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32,
-              ffi.Int32)>>('ncplane_set_fg_rgb8_clipped');
-  late final _ncplane_set_fg_rgb8_clipped = _ncplane_set_fg_rgb8_clippedPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>, int, int, int)>();
+  late final _ncplane_set_fg_rgb8_clippedPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Int32)>>(
+          'ncplane_set_fg_rgb8_clipped');
+  late final _ncplane_set_fg_rgb8_clipped =
+      _ncplane_set_fg_rgb8_clippedPtr.asFunction<void Function(ffi.Pointer<ncplane>, int, int, int)>();
 
   int ncplane_set_fg_rgb(
     ffi.Pointer<ncplane> n,
@@ -2759,12 +2407,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fg_rgbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fg_rgb');
-  late final _ncplane_set_fg_rgb = _ncplane_set_fg_rgbPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_fg_rgbPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fg_rgb');
+  late final _ncplane_set_fg_rgb = _ncplane_set_fg_rgbPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_bg_rgb(
     ffi.Pointer<ncplane> n,
@@ -2776,12 +2421,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bg_rgbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bg_rgb');
-  late final _ncplane_set_bg_rgb = _ncplane_set_bg_rgbPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_bg_rgbPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bg_rgb');
+  late final _ncplane_set_bg_rgb = _ncplane_set_bg_rgbPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   void ncplane_set_fg_default(
     ffi.Pointer<ncplane> n,
@@ -2792,10 +2434,8 @@ class NcFfi {
   }
 
   late final _ncplane_set_fg_defaultPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_set_fg_default');
-  late final _ncplane_set_fg_default = _ncplane_set_fg_defaultPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>('ncplane_set_fg_default');
+  late final _ncplane_set_fg_default = _ncplane_set_fg_defaultPtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
 
   void ncplane_set_bg_default(
     ffi.Pointer<ncplane> n,
@@ -2806,10 +2446,8 @@ class NcFfi {
   }
 
   late final _ncplane_set_bg_defaultPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_set_bg_default');
-  late final _ncplane_set_bg_default = _ncplane_set_bg_defaultPtr
-      .asFunction<void Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>('ncplane_set_bg_default');
+  late final _ncplane_set_bg_default = _ncplane_set_bg_defaultPtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
 
   int ncplane_set_fg_palindex(
     ffi.Pointer<ncplane> n,
@@ -2821,12 +2459,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fg_palindexPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fg_palindex');
-  late final _ncplane_set_fg_palindex = _ncplane_set_fg_palindexPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_fg_palindexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_fg_palindex');
+  late final _ncplane_set_fg_palindex =
+      _ncplane_set_fg_palindexPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_bg_palindex(
     ffi.Pointer<ncplane> n,
@@ -2838,12 +2474,10 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bg_palindexPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bg_palindex');
-  late final _ncplane_set_bg_palindex = _ncplane_set_bg_palindexPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_bg_palindexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Uint32)>>('ncplane_set_bg_palindex');
+  late final _ncplane_set_bg_palindex =
+      _ncplane_set_bg_palindexPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_fg_alpha(
     ffi.Pointer<ncplane> n,
@@ -2855,12 +2489,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_fg_alphaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_set_fg_alpha');
-  late final _ncplane_set_fg_alpha = _ncplane_set_fg_alphaPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_fg_alphaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_set_fg_alpha');
+  late final _ncplane_set_fg_alpha = _ncplane_set_fg_alphaPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_set_bg_alpha(
     ffi.Pointer<ncplane> n,
@@ -2872,12 +2503,9 @@ class NcFfi {
     );
   }
 
-  late final _ncplane_set_bg_alphaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_set_bg_alpha');
-  late final _ncplane_set_bg_alpha = _ncplane_set_bg_alphaPtr
-      .asFunction<int Function(ffi.Pointer<ncplane>, int)>();
+  late final _ncplane_set_bg_alphaPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Int32)>>('ncplane_set_bg_alpha');
+  late final _ncplane_set_bg_alpha = _ncplane_set_bg_alphaPtr.asFunction<int Function(ffi.Pointer<ncplane>, int)>();
 
   int ncplane_fadeout(
     ffi.Pointer<ncplane> n,
@@ -2895,11 +2523,10 @@ class NcFfi {
 
   late final _ncplane_fadeoutPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>,
-              fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_fadeout');
-  late final _ncplane_fadeout = _ncplane_fadeoutPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb,
-          ffi.Pointer<ffi.Void>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_fadeout');
+  late final _ncplane_fadeout = _ncplane_fadeoutPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>();
 
   int ncplane_fadein(
     ffi.Pointer<ncplane> n,
@@ -2917,11 +2544,10 @@ class NcFfi {
 
   late final _ncplane_fadeinPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>,
-              fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_fadein');
-  late final _ncplane_fadein = _ncplane_fadeinPtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb,
-          ffi.Pointer<ffi.Void>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_fadein');
+  late final _ncplane_fadein = _ncplane_fadeinPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<ncfadectx> ncfadectx_setup(
     ffi.Pointer<ncplane> n,
@@ -2931,12 +2557,9 @@ class NcFfi {
     );
   }
 
-  late final _ncfadectx_setupPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncfadectx> Function(
-              ffi.Pointer<ncplane>)>>('ncfadectx_setup');
-  late final _ncfadectx_setup = _ncfadectx_setupPtr
-      .asFunction<ffi.Pointer<ncfadectx> Function(ffi.Pointer<ncplane>)>();
+  late final _ncfadectx_setupPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncfadectx> Function(ffi.Pointer<ncplane>)>>('ncfadectx_setup');
+  late final _ncfadectx_setup = _ncfadectx_setupPtr.asFunction<ffi.Pointer<ncfadectx> Function(ffi.Pointer<ncplane>)>();
 
   int ncfadectx_iterations(
     ffi.Pointer<ncfadectx> nctx,
@@ -2947,10 +2570,8 @@ class NcFfi {
   }
 
   late final _ncfadectx_iterationsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncfadectx>)>>(
-          'ncfadectx_iterations');
-  late final _ncfadectx_iterations = _ncfadectx_iterationsPtr
-      .asFunction<int Function(ffi.Pointer<ncfadectx>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncfadectx>)>>('ncfadectx_iterations');
+  late final _ncfadectx_iterations = _ncfadectx_iterationsPtr.asFunction<int Function(ffi.Pointer<ncfadectx>)>();
 
   int ncplane_fadeout_iteration(
     ffi.Pointer<ncplane> n,
@@ -2970,16 +2591,10 @@ class NcFfi {
 
   late final _ncplane_fadeout_iterationPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncfadectx>,
-              ffi.Int32,
-              fadecb,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, ffi.Int32, fadecb,
               ffi.Pointer<ffi.Void>)>>('ncplane_fadeout_iteration');
-  late final _ncplane_fadeout_iteration =
-      _ncplane_fadeout_iterationPtr.asFunction<
-          int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, int,
-              fadecb, ffi.Pointer<ffi.Void>)>();
+  late final _ncplane_fadeout_iteration = _ncplane_fadeout_iterationPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, int, fadecb, ffi.Pointer<ffi.Void>)>();
 
   int ncplane_fadein_iteration(
     ffi.Pointer<ncplane> n,
@@ -2999,16 +2614,10 @@ class NcFfi {
 
   late final _ncplane_fadein_iterationPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncfadectx>,
-              ffi.Int32,
-              fadecb,
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, ffi.Int32, fadecb,
               ffi.Pointer<ffi.Void>)>>('ncplane_fadein_iteration');
-  late final _ncplane_fadein_iteration =
-      _ncplane_fadein_iterationPtr.asFunction<
-          int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, int,
-              fadecb, ffi.Pointer<ffi.Void>)>();
+  late final _ncplane_fadein_iteration = _ncplane_fadein_iterationPtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfadectx>, int, fadecb, ffi.Pointer<ffi.Void>)>();
 
   int ncplane_pulse(
     ffi.Pointer<ncplane> n,
@@ -3026,11 +2635,10 @@ class NcFfi {
 
   late final _ncplane_pulsePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>,
-              fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_pulse');
-  late final _ncplane_pulse = _ncplane_pulsePtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb,
-          ffi.Pointer<ffi.Void>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>>('ncplane_pulse');
+  late final _ncplane_pulse = _ncplane_pulsePtr
+      .asFunction<int Function(ffi.Pointer<ncplane>, ffi.Pointer<timespec>, fadecb, ffi.Pointer<ffi.Void>)>();
 
   void ncfadectx_free(
     ffi.Pointer<ncfadectx> nctx,
@@ -3041,10 +2649,8 @@ class NcFfi {
   }
 
   late final _ncfadectx_freePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncfadectx>)>>(
-          'ncfadectx_free');
-  late final _ncfadectx_free =
-      _ncfadectx_freePtr.asFunction<void Function(ffi.Pointer<ncfadectx>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncfadectx>)>>('ncfadectx_free');
+  late final _ncfadectx_free = _ncfadectx_freePtr.asFunction<void Function(ffi.Pointer<ncfadectx>)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_file(
     ffi.Pointer<ffi.Int8> file,
@@ -3054,12 +2660,10 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_from_filePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(
-              ffi.Pointer<ffi.Int8>)>>('ncvisual_from_file');
-  late final _ncvisual_from_file = _ncvisual_from_filePtr
-      .asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>)>();
+  late final _ncvisual_from_filePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>)>>('ncvisual_from_file');
+  late final _ncvisual_from_file =
+      _ncvisual_from_filePtr.asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_rgba(
     ffi.Pointer<ffi.Void> rgba,
@@ -3076,11 +2680,10 @@ class NcFfi {
   }
 
   late final _ncvisual_from_rgbaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32,
-              ffi.Int32, ffi.Int32)>>('ncvisual_from_rgba');
-  late final _ncvisual_from_rgba = _ncvisual_from_rgbaPtr.asFunction<
-      ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int)>();
+          ffi.NativeFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Int32)>>(
+      'ncvisual_from_rgba');
+  late final _ncvisual_from_rgba =
+      _ncvisual_from_rgbaPtr.asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_rgb_packed(
     ffi.Pointer<ffi.Void> rgba,
@@ -3100,12 +2703,10 @@ class NcFfi {
 
   late final _ncvisual_from_rgb_packedPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32,
-              ffi.Int32, ffi.Int32, ffi.Int32)>>('ncvisual_from_rgb_packed');
-  late final _ncvisual_from_rgb_packed =
-      _ncvisual_from_rgb_packedPtr.asFunction<
           ffi.Pointer<ncvisual> Function(
-              ffi.Pointer<ffi.Void>, int, int, int, int)>();
+              ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Int32)>>('ncvisual_from_rgb_packed');
+  late final _ncvisual_from_rgb_packed = _ncvisual_from_rgb_packedPtr
+      .asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int, int)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_rgb_loose(
     ffi.Pointer<ffi.Void> rgba,
@@ -3125,11 +2726,10 @@ class NcFfi {
 
   late final _ncvisual_from_rgb_loosePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32,
-              ffi.Int32, ffi.Int32, ffi.Int32)>>('ncvisual_from_rgb_loose');
-  late final _ncvisual_from_rgb_loose = _ncvisual_from_rgb_loosePtr.asFunction<
-      ffi.Pointer<ncvisual> Function(
-          ffi.Pointer<ffi.Void>, int, int, int, int)>();
+          ffi.Pointer<ncvisual> Function(
+              ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Int32)>>('ncvisual_from_rgb_loose');
+  late final _ncvisual_from_rgb_loose = _ncvisual_from_rgb_loosePtr
+      .asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int, int)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_bgra(
     ffi.Pointer<ffi.Void> bgra,
@@ -3146,11 +2746,10 @@ class NcFfi {
   }
 
   late final _ncvisual_from_bgraPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32,
-              ffi.Int32, ffi.Int32)>>('ncvisual_from_bgra');
-  late final _ncvisual_from_bgra = _ncvisual_from_bgraPtr.asFunction<
-      ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int)>();
+          ffi.NativeFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Int32)>>(
+      'ncvisual_from_bgra');
+  late final _ncvisual_from_bgra =
+      _ncvisual_from_bgraPtr.asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_palidx(
     ffi.Pointer<ffi.Void> data,
@@ -3174,17 +2773,10 @@ class NcFfi {
 
   late final _ncvisual_from_palidxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(
-              ffi.Pointer<ffi.Void>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
+          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Int32,
               ffi.Pointer<ffi.Uint32>)>>('ncvisual_from_palidx');
   late final _ncvisual_from_palidx = _ncvisual_from_palidxPtr.asFunction<
-      ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int, int,
-          int, ffi.Pointer<ffi.Uint32>)>();
+      ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Void>, int, int, int, int, int, ffi.Pointer<ffi.Uint32>)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_plane(
     ffi.Pointer<ncplane> n,
@@ -3207,15 +2799,9 @@ class NcFfi {
   late final _ncvisual_from_planePtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ncvisual> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncvisual_from_plane');
-  late final _ncvisual_from_plane = _ncvisual_from_planePtr.asFunction<
-      ffi.Pointer<ncvisual> Function(
-          ffi.Pointer<ncplane>, int, int, int, int, int)>();
+              ffi.Pointer<ncplane>, ffi.Int32, ffi.Int32, ffi.Int32, ffi.Uint32, ffi.Uint32)>>('ncvisual_from_plane');
+  late final _ncvisual_from_plane = _ncvisual_from_planePtr
+      .asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ncplane>, int, int, int, int, int)>();
 
   ffi.Pointer<ncvisual> ncvisual_from_sixel(
     ffi.Pointer<ffi.Int8> s,
@@ -3229,12 +2815,11 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_from_sixelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>, ffi.Uint32,
-              ffi.Uint32)>>('ncvisual_from_sixel');
-  late final _ncvisual_from_sixel = _ncvisual_from_sixelPtr.asFunction<
-      ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>, int, int)>();
+  late final _ncvisual_from_sixelPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint32)>>(
+          'ncvisual_from_sixel');
+  late final _ncvisual_from_sixel =
+      _ncvisual_from_sixelPtr.asFunction<ffi.Pointer<ncvisual> Function(ffi.Pointer<ffi.Int8>, int, int)>();
 
   int ncvisual_geom(
     ffi.Pointer<notcurses> nc,
@@ -3252,14 +2837,11 @@ class NcFfi {
 
   late final _ncvisual_geomPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<notcurses>,
-              ffi.Pointer<ncvisual>,
-              ffi.Pointer<ncvisual_options>,
+          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>,
               ffi.Pointer<ncvgeom>)>>('ncvisual_geom');
   late final _ncvisual_geom = _ncvisual_geomPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>,
-          ffi.Pointer<ncvisual_options>, ffi.Pointer<ncvgeom>)>();
+      int Function(
+          ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>, ffi.Pointer<ncvgeom>)>();
 
   void ncvisual_destroy(
     ffi.Pointer<ncvisual> ncv,
@@ -3270,10 +2852,8 @@ class NcFfi {
   }
 
   late final _ncvisual_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncvisual>)>>(
-          'ncvisual_destroy');
-  late final _ncvisual_destroy =
-      _ncvisual_destroyPtr.asFunction<void Function(ffi.Pointer<ncvisual>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncvisual>)>>('ncvisual_destroy');
+  late final _ncvisual_destroy = _ncvisual_destroyPtr.asFunction<void Function(ffi.Pointer<ncvisual>)>();
 
   int ncvisual_decode(
     ffi.Pointer<ncvisual> nc,
@@ -3284,10 +2864,8 @@ class NcFfi {
   }
 
   late final _ncvisual_decodePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>)>>(
-          'ncvisual_decode');
-  late final _ncvisual_decode =
-      _ncvisual_decodePtr.asFunction<int Function(ffi.Pointer<ncvisual>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>)>>('ncvisual_decode');
+  late final _ncvisual_decode = _ncvisual_decodePtr.asFunction<int Function(ffi.Pointer<ncvisual>)>();
 
   int ncvisual_decode_loop(
     ffi.Pointer<ncvisual> nc,
@@ -3298,10 +2876,8 @@ class NcFfi {
   }
 
   late final _ncvisual_decode_loopPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>)>>(
-          'ncvisual_decode_loop');
-  late final _ncvisual_decode_loop = _ncvisual_decode_loopPtr
-      .asFunction<int Function(ffi.Pointer<ncvisual>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>)>>('ncvisual_decode_loop');
+  late final _ncvisual_decode_loop = _ncvisual_decode_loopPtr.asFunction<int Function(ffi.Pointer<ncvisual>)>();
 
   int ncvisual_rotate(
     ffi.Pointer<ncvisual> n,
@@ -3313,12 +2889,9 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_rotatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncvisual>, ffi.Double)>>('ncvisual_rotate');
-  late final _ncvisual_rotate = _ncvisual_rotatePtr
-      .asFunction<int Function(ffi.Pointer<ncvisual>, double)>();
+  late final _ncvisual_rotatePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Double)>>('ncvisual_rotate');
+  late final _ncvisual_rotate = _ncvisual_rotatePtr.asFunction<int Function(ffi.Pointer<ncvisual>, double)>();
 
   int ncvisual_resize(
     ffi.Pointer<ncvisual> n,
@@ -3332,12 +2905,9 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_resizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncvisual>, ffi.Int32, ffi.Int32)>>('ncvisual_resize');
-  late final _ncvisual_resize = _ncvisual_resizePtr
-      .asFunction<int Function(ffi.Pointer<ncvisual>, int, int)>();
+  late final _ncvisual_resizePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Int32, ffi.Int32)>>('ncvisual_resize');
+  late final _ncvisual_resize = _ncvisual_resizePtr.asFunction<int Function(ffi.Pointer<ncvisual>, int, int)>();
 
   int ncvisual_resize_noninterpolative(
     ffi.Pointer<ncvisual> n,
@@ -3351,13 +2921,11 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_resize_noninterpolativePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Int32,
-              ffi.Int32)>>('ncvisual_resize_noninterpolative');
+  late final _ncvisual_resize_noninterpolativePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Int32, ffi.Int32)>>(
+          'ncvisual_resize_noninterpolative');
   late final _ncvisual_resize_noninterpolative =
-      _ncvisual_resize_noninterpolativePtr
-          .asFunction<int Function(ffi.Pointer<ncvisual>, int, int)>();
+      _ncvisual_resize_noninterpolativePtr.asFunction<int Function(ffi.Pointer<ncvisual>, int, int)>();
 
   int ncvisual_polyfill_yx(
     ffi.Pointer<ncvisual> n,
@@ -3373,12 +2941,11 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_polyfill_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32,
-              ffi.Uint32)>>('ncvisual_polyfill_yx');
-  late final _ncvisual_polyfill_yx = _ncvisual_polyfill_yxPtr
-      .asFunction<int Function(ffi.Pointer<ncvisual>, int, int, int)>();
+  late final _ncvisual_polyfill_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32, ffi.Uint32)>>(
+          'ncvisual_polyfill_yx');
+  late final _ncvisual_polyfill_yx =
+      _ncvisual_polyfill_yxPtr.asFunction<int Function(ffi.Pointer<ncvisual>, int, int, int)>();
 
   int ncvisual_at_yx(
     ffi.Pointer<ncvisual> n,
@@ -3396,10 +2963,10 @@ class NcFfi {
 
   late final _ncvisual_at_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32,
-              ffi.Pointer<ffi.Uint32>)>>('ncvisual_at_yx');
-  late final _ncvisual_at_yx = _ncvisual_at_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncvisual>, int, int, ffi.Pointer<ffi.Uint32>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32, ffi.Pointer<ffi.Uint32>)>>('ncvisual_at_yx');
+  late final _ncvisual_at_yx =
+      _ncvisual_at_yxPtr.asFunction<int Function(ffi.Pointer<ncvisual>, int, int, ffi.Pointer<ffi.Uint32>)>();
 
   int ncvisual_set_yx(
     ffi.Pointer<ncvisual> n,
@@ -3415,12 +2982,10 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_set_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32,
-              ffi.Uint32)>>('ncvisual_set_yx');
-  late final _ncvisual_set_yx = _ncvisual_set_yxPtr
-      .asFunction<int Function(ffi.Pointer<ncvisual>, int, int, int)>();
+  late final _ncvisual_set_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Uint32, ffi.Uint32, ffi.Uint32)>>(
+          'ncvisual_set_yx');
+  late final _ncvisual_set_yx = _ncvisual_set_yxPtr.asFunction<int Function(ffi.Pointer<ncvisual>, int, int, int)>();
 
   ffi.Pointer<ncplane> ncvisual_blit(
     ffi.Pointer<notcurses> nc,
@@ -3437,12 +3002,9 @@ class NcFfi {
   late final _ncvisual_blitPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ncplane> Function(
-              ffi.Pointer<notcurses>,
-              ffi.Pointer<ncvisual>,
-              ffi.Pointer<ncvisual_options>)>>('ncvisual_blit');
+              ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>)>>('ncvisual_blit');
   late final _ncvisual_blit = _ncvisual_blitPtr.asFunction<
-      ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>,
-          ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>)>();
+      ffi.Pointer<ncplane> Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>)>();
 
   ffi.Pointer<ncplane> ncvisual_subtitle_plane(
     ffi.Pointer<ncplane> parent,
@@ -3454,13 +3016,11 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_subtitle_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncvisual>)>>('ncvisual_subtitle_plane');
-  late final _ncvisual_subtitle_plane = _ncvisual_subtitle_planePtr.asFunction<
-      ffi.Pointer<ncplane> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncvisual>)>();
+  late final _ncvisual_subtitle_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncvisual>)>>(
+          'ncvisual_subtitle_plane');
+  late final _ncvisual_subtitle_plane = _ncvisual_subtitle_planePtr
+      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncvisual>)>();
 
   int ncvisual_media_defblitter(
     ffi.Pointer<notcurses> nc,
@@ -3472,12 +3032,10 @@ class NcFfi {
     );
   }
 
-  late final _ncvisual_media_defblitterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<notcurses>, ffi.Int32)>>('ncvisual_media_defblitter');
-  late final _ncvisual_media_defblitter = _ncvisual_media_defblitterPtr
-      .asFunction<int Function(ffi.Pointer<notcurses>, int)>();
+  late final _ncvisual_media_defblitterPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Int32)>>('ncvisual_media_defblitter');
+  late final _ncvisual_media_defblitter =
+      _ncvisual_media_defblitterPtr.asFunction<int Function(ffi.Pointer<notcurses>, int)>();
 
   int ncvisual_simple_streamer(
     ffi.Pointer<ncvisual> ncv,
@@ -3495,15 +3053,11 @@ class NcFfi {
 
   late final _ncvisual_simple_streamerPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncvisual>,
-              ffi.Pointer<ncvisual_options>,
-              ffi.Pointer<timespec>,
+          ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>, ffi.Pointer<timespec>,
               ffi.Pointer<ffi.Void>)>>('ncvisual_simple_streamer');
-  late final _ncvisual_simple_streamer =
-      _ncvisual_simple_streamerPtr.asFunction<
-          int Function(ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>,
-              ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>();
+  late final _ncvisual_simple_streamer = _ncvisual_simple_streamerPtr.asFunction<
+      int Function(
+          ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>, ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>();
 
   int ncvisual_stream(
     ffi.Pointer<notcurses> nc,
@@ -3525,16 +3079,11 @@ class NcFfi {
 
   late final _ncvisual_streamPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<notcurses>,
-              ffi.Pointer<ncvisual>,
-              ffi.Float,
-              ncstreamcb,
-              ffi.Pointer<ncvisual_options>,
-              ffi.Pointer<ffi.Void>)>>('ncvisual_stream');
+          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, ffi.Float, ncstreamcb,
+              ffi.Pointer<ncvisual_options>, ffi.Pointer<ffi.Void>)>>('ncvisual_stream');
   late final _ncvisual_stream = _ncvisual_streamPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, double,
-          ncstreamcb, ffi.Pointer<ncvisual_options>, ffi.Pointer<ffi.Void>)>();
+      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ncvisual>, double, ncstreamcb, ffi.Pointer<ncvisual_options>,
+          ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<ncreel> ncreel_create(
     ffi.Pointer<ncplane> n,
@@ -3546,13 +3095,11 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncreel> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncreel_options>)>>('ncreel_create');
-  late final _ncreel_create = _ncreel_createPtr.asFunction<
-      ffi.Pointer<ncreel> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncreel_options>)>();
+  late final _ncreel_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncreel> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncreel_options>)>>(
+          'ncreel_create');
+  late final _ncreel_create =
+      _ncreel_createPtr.asFunction<ffi.Pointer<ncreel> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncreel_options>)>();
 
   ffi.Pointer<ncplane> ncreel_plane(
     ffi.Pointer<ncreel> nr,
@@ -3562,11 +3109,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncreel>)>>('ncreel_plane');
-  late final _ncreel_plane = _ncreel_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreel>)>>('ncreel_plane');
+  late final _ncreel_plane = _ncreel_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreel>)>();
 
   ffi.Pointer<nctablet> ncreel_add(
     ffi.Pointer<ncreel> nr,
@@ -3586,15 +3131,11 @@ class NcFfi {
 
   late final _ncreel_addPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<nctablet> Function(
-              ffi.Pointer<ncreel>,
-              ffi.Pointer<nctablet>,
-              ffi.Pointer<nctablet>,
-              tabletcb,
+          ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>, ffi.Pointer<nctablet>, ffi.Pointer<nctablet>, tabletcb,
               ffi.Pointer<ffi.Void>)>>('ncreel_add');
   late final _ncreel_add = _ncreel_addPtr.asFunction<
-      ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>, ffi.Pointer<nctablet>,
-          ffi.Pointer<nctablet>, tabletcb, ffi.Pointer<ffi.Void>)>();
+      ffi.Pointer<nctablet> Function(
+          ffi.Pointer<ncreel>, ffi.Pointer<nctablet>, ffi.Pointer<nctablet>, tabletcb, ffi.Pointer<ffi.Void>)>();
 
   int ncreel_tabletcount(
     ffi.Pointer<ncreel> nr,
@@ -3605,10 +3146,8 @@ class NcFfi {
   }
 
   late final _ncreel_tabletcountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreel>)>>(
-          'ncreel_tabletcount');
-  late final _ncreel_tabletcount =
-      _ncreel_tabletcountPtr.asFunction<int Function(ffi.Pointer<ncreel>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreel>)>>('ncreel_tabletcount');
+  late final _ncreel_tabletcount = _ncreel_tabletcountPtr.asFunction<int Function(ffi.Pointer<ncreel>)>();
 
   int ncreel_del(
     ffi.Pointer<ncreel> nr,
@@ -3620,12 +3159,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_delPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncreel>, ffi.Pointer<nctablet>)>>('ncreel_del');
-  late final _ncreel_del = _ncreel_delPtr
-      .asFunction<int Function(ffi.Pointer<ncreel>, ffi.Pointer<nctablet>)>();
+  late final _ncreel_delPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreel>, ffi.Pointer<nctablet>)>>('ncreel_del');
+  late final _ncreel_del = _ncreel_delPtr.asFunction<int Function(ffi.Pointer<ncreel>, ffi.Pointer<nctablet>)>();
 
   int ncreel_redraw(
     ffi.Pointer<ncreel> nr,
@@ -3635,11 +3171,8 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_redrawPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreel>)>>(
-          'ncreel_redraw');
-  late final _ncreel_redraw =
-      _ncreel_redrawPtr.asFunction<int Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_redrawPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreel>)>>('ncreel_redraw');
+  late final _ncreel_redraw = _ncreel_redrawPtr.asFunction<int Function(ffi.Pointer<ncreel>)>();
 
   int ncreel_offer_input(
     ffi.Pointer<ncreel> nr,
@@ -3651,12 +3184,10 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncreel>,
-              ffi.Pointer<ncinput>)>>('ncreel_offer_input');
-  late final _ncreel_offer_input = _ncreel_offer_inputPtr
-      .asFunction<int Function(ffi.Pointer<ncreel>, ffi.Pointer<ncinput>)>();
+  late final _ncreel_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncreel>, ffi.Pointer<ncinput>)>>('ncreel_offer_input');
+  late final _ncreel_offer_input =
+      _ncreel_offer_inputPtr.asFunction<int Function(ffi.Pointer<ncreel>, ffi.Pointer<ncinput>)>();
 
   ffi.Pointer<nctablet> ncreel_focused(
     ffi.Pointer<ncreel> nr,
@@ -3666,12 +3197,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_focusedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctablet> Function(
-              ffi.Pointer<ncreel>)>>('ncreel_focused');
-  late final _ncreel_focused = _ncreel_focusedPtr
-      .asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_focusedPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>>('ncreel_focused');
+  late final _ncreel_focused = _ncreel_focusedPtr.asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
 
   ffi.Pointer<nctablet> ncreel_next(
     ffi.Pointer<ncreel> nr,
@@ -3681,11 +3209,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_nextPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>>('ncreel_next');
-  late final _ncreel_next = _ncreel_nextPtr
-      .asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_nextPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>>('ncreel_next');
+  late final _ncreel_next = _ncreel_nextPtr.asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
 
   ffi.Pointer<nctablet> ncreel_prev(
     ffi.Pointer<ncreel> nr,
@@ -3695,11 +3221,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_prevPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>>('ncreel_prev');
-  late final _ncreel_prev = _ncreel_prevPtr
-      .asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_prevPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>>('ncreel_prev');
+  late final _ncreel_prev = _ncreel_prevPtr.asFunction<ffi.Pointer<nctablet> Function(ffi.Pointer<ncreel>)>();
 
   void ncreel_destroy(
     ffi.Pointer<ncreel> nr,
@@ -3709,11 +3233,8 @@ class NcFfi {
     );
   }
 
-  late final _ncreel_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncreel>)>>(
-          'ncreel_destroy');
-  late final _ncreel_destroy =
-      _ncreel_destroyPtr.asFunction<void Function(ffi.Pointer<ncreel>)>();
+  late final _ncreel_destroyPtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncreel>)>>('ncreel_destroy');
+  late final _ncreel_destroy = _ncreel_destroyPtr.asFunction<void Function(ffi.Pointer<ncreel>)>();
 
   ffi.Pointer<ffi.Void> nctablet_userptr(
     ffi.Pointer<nctablet> t,
@@ -3723,12 +3244,10 @@ class NcFfi {
     );
   }
 
-  late final _nctablet_userptrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(
-              ffi.Pointer<nctablet>)>>('nctablet_userptr');
-  late final _nctablet_userptr = _nctablet_userptrPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctablet>)>();
+  late final _nctablet_userptrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctablet>)>>('nctablet_userptr');
+  late final _nctablet_userptr =
+      _nctablet_userptrPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctablet>)>();
 
   ffi.Pointer<ncplane> nctablet_plane(
     ffi.Pointer<nctablet> t,
@@ -3738,12 +3257,9 @@ class NcFfi {
     );
   }
 
-  late final _nctablet_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<nctablet>)>>('nctablet_plane');
-  late final _nctablet_plane = _nctablet_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctablet>)>();
+  late final _nctablet_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctablet>)>>('nctablet_plane');
+  late final _nctablet_plane = _nctablet_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctablet>)>();
 
   int notcurses_default_foreground(
     ffi.Pointer<notcurses> nc,
@@ -3755,13 +3271,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_default_foregroundPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ffi.Uint32>)>>('notcurses_default_foreground');
+  late final _notcurses_default_foregroundPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>>(
+          'notcurses_default_foreground');
   late final _notcurses_default_foreground =
-      _notcurses_default_foregroundPtr.asFunction<
-          int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>();
+      _notcurses_default_foregroundPtr.asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>();
 
   int notcurses_default_background(
     ffi.Pointer<notcurses> nc,
@@ -3773,13 +3287,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_default_backgroundPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>,
-              ffi.Pointer<ffi.Uint32>)>>('notcurses_default_background');
+  late final _notcurses_default_backgroundPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>>(
+          'notcurses_default_background');
   late final _notcurses_default_background =
-      _notcurses_default_backgroundPtr.asFunction<
-          int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>();
+      _notcurses_default_backgroundPtr.asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Uint32>)>();
 
   int notcurses_cursor_enable(
     ffi.Pointer<notcurses> nc,
@@ -3793,12 +3305,11 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_cursor_enablePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Int32,
-              ffi.Int32)>>('notcurses_cursor_enable');
-  late final _notcurses_cursor_enable = _notcurses_cursor_enablePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>, int, int)>();
+  late final _notcurses_cursor_enablePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Int32, ffi.Int32)>>(
+          'notcurses_cursor_enable');
+  late final _notcurses_cursor_enable =
+      _notcurses_cursor_enablePtr.asFunction<int Function(ffi.Pointer<notcurses>, int, int)>();
 
   int notcurses_cursor_disable(
     ffi.Pointer<notcurses> nc,
@@ -3809,10 +3320,9 @@ class NcFfi {
   }
 
   late final _notcurses_cursor_disablePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>(
-          'notcurses_cursor_disable');
-  late final _notcurses_cursor_disable = _notcurses_cursor_disablePtr
-      .asFunction<int Function(ffi.Pointer<notcurses>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<notcurses>)>>('notcurses_cursor_disable');
+  late final _notcurses_cursor_disable =
+      _notcurses_cursor_disablePtr.asFunction<int Function(ffi.Pointer<notcurses>)>();
 
   int notcurses_cursor_yx(
     ffi.Pointer<notcurses> nc,
@@ -3828,11 +3338,10 @@ class NcFfi {
 
   late final _notcurses_cursor_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Int32>,
-              ffi.Pointer<ffi.Int32>)>>('notcurses_cursor_yx');
-  late final _notcurses_cursor_yx = _notcurses_cursor_yxPtr.asFunction<
-      int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Int32>,
-          ffi.Pointer<ffi.Int32>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<notcurses>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>>('notcurses_cursor_yx');
+  late final _notcurses_cursor_yx = _notcurses_cursor_yxPtr
+      .asFunction<int Function(ffi.Pointer<notcurses>, ffi.Pointer<ffi.Int32>, ffi.Pointer<ffi.Int32>)>();
 
   void ncplane_greyscale(
     ffi.Pointer<ncplane> n,
@@ -3843,10 +3352,8 @@ class NcFfi {
   }
 
   late final _ncplane_greyscalePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>(
-          'ncplane_greyscale');
-  late final _ncplane_greyscale =
-      _ncplane_greyscalePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncplane>)>>('ncplane_greyscale');
+  late final _ncplane_greyscale = _ncplane_greyscalePtr.asFunction<void Function(ffi.Pointer<ncplane>)>();
 
   ffi.Pointer<ncselector> ncselector_create(
     ffi.Pointer<ncplane> n,
@@ -3859,12 +3366,10 @@ class NcFfi {
   }
 
   late final _ncselector_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncselector> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncselector_options>)>>('ncselector_create');
-  late final _ncselector_create = _ncselector_createPtr.asFunction<
-      ffi.Pointer<ncselector> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncselector_options>)>();
+          ffi.NativeFunction<ffi.Pointer<ncselector> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncselector_options>)>>(
+      'ncselector_create');
+  late final _ncselector_create = _ncselector_createPtr
+      .asFunction<ffi.Pointer<ncselector> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncselector_options>)>();
 
   int ncselector_additem(
     ffi.Pointer<ncselector> n,
@@ -3876,12 +3381,11 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_additemPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncselector>,
-              ffi.Pointer<ncselector_item>)>>('ncselector_additem');
-  late final _ncselector_additem = _ncselector_additemPtr.asFunction<
-      int Function(ffi.Pointer<ncselector>, ffi.Pointer<ncselector_item>)>();
+  late final _ncselector_additemPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncselector>, ffi.Pointer<ncselector_item>)>>(
+          'ncselector_additem');
+  late final _ncselector_additem =
+      _ncselector_additemPtr.asFunction<int Function(ffi.Pointer<ncselector>, ffi.Pointer<ncselector_item>)>();
 
   int ncselector_delitem(
     ffi.Pointer<ncselector> n,
@@ -3893,12 +3397,11 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_delitemPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncselector>,
-              ffi.Pointer<ffi.Int8>)>>('ncselector_delitem');
-  late final _ncselector_delitem = _ncselector_delitemPtr.asFunction<
-      int Function(ffi.Pointer<ncselector>, ffi.Pointer<ffi.Int8>)>();
+  late final _ncselector_delitemPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncselector>, ffi.Pointer<ffi.Int8>)>>(
+          'ncselector_delitem');
+  late final _ncselector_delitem =
+      _ncselector_delitemPtr.asFunction<int Function(ffi.Pointer<ncselector>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ffi.Int8> ncselector_selected(
     ffi.Pointer<ncselector> n,
@@ -3908,12 +3411,10 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_selectedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncselector>)>>('ncselector_selected');
-  late final _ncselector_selected = _ncselector_selectedPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
+  late final _ncselector_selectedPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>>('ncselector_selected');
+  late final _ncselector_selected =
+      _ncselector_selectedPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
 
   ffi.Pointer<ncplane> ncselector_plane(
     ffi.Pointer<ncselector> n,
@@ -3923,12 +3424,10 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncselector>)>>('ncselector_plane');
-  late final _ncselector_plane = _ncselector_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncselector>)>();
+  late final _ncselector_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncselector>)>>('ncselector_plane');
+  late final _ncselector_plane =
+      _ncselector_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncselector>)>();
 
   ffi.Pointer<ffi.Int8> ncselector_previtem(
     ffi.Pointer<ncselector> n,
@@ -3938,12 +3437,10 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_previtemPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncselector>)>>('ncselector_previtem');
-  late final _ncselector_previtem = _ncselector_previtemPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
+  late final _ncselector_previtemPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>>('ncselector_previtem');
+  late final _ncselector_previtem =
+      _ncselector_previtemPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
 
   ffi.Pointer<ffi.Int8> ncselector_nextitem(
     ffi.Pointer<ncselector> n,
@@ -3953,12 +3450,10 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_nextitemPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncselector>)>>('ncselector_nextitem');
-  late final _ncselector_nextitem = _ncselector_nextitemPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
+  late final _ncselector_nextitemPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>>('ncselector_nextitem');
+  late final _ncselector_nextitem =
+      _ncselector_nextitemPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncselector>)>();
 
   int ncselector_offer_input(
     ffi.Pointer<ncselector> n,
@@ -3970,12 +3465,11 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncselector>,
-              ffi.Pointer<ncinput>)>>('ncselector_offer_input');
-  late final _ncselector_offer_input = _ncselector_offer_inputPtr.asFunction<
-      int Function(ffi.Pointer<ncselector>, ffi.Pointer<ncinput>)>();
+  late final _ncselector_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncselector>, ffi.Pointer<ncinput>)>>(
+          'ncselector_offer_input');
+  late final _ncselector_offer_input =
+      _ncselector_offer_inputPtr.asFunction<int Function(ffi.Pointer<ncselector>, ffi.Pointer<ncinput>)>();
 
   void ncselector_destroy(
     ffi.Pointer<ncselector> n,
@@ -3987,13 +3481,11 @@ class NcFfi {
     );
   }
 
-  late final _ncselector_destroyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncselector>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('ncselector_destroy');
-  late final _ncselector_destroy = _ncselector_destroyPtr.asFunction<
-      void Function(
-          ffi.Pointer<ncselector>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>();
+  late final _ncselector_destroyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncselector>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>(
+          'ncselector_destroy');
+  late final _ncselector_destroy =
+      _ncselector_destroyPtr.asFunction<void Function(ffi.Pointer<ncselector>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>();
 
   ffi.Pointer<ncmultiselector> ncmultiselector_create(
     ffi.Pointer<ncplane> n,
@@ -4007,11 +3499,10 @@ class NcFfi {
 
   late final _ncmultiselector_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncmultiselector> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncmultiselector_options>)>>('ncmultiselector_create');
-  late final _ncmultiselector_create = _ncmultiselector_createPtr.asFunction<
-      ffi.Pointer<ncmultiselector> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncmultiselector_options>)>();
+          ffi.Pointer<ncmultiselector> Function(
+              ffi.Pointer<ncplane>, ffi.Pointer<ncmultiselector_options>)>>('ncmultiselector_create');
+  late final _ncmultiselector_create = _ncmultiselector_createPtr
+      .asFunction<ffi.Pointer<ncmultiselector> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncmultiselector_options>)>();
 
   int ncmultiselector_selected(
     ffi.Pointer<ncmultiselector> n,
@@ -4025,14 +3516,11 @@ class NcFfi {
     );
   }
 
-  late final _ncmultiselector_selectedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncmultiselector>,
-              ffi.Pointer<ffi.Uint8>, ffi.Uint32)>>('ncmultiselector_selected');
-  late final _ncmultiselector_selected =
-      _ncmultiselector_selectedPtr.asFunction<
-          int Function(
-              ffi.Pointer<ncmultiselector>, ffi.Pointer<ffi.Uint8>, int)>();
+  late final _ncmultiselector_selectedPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmultiselector>, ffi.Pointer<ffi.Uint8>, ffi.Uint32)>>(
+          'ncmultiselector_selected');
+  late final _ncmultiselector_selected = _ncmultiselector_selectedPtr
+      .asFunction<int Function(ffi.Pointer<ncmultiselector>, ffi.Pointer<ffi.Uint8>, int)>();
 
   ffi.Pointer<ncplane> ncmultiselector_plane(
     ffi.Pointer<ncmultiselector> n,
@@ -4042,12 +3530,10 @@ class NcFfi {
     );
   }
 
-  late final _ncmultiselector_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncmultiselector>)>>('ncmultiselector_plane');
-  late final _ncmultiselector_plane = _ncmultiselector_planePtr.asFunction<
-      ffi.Pointer<ncplane> Function(ffi.Pointer<ncmultiselector>)>();
+  late final _ncmultiselector_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncmultiselector>)>>('ncmultiselector_plane');
+  late final _ncmultiselector_plane =
+      _ncmultiselector_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncmultiselector>)>();
 
   int ncmultiselector_offer_input(
     ffi.Pointer<ncmultiselector> n,
@@ -4059,13 +3545,11 @@ class NcFfi {
     );
   }
 
-  late final _ncmultiselector_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncmultiselector>,
-              ffi.Pointer<ncinput>)>>('ncmultiselector_offer_input');
+  late final _ncmultiselector_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncmultiselector>, ffi.Pointer<ncinput>)>>(
+          'ncmultiselector_offer_input');
   late final _ncmultiselector_offer_input =
-      _ncmultiselector_offer_inputPtr.asFunction<
-          int Function(ffi.Pointer<ncmultiselector>, ffi.Pointer<ncinput>)>();
+      _ncmultiselector_offer_inputPtr.asFunction<int Function(ffi.Pointer<ncmultiselector>, ffi.Pointer<ncinput>)>();
 
   void ncmultiselector_destroy(
     ffi.Pointer<ncmultiselector> n,
@@ -4075,11 +3559,10 @@ class NcFfi {
     );
   }
 
-  late final _ncmultiselector_destroyPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncmultiselector>)>>(
-      'ncmultiselector_destroy');
-  late final _ncmultiselector_destroy = _ncmultiselector_destroyPtr
-      .asFunction<void Function(ffi.Pointer<ncmultiselector>)>();
+  late final _ncmultiselector_destroyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncmultiselector>)>>('ncmultiselector_destroy');
+  late final _ncmultiselector_destroy =
+      _ncmultiselector_destroyPtr.asFunction<void Function(ffi.Pointer<ncmultiselector>)>();
 
   ffi.Pointer<nctree> nctree_create(
     ffi.Pointer<ncplane> n,
@@ -4091,13 +3574,11 @@ class NcFfi {
     );
   }
 
-  late final _nctree_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctree> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<nctree_options>)>>('nctree_create');
-  late final _nctree_create = _nctree_createPtr.asFunction<
-      ffi.Pointer<nctree> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<nctree_options>)>();
+  late final _nctree_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctree> Function(ffi.Pointer<ncplane>, ffi.Pointer<nctree_options>)>>(
+          'nctree_create');
+  late final _nctree_create =
+      _nctree_createPtr.asFunction<ffi.Pointer<nctree> Function(ffi.Pointer<ncplane>, ffi.Pointer<nctree_options>)>();
 
   ffi.Pointer<ncplane> nctree_plane(
     ffi.Pointer<nctree> n,
@@ -4107,11 +3588,9 @@ class NcFfi {
     );
   }
 
-  late final _nctree_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<nctree>)>>('nctree_plane');
-  late final _nctree_plane = _nctree_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctree>)>();
+  late final _nctree_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctree>)>>('nctree_plane');
+  late final _nctree_plane = _nctree_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctree>)>();
 
   int nctree_redraw(
     ffi.Pointer<nctree> n,
@@ -4121,11 +3600,8 @@ class NcFfi {
     );
   }
 
-  late final _nctree_redrawPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctree>)>>(
-          'nctree_redraw');
-  late final _nctree_redraw =
-      _nctree_redrawPtr.asFunction<int Function(ffi.Pointer<nctree>)>();
+  late final _nctree_redrawPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctree>)>>('nctree_redraw');
+  late final _nctree_redraw = _nctree_redrawPtr.asFunction<int Function(ffi.Pointer<nctree>)>();
 
   int nctree_offer_input(
     ffi.Pointer<nctree> n,
@@ -4137,12 +3613,10 @@ class NcFfi {
     );
   }
 
-  late final _nctree_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<nctree>,
-              ffi.Pointer<ncinput>)>>('nctree_offer_input');
-  late final _nctree_offer_input = _nctree_offer_inputPtr
-      .asFunction<int Function(ffi.Pointer<nctree>, ffi.Pointer<ncinput>)>();
+  late final _nctree_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<nctree>, ffi.Pointer<ncinput>)>>('nctree_offer_input');
+  late final _nctree_offer_input =
+      _nctree_offer_inputPtr.asFunction<int Function(ffi.Pointer<nctree>, ffi.Pointer<ncinput>)>();
 
   ffi.Pointer<ffi.Void> nctree_focused(
     ffi.Pointer<nctree> n,
@@ -4152,12 +3626,9 @@ class NcFfi {
     );
   }
 
-  late final _nctree_focusedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(
-              ffi.Pointer<nctree>)>>('nctree_focused');
-  late final _nctree_focused = _nctree_focusedPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
+  late final _nctree_focusedPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>>('nctree_focused');
+  late final _nctree_focused = _nctree_focusedPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
 
   ffi.Pointer<ffi.Void> nctree_next(
     ffi.Pointer<nctree> n,
@@ -4167,11 +3638,9 @@ class NcFfi {
     );
   }
 
-  late final _nctree_nextPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>>('nctree_next');
-  late final _nctree_next = _nctree_nextPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
+  late final _nctree_nextPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>>('nctree_next');
+  late final _nctree_next = _nctree_nextPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
 
   ffi.Pointer<ffi.Void> nctree_prev(
     ffi.Pointer<nctree> n,
@@ -4181,11 +3650,9 @@ class NcFfi {
     );
   }
 
-  late final _nctree_prevPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>>('nctree_prev');
-  late final _nctree_prev = _nctree_prevPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
+  late final _nctree_prevPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>>('nctree_prev');
+  late final _nctree_prev = _nctree_prevPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>)>();
 
   ffi.Pointer<ffi.Void> nctree_goto(
     ffi.Pointer<nctree> n,
@@ -4201,11 +3668,10 @@ class NcFfi {
 
   late final _nctree_gotoPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>,
-              ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Int32>)>>('nctree_goto');
+          ffi.Pointer<ffi.Void> Function(
+              ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Int32>)>>('nctree_goto');
   late final _nctree_goto = _nctree_gotoPtr.asFunction<
-      ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>,
-          ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Int32>)>();
+      ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Int32>)>();
 
   int nctree_add(
     ffi.Pointer<nctree> n,
@@ -4221,11 +3687,9 @@ class NcFfi {
 
   late final _nctree_addPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<nctree_item>)>>('nctree_add');
-  late final _nctree_add = _nctree_addPtr.asFunction<
-      int Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<nctree_item>)>();
+          ffi.Int32 Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<nctree_item>)>>('nctree_add');
+  late final _nctree_add =
+      _nctree_addPtr.asFunction<int Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<nctree_item>)>();
 
   int nctree_del(
     ffi.Pointer<nctree> n,
@@ -4237,12 +3701,9 @@ class NcFfi {
     );
   }
 
-  late final _nctree_delPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>)>>('nctree_del');
-  late final _nctree_del = _nctree_delPtr
-      .asFunction<int Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>)>();
+  late final _nctree_delPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>)>>('nctree_del');
+  late final _nctree_del = _nctree_delPtr.asFunction<int Function(ffi.Pointer<nctree>, ffi.Pointer<ffi.Uint32>)>();
 
   void nctree_destroy(
     ffi.Pointer<nctree> n,
@@ -4252,11 +3713,8 @@ class NcFfi {
     );
   }
 
-  late final _nctree_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctree>)>>(
-          'nctree_destroy');
-  late final _nctree_destroy =
-      _nctree_destroyPtr.asFunction<void Function(ffi.Pointer<nctree>)>();
+  late final _nctree_destroyPtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctree>)>>('nctree_destroy');
+  late final _nctree_destroy = _nctree_destroyPtr.asFunction<void Function(ffi.Pointer<nctree>)>();
 
   ffi.Pointer<ncmenu> ncmenu_create(
     ffi.Pointer<ncplane> n,
@@ -4268,13 +3726,11 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncmenu> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncmenu_options>)>>('ncmenu_create');
-  late final _ncmenu_create = _ncmenu_createPtr.asFunction<
-      ffi.Pointer<ncmenu> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncmenu_options>)>();
+  late final _ncmenu_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncmenu> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncmenu_options>)>>(
+          'ncmenu_create');
+  late final _ncmenu_create =
+      _ncmenu_createPtr.asFunction<ffi.Pointer<ncmenu> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncmenu_options>)>();
 
   int ncmenu_unroll(
     ffi.Pointer<ncmenu> n,
@@ -4286,11 +3742,9 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_unrollPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncmenu>, ffi.Int32)>>('ncmenu_unroll');
-  late final _ncmenu_unroll =
-      _ncmenu_unrollPtr.asFunction<int Function(ffi.Pointer<ncmenu>, int)>();
+  late final _ncmenu_unrollPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>, ffi.Int32)>>('ncmenu_unroll');
+  late final _ncmenu_unroll = _ncmenu_unrollPtr.asFunction<int Function(ffi.Pointer<ncmenu>, int)>();
 
   int ncmenu_rollup(
     ffi.Pointer<ncmenu> n,
@@ -4300,11 +3754,8 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_rollupPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_rollup');
-  late final _ncmenu_rollup =
-      _ncmenu_rollupPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
+  late final _ncmenu_rollupPtr = _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>('ncmenu_rollup');
+  late final _ncmenu_rollup = _ncmenu_rollupPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_nextsection(
     ffi.Pointer<ncmenu> n,
@@ -4315,10 +3766,8 @@ class NcFfi {
   }
 
   late final _ncmenu_nextsectionPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_nextsection');
-  late final _ncmenu_nextsection =
-      _ncmenu_nextsectionPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>('ncmenu_nextsection');
+  late final _ncmenu_nextsection = _ncmenu_nextsectionPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_prevsection(
     ffi.Pointer<ncmenu> n,
@@ -4329,10 +3778,8 @@ class NcFfi {
   }
 
   late final _ncmenu_prevsectionPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_prevsection');
-  late final _ncmenu_prevsection =
-      _ncmenu_prevsectionPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>('ncmenu_prevsection');
+  late final _ncmenu_prevsection = _ncmenu_prevsectionPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_nextitem(
     ffi.Pointer<ncmenu> n,
@@ -4343,10 +3790,8 @@ class NcFfi {
   }
 
   late final _ncmenu_nextitemPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_nextitem');
-  late final _ncmenu_nextitem =
-      _ncmenu_nextitemPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>('ncmenu_nextitem');
+  late final _ncmenu_nextitem = _ncmenu_nextitemPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_previtem(
     ffi.Pointer<ncmenu> n,
@@ -4357,10 +3802,8 @@ class NcFfi {
   }
 
   late final _ncmenu_previtemPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_previtem');
-  late final _ncmenu_previtem =
-      _ncmenu_previtemPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncmenu>)>>('ncmenu_previtem');
+  late final _ncmenu_previtem = _ncmenu_previtemPtr.asFunction<int Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_item_set_status(
     ffi.Pointer<ncmenu> n,
@@ -4378,11 +3821,10 @@ class NcFfi {
 
   late final _ncmenu_item_set_statusPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncmenu>, ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Int8>, ffi.Uint8)>>('ncmenu_item_set_status');
-  late final _ncmenu_item_set_status = _ncmenu_item_set_statusPtr.asFunction<
-      int Function(ffi.Pointer<ncmenu>, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<ffi.Int8>, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncmenu>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, ffi.Uint8)>>('ncmenu_item_set_status');
+  late final _ncmenu_item_set_status = _ncmenu_item_set_statusPtr
+      .asFunction<int Function(ffi.Pointer<ncmenu>, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>, int)>();
 
   ffi.Pointer<ffi.Int8> ncmenu_selected(
     ffi.Pointer<ncmenu> n,
@@ -4394,13 +3836,11 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_selectedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>>('ncmenu_selected');
-  late final _ncmenu_selected = _ncmenu_selectedPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(
-          ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>();
+  late final _ncmenu_selectedPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>>(
+          'ncmenu_selected');
+  late final _ncmenu_selected =
+      _ncmenu_selectedPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>();
 
   ffi.Pointer<ffi.Int8> ncmenu_mouse_selected(
     ffi.Pointer<ncmenu> n,
@@ -4417,12 +3857,9 @@ class NcFfi {
   late final _ncmenu_mouse_selectedPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncmenu>,
-              ffi.Pointer<ncinput>,
-              ffi.Pointer<ncinput>)>>('ncmenu_mouse_selected');
-  late final _ncmenu_mouse_selected = _ncmenu_mouse_selectedPtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(
-          ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>, ffi.Pointer<ncinput>)>();
+              ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>, ffi.Pointer<ncinput>)>>('ncmenu_mouse_selected');
+  late final _ncmenu_mouse_selected = _ncmenu_mouse_selectedPtr
+      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>, ffi.Pointer<ncinput>)>();
 
   ffi.Pointer<ncplane> ncmenu_plane(
     ffi.Pointer<ncmenu> n,
@@ -4432,11 +3869,9 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(ffi.Pointer<ncmenu>)>>('ncmenu_plane');
-  late final _ncmenu_plane = _ncmenu_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncmenu>)>();
+  late final _ncmenu_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncmenu>)>>('ncmenu_plane');
+  late final _ncmenu_plane = _ncmenu_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncmenu>)>();
 
   int ncmenu_offer_input(
     ffi.Pointer<ncmenu> n,
@@ -4448,12 +3883,10 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncmenu>,
-              ffi.Pointer<ncinput>)>>('ncmenu_offer_input');
-  late final _ncmenu_offer_input = _ncmenu_offer_inputPtr
-      .asFunction<int Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>();
+  late final _ncmenu_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>>('ncmenu_offer_input');
+  late final _ncmenu_offer_input =
+      _ncmenu_offer_inputPtr.asFunction<int Function(ffi.Pointer<ncmenu>, ffi.Pointer<ncinput>)>();
 
   void ncmenu_destroy(
     ffi.Pointer<ncmenu> n,
@@ -4463,11 +3896,8 @@ class NcFfi {
     );
   }
 
-  late final _ncmenu_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncmenu>)>>(
-          'ncmenu_destroy');
-  late final _ncmenu_destroy =
-      _ncmenu_destroyPtr.asFunction<void Function(ffi.Pointer<ncmenu>)>();
+  late final _ncmenu_destroyPtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncmenu>)>>('ncmenu_destroy');
+  late final _ncmenu_destroy = _ncmenu_destroyPtr.asFunction<void Function(ffi.Pointer<ncmenu>)>();
 
   ffi.Pointer<ncprogbar> ncprogbar_create(
     ffi.Pointer<ncplane> n,
@@ -4480,12 +3910,10 @@ class NcFfi {
   }
 
   late final _ncprogbar_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncprogbar> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncprogbar_options>)>>('ncprogbar_create');
-  late final _ncprogbar_create = _ncprogbar_createPtr.asFunction<
-      ffi.Pointer<ncprogbar> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncprogbar_options>)>();
+          ffi.NativeFunction<ffi.Pointer<ncprogbar> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncprogbar_options>)>>(
+      'ncprogbar_create');
+  late final _ncprogbar_create = _ncprogbar_createPtr
+      .asFunction<ffi.Pointer<ncprogbar> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncprogbar_options>)>();
 
   ffi.Pointer<ncplane> ncprogbar_plane(
     ffi.Pointer<ncprogbar> n,
@@ -4495,12 +3923,9 @@ class NcFfi {
     );
   }
 
-  late final _ncprogbar_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncprogbar>)>>('ncprogbar_plane');
-  late final _ncprogbar_plane = _ncprogbar_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncprogbar>)>();
+  late final _ncprogbar_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncprogbar>)>>('ncprogbar_plane');
+  late final _ncprogbar_plane = _ncprogbar_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncprogbar>)>();
 
   int ncprogbar_set_progress(
     ffi.Pointer<ncprogbar> n,
@@ -4512,12 +3937,10 @@ class NcFfi {
     );
   }
 
-  late final _ncprogbar_set_progressPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncprogbar>, ffi.Double)>>('ncprogbar_set_progress');
-  late final _ncprogbar_set_progress = _ncprogbar_set_progressPtr
-      .asFunction<int Function(ffi.Pointer<ncprogbar>, double)>();
+  late final _ncprogbar_set_progressPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncprogbar>, ffi.Double)>>('ncprogbar_set_progress');
+  late final _ncprogbar_set_progress =
+      _ncprogbar_set_progressPtr.asFunction<int Function(ffi.Pointer<ncprogbar>, double)>();
 
   double ncprogbar_progress(
     ffi.Pointer<ncprogbar> n,
@@ -4528,10 +3951,8 @@ class NcFfi {
   }
 
   late final _ncprogbar_progressPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(ffi.Pointer<ncprogbar>)>>(
-          'ncprogbar_progress');
-  late final _ncprogbar_progress = _ncprogbar_progressPtr
-      .asFunction<double Function(ffi.Pointer<ncprogbar>)>();
+      _lookup<ffi.NativeFunction<ffi.Double Function(ffi.Pointer<ncprogbar>)>>('ncprogbar_progress');
+  late final _ncprogbar_progress = _ncprogbar_progressPtr.asFunction<double Function(ffi.Pointer<ncprogbar>)>();
 
   void ncprogbar_destroy(
     ffi.Pointer<ncprogbar> n,
@@ -4542,10 +3963,8 @@ class NcFfi {
   }
 
   late final _ncprogbar_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncprogbar>)>>(
-          'ncprogbar_destroy');
-  late final _ncprogbar_destroy =
-      _ncprogbar_destroyPtr.asFunction<void Function(ffi.Pointer<ncprogbar>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncprogbar>)>>('ncprogbar_destroy');
+  late final _ncprogbar_destroy = _ncprogbar_destroyPtr.asFunction<void Function(ffi.Pointer<ncprogbar>)>();
 
   ffi.Pointer<nctabbed> nctabbed_create(
     ffi.Pointer<ncplane> n,
@@ -4557,13 +3976,11 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctabbed> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<nctabbed_options>)>>('nctabbed_create');
-  late final _nctabbed_create = _nctabbed_createPtr.asFunction<
-      ffi.Pointer<nctabbed> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<nctabbed_options>)>();
+  late final _nctabbed_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctabbed> Function(ffi.Pointer<ncplane>, ffi.Pointer<nctabbed_options>)>>(
+          'nctabbed_create');
+  late final _nctabbed_create = _nctabbed_createPtr
+      .asFunction<ffi.Pointer<nctabbed> Function(ffi.Pointer<ncplane>, ffi.Pointer<nctabbed_options>)>();
 
   void nctabbed_destroy(
     ffi.Pointer<nctabbed> nt,
@@ -4574,10 +3991,8 @@ class NcFfi {
   }
 
   late final _nctabbed_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>(
-          'nctabbed_destroy');
-  late final _nctabbed_destroy =
-      _nctabbed_destroyPtr.asFunction<void Function(ffi.Pointer<nctabbed>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>('nctabbed_destroy');
+  late final _nctabbed_destroy = _nctabbed_destroyPtr.asFunction<void Function(ffi.Pointer<nctabbed>)>();
 
   void nctabbed_redraw(
     ffi.Pointer<nctabbed> nt,
@@ -4588,10 +4003,8 @@ class NcFfi {
   }
 
   late final _nctabbed_redrawPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>(
-          'nctabbed_redraw');
-  late final _nctabbed_redraw =
-      _nctabbed_redrawPtr.asFunction<void Function(ffi.Pointer<nctabbed>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>('nctabbed_redraw');
+  late final _nctabbed_redraw = _nctabbed_redrawPtr.asFunction<void Function(ffi.Pointer<nctabbed>)>();
 
   void nctabbed_ensure_selected_header_visible(
     ffi.Pointer<nctabbed> nt,
@@ -4602,11 +4015,9 @@ class NcFfi {
   }
 
   late final _nctabbed_ensure_selected_header_visiblePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>(
-          'nctabbed_ensure_selected_header_visible');
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>)>>('nctabbed_ensure_selected_header_visible');
   late final _nctabbed_ensure_selected_header_visible =
-      _nctabbed_ensure_selected_header_visiblePtr
-          .asFunction<void Function(ffi.Pointer<nctabbed>)>();
+      _nctabbed_ensure_selected_header_visiblePtr.asFunction<void Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<nctab> nctabbed_selected(
     ffi.Pointer<nctabbed> nt,
@@ -4616,12 +4027,10 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_selectedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(
-              ffi.Pointer<nctabbed>)>>('nctabbed_selected');
-  late final _nctabbed_selected = _nctabbed_selectedPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_selectedPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_selected');
+  late final _nctabbed_selected =
+      _nctabbed_selectedPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<nctab> nctabbed_leftmost(
     ffi.Pointer<nctabbed> nt,
@@ -4631,12 +4040,10 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_leftmostPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(
-              ffi.Pointer<nctabbed>)>>('nctabbed_leftmost');
-  late final _nctabbed_leftmost = _nctabbed_leftmostPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_leftmostPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_leftmost');
+  late final _nctabbed_leftmost =
+      _nctabbed_leftmostPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
 
   int nctabbed_tabcount(
     ffi.Pointer<nctabbed> nt,
@@ -4647,10 +4054,8 @@ class NcFfi {
   }
 
   late final _nctabbed_tabcountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>)>>(
-          'nctabbed_tabcount');
-  late final _nctabbed_tabcount =
-      _nctabbed_tabcountPtr.asFunction<int Function(ffi.Pointer<nctabbed>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>)>>('nctabbed_tabcount');
+  late final _nctabbed_tabcount = _nctabbed_tabcountPtr.asFunction<int Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<ncplane> nctabbed_plane(
     ffi.Pointer<nctabbed> nt,
@@ -4660,12 +4065,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<nctabbed>)>>('nctabbed_plane');
-  late final _nctabbed_plane = _nctabbed_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>>('nctabbed_plane');
+  late final _nctabbed_plane = _nctabbed_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<ncplane> nctabbed_content_plane(
     ffi.Pointer<nctabbed> nt,
@@ -4675,12 +4077,10 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_content_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<nctabbed>)>>('nctabbed_content_plane');
-  late final _nctabbed_content_plane = _nctabbed_content_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_content_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>>('nctabbed_content_plane');
+  late final _nctabbed_content_plane =
+      _nctabbed_content_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<nctabbed>)>();
 
   tabcb nctab_cb(
     ffi.Pointer<nctab> t,
@@ -4690,11 +4090,8 @@ class NcFfi {
     );
   }
 
-  late final _nctab_cbPtr =
-      _lookup<ffi.NativeFunction<tabcb Function(ffi.Pointer<nctab>)>>(
-          'nctab_cb');
-  late final _nctab_cb =
-      _nctab_cbPtr.asFunction<tabcb Function(ffi.Pointer<nctab>)>();
+  late final _nctab_cbPtr = _lookup<ffi.NativeFunction<tabcb Function(ffi.Pointer<nctab>)>>('nctab_cb');
+  late final _nctab_cb = _nctab_cbPtr.asFunction<tabcb Function(ffi.Pointer<nctab>)>();
 
   ffi.Pointer<ffi.Int8> nctab_name(
     ffi.Pointer<nctab> t,
@@ -4704,11 +4101,9 @@ class NcFfi {
     );
   }
 
-  late final _nctab_namePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctab>)>>('nctab_name');
-  late final _nctab_name = _nctab_namePtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctab>)>();
+  late final _nctab_namePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctab>)>>('nctab_name');
+  late final _nctab_name = _nctab_namePtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctab>)>();
 
   int nctab_name_width(
     ffi.Pointer<nctab> t,
@@ -4719,10 +4114,8 @@ class NcFfi {
   }
 
   late final _nctab_name_widthPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctab>)>>(
-          'nctab_name_width');
-  late final _nctab_name_width =
-      _nctab_name_widthPtr.asFunction<int Function(ffi.Pointer<nctab>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctab>)>>('nctab_name_width');
+  late final _nctab_name_width = _nctab_name_widthPtr.asFunction<int Function(ffi.Pointer<nctab>)>();
 
   ffi.Pointer<ffi.Void> nctab_userptr(
     ffi.Pointer<nctab> t,
@@ -4732,11 +4125,9 @@ class NcFfi {
     );
   }
 
-  late final _nctab_userptrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>)>>('nctab_userptr');
-  late final _nctab_userptr = _nctab_userptrPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>)>();
+  late final _nctab_userptrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>)>>('nctab_userptr');
+  late final _nctab_userptr = _nctab_userptrPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>)>();
 
   ffi.Pointer<nctab> nctab_next(
     ffi.Pointer<nctab> t,
@@ -4746,11 +4137,9 @@ class NcFfi {
     );
   }
 
-  late final _nctab_nextPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>>(
-      'nctab_next');
-  late final _nctab_next = _nctab_nextPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>();
+  late final _nctab_nextPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>>('nctab_next');
+  late final _nctab_next = _nctab_nextPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>();
 
   ffi.Pointer<nctab> nctab_prev(
     ffi.Pointer<nctab> t,
@@ -4760,11 +4149,9 @@ class NcFfi {
     );
   }
 
-  late final _nctab_prevPtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>>(
-      'nctab_prev');
-  late final _nctab_prev = _nctab_prevPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>();
+  late final _nctab_prevPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>>('nctab_prev');
+  late final _nctab_prev = _nctab_prevPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctab>)>();
 
   ffi.Pointer<nctab> nctabbed_add(
     ffi.Pointer<nctabbed> nt,
@@ -4786,21 +4173,11 @@ class NcFfi {
 
   late final _nctabbed_addPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(
-              ffi.Pointer<nctabbed>,
-              ffi.Pointer<nctab>,
-              ffi.Pointer<nctab>,
-              tabcb,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Void>)>>('nctabbed_add');
+          ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>, ffi.Pointer<nctab>, tabcb,
+              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>)>>('nctabbed_add');
   late final _nctabbed_add = _nctabbed_addPtr.asFunction<
-      ffi.Pointer<nctab> Function(
-          ffi.Pointer<nctabbed>,
-          ffi.Pointer<nctab>,
-          ffi.Pointer<nctab>,
-          tabcb,
-          ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<ffi.Void>)>();
+      ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>, ffi.Pointer<nctab>, tabcb,
+          ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Void>)>();
 
   int nctabbed_del(
     ffi.Pointer<nctabbed> nt,
@@ -4812,12 +4189,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_delPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctabbed_del');
-  late final _nctabbed_del = _nctabbed_delPtr
-      .asFunction<int Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
+  late final _nctabbed_delPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctabbed_del');
+  late final _nctabbed_del = _nctabbed_delPtr.asFunction<int Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
 
   int nctab_move(
     ffi.Pointer<nctabbed> nt,
@@ -4835,11 +4209,10 @@ class NcFfi {
 
   late final _nctab_movePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>,
-              ffi.Pointer<nctab>, ffi.Pointer<nctab>)>>('nctab_move');
-  late final _nctab_move = _nctab_movePtr.asFunction<
-      int Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>,
-          ffi.Pointer<nctab>, ffi.Pointer<nctab>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<nctabbed>, ffi.Pointer<nctab>, ffi.Pointer<nctab>, ffi.Pointer<nctab>)>>('nctab_move');
+  late final _nctab_move = _nctab_movePtr
+      .asFunction<int Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>, ffi.Pointer<nctab>, ffi.Pointer<nctab>)>();
 
   void nctab_move_right(
     ffi.Pointer<nctabbed> nt,
@@ -4851,12 +4224,10 @@ class NcFfi {
     );
   }
 
-  late final _nctab_move_rightPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctab_move_right');
-  late final _nctab_move_right = _nctab_move_rightPtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
+  late final _nctab_move_rightPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctab_move_right');
+  late final _nctab_move_right =
+      _nctab_move_rightPtr.asFunction<void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
 
   void nctab_move_left(
     ffi.Pointer<nctabbed> nt,
@@ -4868,12 +4239,10 @@ class NcFfi {
     );
   }
 
-  late final _nctab_move_leftPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctab_move_left');
-  late final _nctab_move_left = _nctab_move_leftPtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
+  late final _nctab_move_leftPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctab_move_left');
+  late final _nctab_move_left =
+      _nctab_move_leftPtr.asFunction<void Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
 
   void nctabbed_rotate(
     ffi.Pointer<nctabbed> nt,
@@ -4885,12 +4254,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_rotatePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Int32)>>('nctabbed_rotate');
-  late final _nctabbed_rotate = _nctabbed_rotatePtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
+  late final _nctabbed_rotatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Int32)>>('nctabbed_rotate');
+  late final _nctabbed_rotate = _nctabbed_rotatePtr.asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
 
   ffi.Pointer<nctab> nctabbed_next(
     ffi.Pointer<nctabbed> nt,
@@ -4900,11 +4266,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_nextPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_next');
-  late final _nctabbed_next = _nctabbed_nextPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_nextPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_next');
+  late final _nctabbed_next = _nctabbed_nextPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<nctab> nctabbed_prev(
     ffi.Pointer<nctabbed> nt,
@@ -4914,11 +4278,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_prevPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_prev');
-  late final _nctabbed_prev = _nctabbed_prevPtr
-      .asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_prevPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>>('nctabbed_prev');
+  late final _nctabbed_prev = _nctabbed_prevPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>)>();
 
   ffi.Pointer<nctab> nctabbed_select(
     ffi.Pointer<nctabbed> nt,
@@ -4930,12 +4292,11 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_selectPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nctab> Function(
-              ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>('nctabbed_select');
-  late final _nctabbed_select = _nctabbed_selectPtr.asFunction<
-      ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
+  late final _nctabbed_selectPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>>(
+          'nctabbed_select');
+  late final _nctabbed_select =
+      _nctabbed_selectPtr.asFunction<ffi.Pointer<nctab> Function(ffi.Pointer<nctabbed>, ffi.Pointer<nctab>)>();
 
   void nctabbed_channels(
     ffi.Pointer<nctabbed> nt,
@@ -4953,14 +4314,11 @@ class NcFfi {
 
   late final _nctabbed_channelsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>,
-              ffi.Pointer<ffi.Uint64>,
-              ffi.Pointer<ffi.Uint64>,
+          ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Uint64>, ffi.Pointer<ffi.Uint64>,
               ffi.Pointer<ffi.Uint64>)>>('nctabbed_channels');
   late final _nctabbed_channels = _nctabbed_channelsPtr.asFunction<
-      void Function(ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Uint64>,
-          ffi.Pointer<ffi.Uint64>, ffi.Pointer<ffi.Uint64>)>();
+      void Function(
+          ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Uint64>, ffi.Pointer<ffi.Uint64>, ffi.Pointer<ffi.Uint64>)>();
 
   ffi.Pointer<ffi.Int8> nctabbed_separator(
     ffi.Pointer<nctabbed> nt,
@@ -4970,12 +4328,10 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_separatorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<nctabbed>)>>('nctabbed_separator');
-  late final _nctabbed_separator = _nctabbed_separatorPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctabbed>)>();
+  late final _nctabbed_separatorPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctabbed>)>>('nctabbed_separator');
+  late final _nctabbed_separator =
+      _nctabbed_separatorPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<nctabbed>)>();
 
   int nctabbed_separator_width(
     ffi.Pointer<nctabbed> nt,
@@ -4986,10 +4342,8 @@ class NcFfi {
   }
 
   late final _nctabbed_separator_widthPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>)>>(
-          'nctabbed_separator_width');
-  late final _nctabbed_separator_width = _nctabbed_separator_widthPtr
-      .asFunction<int Function(ffi.Pointer<nctabbed>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>)>>('nctabbed_separator_width');
+  late final _nctabbed_separator_width = _nctabbed_separator_widthPtr.asFunction<int Function(ffi.Pointer<nctabbed>)>();
 
   void nctabbed_set_hdrchan(
     ffi.Pointer<nctabbed> nt,
@@ -5001,12 +4355,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_set_hdrchanPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_hdrchan');
-  late final _nctabbed_set_hdrchan = _nctabbed_set_hdrchanPtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
+  late final _nctabbed_set_hdrchanPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_hdrchan');
+  late final _nctabbed_set_hdrchan = _nctabbed_set_hdrchanPtr.asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
 
   void nctabbed_set_selchan(
     ffi.Pointer<nctabbed> nt,
@@ -5018,12 +4369,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_set_selchanPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_selchan');
-  late final _nctabbed_set_selchan = _nctabbed_set_selchanPtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
+  late final _nctabbed_set_selchanPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_selchan');
+  late final _nctabbed_set_selchan = _nctabbed_set_selchanPtr.asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
 
   void nctabbed_set_sepchan(
     ffi.Pointer<nctabbed> nt,
@@ -5035,12 +4383,9 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_set_sepchanPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_sepchan');
-  late final _nctabbed_set_sepchan = _nctabbed_set_sepchanPtr
-      .asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
+  late final _nctabbed_set_sepchanPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctabbed>, ffi.Uint64)>>('nctabbed_set_sepchan');
+  late final _nctabbed_set_sepchan = _nctabbed_set_sepchanPtr.asFunction<void Function(ffi.Pointer<nctabbed>, int)>();
 
   tabcb nctab_set_cb(
     ffi.Pointer<nctab> t,
@@ -5052,11 +4397,8 @@ class NcFfi {
     );
   }
 
-  late final _nctab_set_cbPtr =
-      _lookup<ffi.NativeFunction<tabcb Function(ffi.Pointer<nctab>, tabcb)>>(
-          'nctab_set_cb');
-  late final _nctab_set_cb =
-      _nctab_set_cbPtr.asFunction<tabcb Function(ffi.Pointer<nctab>, tabcb)>();
+  late final _nctab_set_cbPtr = _lookup<ffi.NativeFunction<tabcb Function(ffi.Pointer<nctab>, tabcb)>>('nctab_set_cb');
+  late final _nctab_set_cb = _nctab_set_cbPtr.asFunction<tabcb Function(ffi.Pointer<nctab>, tabcb)>();
 
   int nctab_set_name(
     ffi.Pointer<nctab> t,
@@ -5068,12 +4410,9 @@ class NcFfi {
     );
   }
 
-  late final _nctab_set_namePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<nctab>, ffi.Pointer<ffi.Int8>)>>('nctab_set_name');
-  late final _nctab_set_name = _nctab_set_namePtr
-      .asFunction<int Function(ffi.Pointer<nctab>, ffi.Pointer<ffi.Int8>)>();
+  late final _nctab_set_namePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctab>, ffi.Pointer<ffi.Int8>)>>('nctab_set_name');
+  late final _nctab_set_name = _nctab_set_namePtr.asFunction<int Function(ffi.Pointer<nctab>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ffi.Void> nctab_set_userptr(
     ffi.Pointer<nctab> t,
@@ -5085,13 +4424,11 @@ class NcFfi {
     );
   }
 
-  late final _nctab_set_userptrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Void> Function(
-              ffi.Pointer<nctab>, ffi.Pointer<ffi.Void>)>>('nctab_set_userptr');
-  late final _nctab_set_userptr = _nctab_set_userptrPtr.asFunction<
-      ffi.Pointer<ffi.Void> Function(
-          ffi.Pointer<nctab>, ffi.Pointer<ffi.Void>)>();
+  late final _nctab_set_userptrPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>, ffi.Pointer<ffi.Void>)>>(
+          'nctab_set_userptr');
+  late final _nctab_set_userptr =
+      _nctab_set_userptrPtr.asFunction<ffi.Pointer<ffi.Void> Function(ffi.Pointer<nctab>, ffi.Pointer<ffi.Void>)>();
 
   int nctabbed_set_separator(
     ffi.Pointer<nctabbed> nt,
@@ -5103,12 +4440,11 @@ class NcFfi {
     );
   }
 
-  late final _nctabbed_set_separatorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<nctabbed>,
-              ffi.Pointer<ffi.Int8>)>>('nctabbed_set_separator');
-  late final _nctabbed_set_separator = _nctabbed_set_separatorPtr
-      .asFunction<int Function(ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Int8>)>();
+  late final _nctabbed_set_separatorPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Int8>)>>(
+          'nctabbed_set_separator');
+  late final _nctabbed_set_separator =
+      _nctabbed_set_separatorPtr.asFunction<int Function(ffi.Pointer<nctabbed>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ncuplot> ncuplot_create(
     ffi.Pointer<ncplane> n,
@@ -5127,13 +4463,9 @@ class NcFfi {
   late final _ncuplot_createPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ncuplot> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncplot_options>,
-              ffi.Uint64,
-              ffi.Uint64)>>('ncuplot_create');
-  late final _ncuplot_create = _ncuplot_createPtr.asFunction<
-      ffi.Pointer<ncuplot> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncplot_options>, int, int)>();
+              ffi.Pointer<ncplane>, ffi.Pointer<ncplot_options>, ffi.Uint64, ffi.Uint64)>>('ncuplot_create');
+  late final _ncuplot_create = _ncuplot_createPtr
+      .asFunction<ffi.Pointer<ncuplot> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncplot_options>, int, int)>();
 
   ffi.Pointer<ncplane> ncuplot_plane(
     ffi.Pointer<ncuplot> n,
@@ -5143,12 +4475,9 @@ class NcFfi {
     );
   }
 
-  late final _ncuplot_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncuplot>)>>('ncuplot_plane');
-  late final _ncuplot_plane = _ncuplot_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncuplot>)>();
+  late final _ncuplot_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncuplot>)>>('ncuplot_plane');
+  late final _ncuplot_plane = _ncuplot_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncuplot>)>();
 
   int ncuplot_add_sample(
     ffi.Pointer<ncuplot> n,
@@ -5162,12 +4491,10 @@ class NcFfi {
     );
   }
 
-  late final _ncuplot_add_samplePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64,
-              ffi.Uint64)>>('ncuplot_add_sample');
-  late final _ncuplot_add_sample = _ncuplot_add_samplePtr
-      .asFunction<int Function(ffi.Pointer<ncuplot>, int, int)>();
+  late final _ncuplot_add_samplePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64, ffi.Uint64)>>(
+          'ncuplot_add_sample');
+  late final _ncuplot_add_sample = _ncuplot_add_samplePtr.asFunction<int Function(ffi.Pointer<ncuplot>, int, int)>();
 
   int ncuplot_set_sample(
     ffi.Pointer<ncuplot> n,
@@ -5181,12 +4508,10 @@ class NcFfi {
     );
   }
 
-  late final _ncuplot_set_samplePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64,
-              ffi.Uint64)>>('ncuplot_set_sample');
-  late final _ncuplot_set_sample = _ncuplot_set_samplePtr
-      .asFunction<int Function(ffi.Pointer<ncuplot>, int, int)>();
+  late final _ncuplot_set_samplePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64, ffi.Uint64)>>(
+          'ncuplot_set_sample');
+  late final _ncuplot_set_sample = _ncuplot_set_samplePtr.asFunction<int Function(ffi.Pointer<ncuplot>, int, int)>();
 
   int ncuplot_sample(
     ffi.Pointer<ncuplot> n,
@@ -5200,12 +4525,11 @@ class NcFfi {
     );
   }
 
-  late final _ncuplot_samplePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64,
-              ffi.Pointer<ffi.Uint64>)>>('ncuplot_sample');
-  late final _ncuplot_sample = _ncuplot_samplePtr.asFunction<
-      int Function(ffi.Pointer<ncuplot>, int, ffi.Pointer<ffi.Uint64>)>();
+  late final _ncuplot_samplePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncuplot>, ffi.Uint64, ffi.Pointer<ffi.Uint64>)>>(
+          'ncuplot_sample');
+  late final _ncuplot_sample =
+      _ncuplot_samplePtr.asFunction<int Function(ffi.Pointer<ncuplot>, int, ffi.Pointer<ffi.Uint64>)>();
 
   void ncuplot_destroy(
     ffi.Pointer<ncuplot> n,
@@ -5216,10 +4540,8 @@ class NcFfi {
   }
 
   late final _ncuplot_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncuplot>)>>(
-          'ncuplot_destroy');
-  late final _ncuplot_destroy =
-      _ncuplot_destroyPtr.asFunction<void Function(ffi.Pointer<ncuplot>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncuplot>)>>('ncuplot_destroy');
+  late final _ncuplot_destroy = _ncuplot_destroyPtr.asFunction<void Function(ffi.Pointer<ncuplot>)>();
 
   ffi.Pointer<ncfdplane> ncfdplane_create(
     ffi.Pointer<ncplane> n,
@@ -5239,19 +4561,11 @@ class NcFfi {
 
   late final _ncfdplane_createPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncfdplane> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncfdplane_options>,
-              ffi.Int32,
-              ncfdplane_callback,
-              ncfdplane_done_cb)>>('ncfdplane_create');
+          ffi.Pointer<ncfdplane> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncfdplane_options>, ffi.Int32,
+              ncfdplane_callback, ncfdplane_done_cb)>>('ncfdplane_create');
   late final _ncfdplane_create = _ncfdplane_createPtr.asFunction<
       ffi.Pointer<ncfdplane> Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<ncfdplane_options>,
-          int,
-          ncfdplane_callback,
-          ncfdplane_done_cb)>();
+          ffi.Pointer<ncplane>, ffi.Pointer<ncfdplane_options>, int, ncfdplane_callback, ncfdplane_done_cb)>();
 
   ffi.Pointer<ncplane> ncfdplane_plane(
     ffi.Pointer<ncfdplane> n,
@@ -5261,12 +4575,9 @@ class NcFfi {
     );
   }
 
-  late final _ncfdplane_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncfdplane>)>>('ncfdplane_plane');
-  late final _ncfdplane_plane = _ncfdplane_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncfdplane>)>();
+  late final _ncfdplane_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncfdplane>)>>('ncfdplane_plane');
+  late final _ncfdplane_plane = _ncfdplane_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncfdplane>)>();
 
   int ncfdplane_destroy(
     ffi.Pointer<ncfdplane> n,
@@ -5277,10 +4588,8 @@ class NcFfi {
   }
 
   late final _ncfdplane_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncfdplane>)>>(
-          'ncfdplane_destroy');
-  late final _ncfdplane_destroy =
-      _ncfdplane_destroyPtr.asFunction<int Function(ffi.Pointer<ncfdplane>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncfdplane>)>>('ncfdplane_destroy');
+  late final _ncfdplane_destroy = _ncfdplane_destroyPtr.asFunction<int Function(ffi.Pointer<ncfdplane>)>();
 
   ffi.Pointer<ncsubproc> ncsubproc_createv(
     ffi.Pointer<ncplane> n,
@@ -5302,21 +4611,11 @@ class NcFfi {
 
   late final _ncsubproc_createvPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncsubproc> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncsubproc_options>,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
-              ncfdplane_callback,
-              ncfdplane_done_cb)>>('ncsubproc_createv');
+          ffi.Pointer<ncsubproc> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncsubproc_options>, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>, ncfdplane_callback, ncfdplane_done_cb)>>('ncsubproc_createv');
   late final _ncsubproc_createv = _ncsubproc_createvPtr.asFunction<
-      ffi.Pointer<ncsubproc> Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<ncsubproc_options>,
-          ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<ffi.Pointer<ffi.Int8>>,
-          ncfdplane_callback,
-          ncfdplane_done_cb)>();
+      ffi.Pointer<ncsubproc> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncsubproc_options>, ffi.Pointer<ffi.Int8>,
+          ffi.Pointer<ffi.Pointer<ffi.Int8>>, ncfdplane_callback, ncfdplane_done_cb)>();
 
   ffi.Pointer<ncsubproc> ncsubproc_createvp(
     ffi.Pointer<ncplane> n,
@@ -5338,21 +4637,11 @@ class NcFfi {
 
   late final _ncsubproc_createvpPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncsubproc> Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ncsubproc_options>,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>,
-              ncfdplane_callback,
-              ncfdplane_done_cb)>>('ncsubproc_createvp');
+          ffi.Pointer<ncsubproc> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncsubproc_options>, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Pointer<ffi.Int8>>, ncfdplane_callback, ncfdplane_done_cb)>>('ncsubproc_createvp');
   late final _ncsubproc_createvp = _ncsubproc_createvpPtr.asFunction<
-      ffi.Pointer<ncsubproc> Function(
-          ffi.Pointer<ncplane>,
-          ffi.Pointer<ncsubproc_options>,
-          ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<ffi.Pointer<ffi.Int8>>,
-          ncfdplane_callback,
-          ncfdplane_done_cb)>();
+      ffi.Pointer<ncsubproc> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncsubproc_options>, ffi.Pointer<ffi.Int8>,
+          ffi.Pointer<ffi.Pointer<ffi.Int8>>, ncfdplane_callback, ncfdplane_done_cb)>();
 
   ffi.Pointer<ncsubproc> ncsubproc_createvpe(
     ffi.Pointer<ncplane> n,
@@ -5402,12 +4691,9 @@ class NcFfi {
     );
   }
 
-  late final _ncsubproc_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncsubproc>)>>('ncsubproc_plane');
-  late final _ncsubproc_plane = _ncsubproc_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncsubproc>)>();
+  late final _ncsubproc_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncsubproc>)>>('ncsubproc_plane');
+  late final _ncsubproc_plane = _ncsubproc_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncsubproc>)>();
 
   int ncsubproc_destroy(
     ffi.Pointer<ncsubproc> n,
@@ -5418,10 +4704,8 @@ class NcFfi {
   }
 
   late final _ncsubproc_destroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncsubproc>)>>(
-          'ncsubproc_destroy');
-  late final _ncsubproc_destroy =
-      _ncsubproc_destroyPtr.asFunction<int Function(ffi.Pointer<ncsubproc>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncsubproc>)>>('ncsubproc_destroy');
+  late final _ncsubproc_destroy = _ncsubproc_destroyPtr.asFunction<int Function(ffi.Pointer<ncsubproc>)>();
 
   int ncplane_qrcode(
     ffi.Pointer<ncplane> n,
@@ -5441,15 +4725,11 @@ class NcFfi {
 
   late final _ncplane_qrcodePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncplane>,
-              ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Void>,
-              size_t)>>('ncplane_qrcode');
+          ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>,
+              ffi.Pointer<ffi.Void>, size_t)>>('ncplane_qrcode');
   late final _ncplane_qrcode = _ncplane_qrcodePtr.asFunction<
-      int Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Void>, int)>();
+      int Function(
+          ffi.Pointer<ncplane>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Void>, int)>();
 
   ffi.Pointer<ncreader> ncreader_create(
     ffi.Pointer<ncplane> n,
@@ -5461,13 +4741,11 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_createPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncreader> Function(ffi.Pointer<ncplane>,
-              ffi.Pointer<ncreader_options>)>>('ncreader_create');
-  late final _ncreader_create = _ncreader_createPtr.asFunction<
-      ffi.Pointer<ncreader> Function(
-          ffi.Pointer<ncplane>, ffi.Pointer<ncreader_options>)>();
+  late final _ncreader_createPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncreader> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncreader_options>)>>(
+          'ncreader_create');
+  late final _ncreader_create = _ncreader_createPtr
+      .asFunction<ffi.Pointer<ncreader> Function(ffi.Pointer<ncplane>, ffi.Pointer<ncreader_options>)>();
 
   int ncreader_clear(
     ffi.Pointer<ncreader> n,
@@ -5478,10 +4756,8 @@ class NcFfi {
   }
 
   late final _ncreader_clearPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>(
-          'ncreader_clear');
-  late final _ncreader_clear =
-      _ncreader_clearPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>('ncreader_clear');
+  late final _ncreader_clear = _ncreader_clearPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
 
   ffi.Pointer<ncplane> ncreader_plane(
     ffi.Pointer<ncreader> n,
@@ -5491,12 +4767,9 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_planePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncplane> Function(
-              ffi.Pointer<ncreader>)>>('ncreader_plane');
-  late final _ncreader_plane = _ncreader_planePtr
-      .asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreader>)>();
+  late final _ncreader_planePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreader>)>>('ncreader_plane');
+  late final _ncreader_plane = _ncreader_planePtr.asFunction<ffi.Pointer<ncplane> Function(ffi.Pointer<ncreader>)>();
 
   int ncreader_offer_input(
     ffi.Pointer<ncreader> n,
@@ -5508,12 +4781,11 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_offer_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint8 Function(ffi.Pointer<ncreader>,
-              ffi.Pointer<ncinput>)>>('ncreader_offer_input');
-  late final _ncreader_offer_input = _ncreader_offer_inputPtr
-      .asFunction<int Function(ffi.Pointer<ncreader>, ffi.Pointer<ncinput>)>();
+  late final _ncreader_offer_inputPtr =
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncreader>, ffi.Pointer<ncinput>)>>(
+          'ncreader_offer_input');
+  late final _ncreader_offer_input =
+      _ncreader_offer_inputPtr.asFunction<int Function(ffi.Pointer<ncreader>, ffi.Pointer<ncinput>)>();
 
   int ncreader_move_left(
     ffi.Pointer<ncreader> n,
@@ -5524,10 +4796,8 @@ class NcFfi {
   }
 
   late final _ncreader_move_leftPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>(
-          'ncreader_move_left');
-  late final _ncreader_move_left =
-      _ncreader_move_leftPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>('ncreader_move_left');
+  late final _ncreader_move_left = _ncreader_move_leftPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
 
   int ncreader_move_right(
     ffi.Pointer<ncreader> n,
@@ -5538,10 +4808,8 @@ class NcFfi {
   }
 
   late final _ncreader_move_rightPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>(
-          'ncreader_move_right');
-  late final _ncreader_move_right =
-      _ncreader_move_rightPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>('ncreader_move_right');
+  late final _ncreader_move_right = _ncreader_move_rightPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
 
   int ncreader_move_up(
     ffi.Pointer<ncreader> n,
@@ -5552,10 +4820,8 @@ class NcFfi {
   }
 
   late final _ncreader_move_upPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>(
-          'ncreader_move_up');
-  late final _ncreader_move_up =
-      _ncreader_move_upPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>('ncreader_move_up');
+  late final _ncreader_move_up = _ncreader_move_upPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
 
   int ncreader_move_down(
     ffi.Pointer<ncreader> n,
@@ -5566,10 +4832,8 @@ class NcFfi {
   }
 
   late final _ncreader_move_downPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>(
-          'ncreader_move_down');
-  late final _ncreader_move_down =
-      _ncreader_move_downPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>)>>('ncreader_move_down');
+  late final _ncreader_move_down = _ncreader_move_downPtr.asFunction<int Function(ffi.Pointer<ncreader>)>();
 
   int ncreader_write_egc(
     ffi.Pointer<ncreader> n,
@@ -5581,12 +4845,11 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_write_egcPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncreader>,
-              ffi.Pointer<ffi.Int8>)>>('ncreader_write_egc');
-  late final _ncreader_write_egc = _ncreader_write_egcPtr
-      .asFunction<int Function(ffi.Pointer<ncreader>, ffi.Pointer<ffi.Int8>)>();
+  late final _ncreader_write_egcPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncreader>, ffi.Pointer<ffi.Int8>)>>(
+          'ncreader_write_egc');
+  late final _ncreader_write_egc =
+      _ncreader_write_egcPtr.asFunction<int Function(ffi.Pointer<ncreader>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ffi.Int8> ncreader_contents(
     ffi.Pointer<ncreader> n,
@@ -5596,12 +4859,10 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_contentsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncreader>)>>('ncreader_contents');
-  late final _ncreader_contents = _ncreader_contentsPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncreader>)>();
+  late final _ncreader_contentsPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncreader>)>>('ncreader_contents');
+  late final _ncreader_contents =
+      _ncreader_contentsPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncreader>)>();
 
   void ncreader_destroy(
     ffi.Pointer<ncreader> n,
@@ -5613,43 +4874,35 @@ class NcFfi {
     );
   }
 
-  late final _ncreader_destroyPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<ncreader>,
-              ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>('ncreader_destroy');
-  late final _ncreader_destroy = _ncreader_destroyPtr.asFunction<
-      void Function(
-          ffi.Pointer<ncreader>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>();
+  late final _ncreader_destroyPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncreader>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>>(
+          'ncreader_destroy');
+  late final _ncreader_destroy =
+      _ncreader_destroyPtr.asFunction<void Function(ffi.Pointer<ncreader>, ffi.Pointer<ffi.Pointer<ffi.Int8>>)>();
 
   ffi.Pointer<ffi.Int8> notcurses_accountname() {
     return _notcurses_accountname();
   }
 
   late final _notcurses_accountnamePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>(
-          'notcurses_accountname');
-  late final _notcurses_accountname =
-      _notcurses_accountnamePtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>('notcurses_accountname');
+  late final _notcurses_accountname = _notcurses_accountnamePtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
 
   ffi.Pointer<ffi.Int8> notcurses_hostname() {
     return _notcurses_hostname();
   }
 
   late final _notcurses_hostnamePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>(
-          'notcurses_hostname');
-  late final _notcurses_hostname =
-      _notcurses_hostnamePtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>('notcurses_hostname');
+  late final _notcurses_hostname = _notcurses_hostnamePtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
 
   ffi.Pointer<ffi.Int8> notcurses_osversion() {
     return _notcurses_osversion();
   }
 
   late final _notcurses_osversionPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>(
-          'notcurses_osversion');
-  late final _notcurses_osversion =
-      _notcurses_osversionPtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function()>>('notcurses_osversion');
+  late final _notcurses_osversion = _notcurses_osversionPtr.asFunction<ffi.Pointer<ffi.Int8> Function()>();
 
   void notcurses_debug(
     ffi.Pointer<notcurses> nc,
@@ -5661,12 +4914,10 @@ class NcFfi {
     );
   }
 
-  late final _notcurses_debugPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>>('notcurses_debug');
-  late final _notcurses_debug = _notcurses_debugPtr
-      .asFunction<void Function(ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>();
+  late final _notcurses_debugPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>>('notcurses_debug');
+  late final _notcurses_debug =
+      _notcurses_debugPtr.asFunction<void Function(ffi.Pointer<notcurses>, ffi.Pointer<FILE>)>();
 
   ffi.Pointer<ncdirect> ncdirect_init(
     ffi.Pointer<ffi.Int8> termtype,
@@ -5680,13 +4931,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_initPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<FILE>, ffi.Uint64)>>('ncdirect_init');
-  late final _ncdirect_init = _ncdirect_initPtr.asFunction<
-      ffi.Pointer<ncdirect> Function(
-          ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
+  late final _ncdirect_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, ffi.Uint64)>>(
+          'ncdirect_init');
+  late final _ncdirect_init =
+      _ncdirect_initPtr.asFunction<ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
 
   ffi.Pointer<ncdirect> ncdirect_core_init(
     ffi.Pointer<ffi.Int8> termtype,
@@ -5700,13 +4949,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_core_initPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<FILE>, ffi.Uint64)>>('ncdirect_core_init');
-  late final _ncdirect_core_init = _ncdirect_core_initPtr.asFunction<
-      ffi.Pointer<ncdirect> Function(
-          ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
+  late final _ncdirect_core_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, ffi.Uint64)>>(
+          'ncdirect_core_init');
+  late final _ncdirect_core_init = _ncdirect_core_initPtr
+      .asFunction<ffi.Pointer<ncdirect> Function(ffi.Pointer<ffi.Int8>, ffi.Pointer<FILE>, int)>();
 
   ffi.Pointer<ffi.Int8> ncdirect_readline(
     ffi.Pointer<ncdirect> nc,
@@ -5718,13 +4965,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_readlinePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>,
-              ffi.Pointer<ffi.Int8>)>>('ncdirect_readline');
-  late final _ncdirect_readline = _ncdirect_readlinePtr.asFunction<
-      ffi.Pointer<ffi.Int8> Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
+  late final _ncdirect_readlinePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>>(
+          'ncdirect_readline');
+  late final _ncdirect_readline =
+      _ncdirect_readlinePtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
 
   int ncdirect_set_fg_rgb(
     ffi.Pointer<ncdirect> nc,
@@ -5736,12 +4981,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_set_fg_rgbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_fg_rgb');
-  late final _ncdirect_set_fg_rgb = _ncdirect_set_fg_rgbPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_set_fg_rgbPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_fg_rgb');
+  late final _ncdirect_set_fg_rgb = _ncdirect_set_fg_rgbPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_set_bg_rgb(
     ffi.Pointer<ncdirect> nc,
@@ -5753,12 +4995,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_set_bg_rgbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_bg_rgb');
-  late final _ncdirect_set_bg_rgb = _ncdirect_set_bg_rgbPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_set_bg_rgbPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_bg_rgb');
+  late final _ncdirect_set_bg_rgb = _ncdirect_set_bg_rgbPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_set_fg_palindex(
     ffi.Pointer<ncdirect> nc,
@@ -5770,12 +5009,10 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_set_fg_palindexPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_fg_palindex');
-  late final _ncdirect_set_fg_palindex = _ncdirect_set_fg_palindexPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_set_fg_palindexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_fg_palindex');
+  late final _ncdirect_set_fg_palindex =
+      _ncdirect_set_fg_palindexPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_set_bg_palindex(
     ffi.Pointer<ncdirect> nc,
@@ -5787,12 +5024,10 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_set_bg_palindexPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_bg_palindex');
-  late final _ncdirect_set_bg_palindex = _ncdirect_set_bg_palindexPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_set_bg_palindexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_set_bg_palindex');
+  late final _ncdirect_set_bg_palindex =
+      _ncdirect_set_bg_palindexPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_palette_size(
     ffi.Pointer<ncdirect> nc,
@@ -5803,10 +5038,8 @@ class NcFfi {
   }
 
   late final _ncdirect_palette_sizePtr =
-      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_palette_size');
-  late final _ncdirect_palette_size = _ncdirect_palette_sizePtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_palette_size');
+  late final _ncdirect_palette_size = _ncdirect_palette_sizePtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_putstr(
     ffi.Pointer<ncdirect> nc,
@@ -5820,12 +5053,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_putstrPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64,
-              ffi.Pointer<ffi.Int8>)>>('ncdirect_putstr');
-  late final _ncdirect_putstr = _ncdirect_putstrPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>)>();
+  late final _ncdirect_putstrPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64, ffi.Pointer<ffi.Int8>)>>(
+          'ncdirect_putstr');
+  late final _ncdirect_putstr =
+      _ncdirect_putstrPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>)>();
 
   int ncdirect_putegc(
     ffi.Pointer<ncdirect> nc,
@@ -5844,13 +5076,9 @@ class NcFfi {
   late final _ncdirect_putegcPtr = _lookup<
       ffi.NativeFunction<
           ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Uint64,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Pointer<ffi.Int32>)>>('ncdirect_putegc');
-  late final _ncdirect_putegc = _ncdirect_putegcPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>,
-          ffi.Pointer<ffi.Int32>)>();
+              ffi.Pointer<ncdirect>, ffi.Uint64, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>>('ncdirect_putegc');
+  late final _ncdirect_putegc = _ncdirect_putegcPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int32>)>();
 
   int ncdirect_printf_aligned(
     ffi.Pointer<ncdirect> n,
@@ -5867,11 +5095,10 @@ class NcFfi {
   }
 
   late final _ncdirect_printf_alignedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32, ffi.Int32,
-              ffi.Pointer<ffi.Int8>)>>('ncdirect_printf_aligned');
-  late final _ncdirect_printf_aligned = _ncdirect_printf_alignedPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, int, ffi.Pointer<ffi.Int8>)>();
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32, ffi.Int32, ffi.Pointer<ffi.Int8>)>>(
+      'ncdirect_printf_aligned');
+  late final _ncdirect_printf_aligned =
+      _ncdirect_printf_alignedPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int, int, ffi.Pointer<ffi.Int8>)>();
 
   int ncdirect_flush(
     ffi.Pointer<ncdirect> nc,
@@ -5882,10 +5109,8 @@ class NcFfi {
   }
 
   late final _ncdirect_flushPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_flush');
-  late final _ncdirect_flush =
-      _ncdirect_flushPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_flush');
+  late final _ncdirect_flush = _ncdirect_flushPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_set_fg_default(
     ffi.Pointer<ncdirect> nc,
@@ -5896,10 +5121,8 @@ class NcFfi {
   }
 
   late final _ncdirect_set_fg_defaultPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_set_fg_default');
-  late final _ncdirect_set_fg_default = _ncdirect_set_fg_defaultPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_set_fg_default');
+  late final _ncdirect_set_fg_default = _ncdirect_set_fg_defaultPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_set_bg_default(
     ffi.Pointer<ncdirect> nc,
@@ -5910,10 +5133,8 @@ class NcFfi {
   }
 
   late final _ncdirect_set_bg_defaultPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_set_bg_default');
-  late final _ncdirect_set_bg_default = _ncdirect_set_bg_defaultPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_set_bg_default');
+  late final _ncdirect_set_bg_default = _ncdirect_set_bg_defaultPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_dim_x(
     ffi.Pointer<ncdirect> nc,
@@ -5924,10 +5145,8 @@ class NcFfi {
   }
 
   late final _ncdirect_dim_xPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_dim_x');
-  late final _ncdirect_dim_x =
-      _ncdirect_dim_xPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_dim_x');
+  late final _ncdirect_dim_x = _ncdirect_dim_xPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_dim_y(
     ffi.Pointer<ncdirect> nc,
@@ -5938,10 +5157,8 @@ class NcFfi {
   }
 
   late final _ncdirect_dim_yPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_dim_y');
-  late final _ncdirect_dim_y =
-      _ncdirect_dim_yPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_dim_y');
+  late final _ncdirect_dim_y = _ncdirect_dim_yPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_supported_styles(
     ffi.Pointer<ncdirect> nc,
@@ -5952,10 +5169,9 @@ class NcFfi {
   }
 
   late final _ncdirect_supported_stylesPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_supported_styles');
-  late final _ncdirect_supported_styles = _ncdirect_supported_stylesPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>('ncdirect_supported_styles');
+  late final _ncdirect_supported_styles =
+      _ncdirect_supported_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_set_styles(
     ffi.Pointer<ncdirect> n,
@@ -5967,12 +5183,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_set_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_styles');
-  late final _ncdirect_set_styles = _ncdirect_set_stylesPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_set_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_set_styles');
+  late final _ncdirect_set_styles = _ncdirect_set_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_on_styles(
     ffi.Pointer<ncdirect> n,
@@ -5984,12 +5197,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_on_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_on_styles');
-  late final _ncdirect_on_styles = _ncdirect_on_stylesPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_on_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_on_styles');
+  late final _ncdirect_on_styles = _ncdirect_on_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_off_styles(
     ffi.Pointer<ncdirect> n,
@@ -6001,12 +5211,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_off_stylesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_off_styles');
-  late final _ncdirect_off_styles = _ncdirect_off_stylesPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_off_stylesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint32)>>('ncdirect_off_styles');
+  late final _ncdirect_off_styles = _ncdirect_off_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_styles(
     ffi.Pointer<ncdirect> n,
@@ -6017,10 +5224,8 @@ class NcFfi {
   }
 
   late final _ncdirect_stylesPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_styles');
-  late final _ncdirect_styles =
-      _ncdirect_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint16 Function(ffi.Pointer<ncdirect>)>>('ncdirect_styles');
+  late final _ncdirect_styles = _ncdirect_stylesPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_cursor_move_yx(
     ffi.Pointer<ncdirect> n,
@@ -6034,12 +5239,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_cursor_move_yxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32,
-              ffi.Int32)>>('ncdirect_cursor_move_yx');
-  late final _ncdirect_cursor_move_yx = _ncdirect_cursor_move_yxPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int, int)>();
+  late final _ncdirect_cursor_move_yxPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32, ffi.Int32)>>(
+          'ncdirect_cursor_move_yx');
+  late final _ncdirect_cursor_move_yx =
+      _ncdirect_cursor_move_yxPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int, int)>();
 
   int ncdirect_cursor_enable(
     ffi.Pointer<ncdirect> nc,
@@ -6050,10 +5254,8 @@ class NcFfi {
   }
 
   late final _ncdirect_cursor_enablePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_cursor_enable');
-  late final _ncdirect_cursor_enable = _ncdirect_cursor_enablePtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_cursor_enable');
+  late final _ncdirect_cursor_enable = _ncdirect_cursor_enablePtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_cursor_disable(
     ffi.Pointer<ncdirect> nc,
@@ -6064,10 +5266,8 @@ class NcFfi {
   }
 
   late final _ncdirect_cursor_disablePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_cursor_disable');
-  late final _ncdirect_cursor_disable = _ncdirect_cursor_disablePtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_cursor_disable');
+  late final _ncdirect_cursor_disable = _ncdirect_cursor_disablePtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_cursor_up(
     ffi.Pointer<ncdirect> nc,
@@ -6079,12 +5279,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_cursor_upPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_up');
-  late final _ncdirect_cursor_up = _ncdirect_cursor_upPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_cursor_upPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_up');
+  late final _ncdirect_cursor_up = _ncdirect_cursor_upPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_cursor_left(
     ffi.Pointer<ncdirect> nc,
@@ -6096,12 +5293,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_cursor_leftPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_left');
-  late final _ncdirect_cursor_left = _ncdirect_cursor_leftPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_cursor_leftPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_left');
+  late final _ncdirect_cursor_left = _ncdirect_cursor_leftPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_cursor_right(
     ffi.Pointer<ncdirect> nc,
@@ -6113,12 +5307,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_cursor_rightPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_right');
-  late final _ncdirect_cursor_right = _ncdirect_cursor_rightPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_cursor_rightPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_right');
+  late final _ncdirect_cursor_right = _ncdirect_cursor_rightPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_cursor_down(
     ffi.Pointer<ncdirect> nc,
@@ -6130,12 +5321,9 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_cursor_downPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_down');
-  late final _ncdirect_cursor_down = _ncdirect_cursor_downPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
+  late final _ncdirect_cursor_downPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Int32)>>('ncdirect_cursor_down');
+  late final _ncdirect_cursor_down = _ncdirect_cursor_downPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int)>();
 
   int ncdirect_cursor_yx(
     ffi.Pointer<ncdirect> n,
@@ -6151,11 +5339,10 @@ class NcFfi {
 
   late final _ncdirect_cursor_yxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>,
-              ffi.Pointer<ffi.Uint32>)>>('ncdirect_cursor_yx');
-  late final _ncdirect_cursor_yx = _ncdirect_cursor_yxPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>,
-          ffi.Pointer<ffi.Uint32>)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>>('ncdirect_cursor_yx');
+  late final _ncdirect_cursor_yx = _ncdirect_cursor_yxPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>)>();
 
   int ncdirect_cursor_push(
     ffi.Pointer<ncdirect> n,
@@ -6166,10 +5353,8 @@ class NcFfi {
   }
 
   late final _ncdirect_cursor_pushPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_cursor_push');
-  late final _ncdirect_cursor_push = _ncdirect_cursor_pushPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_cursor_push');
+  late final _ncdirect_cursor_push = _ncdirect_cursor_pushPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_cursor_pop(
     ffi.Pointer<ncdirect> n,
@@ -6180,10 +5365,8 @@ class NcFfi {
   }
 
   late final _ncdirect_cursor_popPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_cursor_pop');
-  late final _ncdirect_cursor_pop =
-      _ncdirect_cursor_popPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_cursor_pop');
+  late final _ncdirect_cursor_pop = _ncdirect_cursor_popPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_clear(
     ffi.Pointer<ncdirect> nc,
@@ -6194,10 +5377,8 @@ class NcFfi {
   }
 
   late final _ncdirect_clearPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_clear');
-  late final _ncdirect_clear =
-      _ncdirect_clearPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_clear');
+  late final _ncdirect_clear = _ncdirect_clearPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   ffi.Pointer<nccapabilities> ncdirect_capabilities(
     ffi.Pointer<ncdirect> n,
@@ -6207,12 +5388,10 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_capabilitiesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<nccapabilities> Function(
-              ffi.Pointer<ncdirect>)>>('ncdirect_capabilities');
-  late final _ncdirect_capabilities = _ncdirect_capabilitiesPtr.asFunction<
-      ffi.Pointer<nccapabilities> Function(ffi.Pointer<ncdirect>)>();
+  late final _ncdirect_capabilitiesPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<nccapabilities> Function(ffi.Pointer<ncdirect>)>>('ncdirect_capabilities');
+  late final _ncdirect_capabilities =
+      _ncdirect_capabilitiesPtr.asFunction<ffi.Pointer<nccapabilities> Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_hline_interp(
     ffi.Pointer<ncdirect> n,
@@ -6232,11 +5411,10 @@ class NcFfi {
 
   late final _ncdirect_hline_interpPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
-              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncdirect_hline_interp');
-  late final _ncdirect_hline_interp = _ncdirect_hline_interpPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint64,
+              ffi.Uint64)>>('ncdirect_hline_interp');
+  late final _ncdirect_hline_interp =
+      _ncdirect_hline_interpPtr.asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
 
   int ncdirect_vline_interp(
     ffi.Pointer<ncdirect> n,
@@ -6256,11 +5434,10 @@ class NcFfi {
 
   late final _ncdirect_vline_interpPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
-              ffi.Uint32, ffi.Uint64, ffi.Uint64)>>('ncdirect_vline_interp');
-  late final _ncdirect_vline_interp = _ncdirect_vline_interpPtr.asFunction<
-      int Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ffi.Uint32, ffi.Uint64,
+              ffi.Uint64)>>('ncdirect_vline_interp');
+  late final _ncdirect_vline_interp =
+      _ncdirect_vline_interpPtr.asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
 
   int ncdirect_box(
     ffi.Pointer<ncdirect> n,
@@ -6288,19 +5465,10 @@ class NcFfi {
 
   late final _ncdirect_boxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Pointer<wchar_t>,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncdirect_box');
-  late final _ncdirect_box = _ncdirect_boxPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, int, int, int,
-          ffi.Pointer<wchar_t>, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint64,
+              ffi.Pointer<wchar_t>, ffi.Uint32, ffi.Uint32, ffi.Uint32)>>('ncdirect_box');
+  late final _ncdirect_box = _ncdirect_boxPtr
+      .asFunction<int Function(ffi.Pointer<ncdirect>, int, int, int, int, ffi.Pointer<wchar_t>, int, int, int)>();
 
   int ncdirect_rounded_box(
     ffi.Pointer<ncdirect> n,
@@ -6326,17 +5494,10 @@ class NcFfi {
 
   late final _ncdirect_rounded_boxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncdirect_rounded_box');
-  late final _ncdirect_rounded_box = _ncdirect_rounded_boxPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint32,
+              ffi.Uint32, ffi.Uint32)>>('ncdirect_rounded_box');
+  late final _ncdirect_rounded_box =
+      _ncdirect_rounded_boxPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
 
   int ncdirect_double_box(
     ffi.Pointer<ncdirect> n,
@@ -6362,17 +5523,10 @@ class NcFfi {
 
   late final _ncdirect_double_boxPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint64,
-              ffi.Uint32,
-              ffi.Uint32,
-              ffi.Uint32)>>('ncdirect_double_box');
-  late final _ncdirect_double_box = _ncdirect_double_boxPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint64, ffi.Uint32,
+              ffi.Uint32, ffi.Uint32)>>('ncdirect_double_box');
+  late final _ncdirect_double_box =
+      _ncdirect_double_boxPtr.asFunction<int Function(ffi.Pointer<ncdirect>, int, int, int, int, int, int, int)>();
 
   int ncdirect_get(
     ffi.Pointer<ncdirect> n,
@@ -6387,12 +5541,10 @@ class NcFfi {
   }
 
   late final _ncdirect_getPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>,
-              ffi.Pointer<ncinput>)>>('ncdirect_get');
-  late final _ncdirect_get = _ncdirect_getPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>,
-          ffi.Pointer<ncinput>)>();
+          ffi.NativeFunction<ffi.Uint32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>)>>(
+      'ncdirect_get');
+  late final _ncdirect_get =
+      _ncdirect_getPtr.asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<timespec>, ffi.Pointer<ncinput>)>();
 
   int ncdirect_inputready_fd(
     ffi.Pointer<ncdirect> n,
@@ -6403,10 +5555,8 @@ class NcFfi {
   }
 
   late final _ncdirect_inputready_fdPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_inputready_fd');
-  late final _ncdirect_inputready_fd = _ncdirect_inputready_fdPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_inputready_fd');
+  late final _ncdirect_inputready_fd = _ncdirect_inputready_fdPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_stop(
     ffi.Pointer<ncdirect> nc,
@@ -6417,10 +5567,8 @@ class NcFfi {
   }
 
   late final _ncdirect_stopPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_stop');
-  late final _ncdirect_stop =
-      _ncdirect_stopPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_stop');
+  late final _ncdirect_stop = _ncdirect_stopPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_render_image(
     ffi.Pointer<ncdirect> n,
@@ -6440,11 +5588,10 @@ class NcFfi {
 
   late final _ncdirect_render_imagePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>,
-              ffi.Int32, ffi.Int32, ffi.Int32)>>('ncdirect_render_image');
-  late final _ncdirect_render_image = _ncdirect_render_imagePtr.asFunction<
-      int Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
+          ffi.Int32 Function(
+              ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32, ffi.Int32)>>('ncdirect_render_image');
+  late final _ncdirect_render_image =
+      _ncdirect_render_imagePtr.asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int)>();
 
   ffi.Pointer<ncdirectv> ncdirect_render_frame(
     ffi.Pointer<ncdirect> n,
@@ -6466,16 +5613,10 @@ class NcFfi {
 
   late final _ncdirect_render_framePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ncdirectv> Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Pointer<ffi.Int8>,
-              ffi.Int32,
-              ffi.Int32,
-              ffi.Int32,
+          ffi.Pointer<ncdirectv> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32, ffi.Int32,
               ffi.Int32)>>('ncdirect_render_frame');
-  late final _ncdirect_render_frame = _ncdirect_render_framePtr.asFunction<
-      ffi.Pointer<ncdirectv> Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int, int)>();
+  late final _ncdirect_render_frame = _ncdirect_render_framePtr
+      .asFunction<ffi.Pointer<ncdirectv> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, int, int, int, int)>();
 
   int ncdirect_raster_frame(
     ffi.Pointer<ncdirect> n,
@@ -6489,12 +5630,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_raster_framePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>,
-              ffi.Int32)>>('ncdirect_raster_frame');
-  late final _ncdirect_raster_frame = _ncdirect_raster_framePtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>, int)>();
+  late final _ncdirect_raster_framePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>, ffi.Int32)>>(
+          'ncdirect_raster_frame');
+  late final _ncdirect_raster_frame =
+      _ncdirect_raster_framePtr.asFunction<int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectv>, int)>();
 
   ffi.Pointer<ncdirectf> ncdirectf_from_file(
     ffi.Pointer<ncdirect> n,
@@ -6506,13 +5646,11 @@ class NcFfi {
     );
   }
 
-  late final _ncdirectf_from_filePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ncdirectf> Function(ffi.Pointer<ncdirect>,
-              ffi.Pointer<ffi.Int8>)>>('ncdirectf_from_file');
-  late final _ncdirectf_from_file = _ncdirectf_from_filePtr.asFunction<
-      ffi.Pointer<ncdirectf> Function(
-          ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
+  late final _ncdirectf_from_filePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ncdirectf> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>>(
+          'ncdirectf_from_file');
+  late final _ncdirectf_from_file = _ncdirectf_from_filePtr
+      .asFunction<ffi.Pointer<ncdirectf> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>)>();
 
   void ncdirectf_free(
     ffi.Pointer<ncdirectf> frame,
@@ -6523,10 +5661,8 @@ class NcFfi {
   }
 
   late final _ncdirectf_freePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncdirectf>)>>(
-          'ncdirectf_free');
-  late final _ncdirectf_free =
-      _ncdirectf_freePtr.asFunction<void Function(ffi.Pointer<ncdirectf>)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ncdirectf>)>>('ncdirectf_free');
+  late final _ncdirectf_free = _ncdirectf_freePtr.asFunction<void Function(ffi.Pointer<ncdirectf>)>();
 
   ffi.Pointer<ncdirectv> ncdirectf_render(
     ffi.Pointer<ncdirect> n,
@@ -6543,12 +5679,9 @@ class NcFfi {
   late final _ncdirectf_renderPtr = _lookup<
       ffi.NativeFunction<
           ffi.Pointer<ncdirectv> Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Pointer<ncdirectf>,
-              ffi.Pointer<ncvisual_options>)>>('ncdirectf_render');
+              ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>)>>('ncdirectf_render');
   late final _ncdirectf_render = _ncdirectf_renderPtr.asFunction<
-      ffi.Pointer<ncdirectv> Function(ffi.Pointer<ncdirect>,
-          ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>)>();
+      ffi.Pointer<ncdirectv> Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>)>();
 
   int ncdirectf_geom(
     ffi.Pointer<ncdirect> n,
@@ -6566,14 +5699,11 @@ class NcFfi {
 
   late final _ncdirectf_geomPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Pointer<ncdirectf>,
-              ffi.Pointer<ncvisual_options>,
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>,
               ffi.Pointer<ncvgeom>)>>('ncdirectf_geom');
   late final _ncdirectf_geom = _ncdirectf_geomPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>,
-          ffi.Pointer<ncvisual_options>, ffi.Pointer<ncvgeom>)>();
+      int Function(
+          ffi.Pointer<ncdirect>, ffi.Pointer<ncdirectf>, ffi.Pointer<ncvisual_options>, ffi.Pointer<ncvgeom>)>();
 
   int ncdirect_stream(
     ffi.Pointer<ncdirect> n,
@@ -6593,15 +5723,11 @@ class NcFfi {
 
   late final _ncdirect_streamPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ncdirect>,
-              ffi.Pointer<ffi.Int8>,
-              ncstreamcb,
-              ffi.Pointer<ncvisual_options>,
+          ffi.Int32 Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ncstreamcb, ffi.Pointer<ncvisual_options>,
               ffi.Pointer<ffi.Void>)>>('ncdirect_stream');
   late final _ncdirect_stream = _ncdirect_streamPtr.asFunction<
-      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ncstreamcb,
-          ffi.Pointer<ncvisual_options>, ffi.Pointer<ffi.Void>)>();
+      int Function(ffi.Pointer<ncdirect>, ffi.Pointer<ffi.Int8>, ncstreamcb, ffi.Pointer<ncvisual_options>,
+          ffi.Pointer<ffi.Void>)>();
 
   ffi.Pointer<ffi.Int8> ncdirect_detected_terminal(
     ffi.Pointer<ncdirect> n,
@@ -6611,12 +5737,10 @@ class NcFfi {
     );
   }
 
-  late final _ncdirect_detected_terminalPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<ffi.Int8> Function(
-              ffi.Pointer<ncdirect>)>>('ncdirect_detected_terminal');
-  late final _ncdirect_detected_terminal = _ncdirect_detected_terminalPtr
-      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>)>();
+  late final _ncdirect_detected_terminalPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>)>>('ncdirect_detected_terminal');
+  late final _ncdirect_detected_terminal =
+      _ncdirect_detected_terminalPtr.asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_canutf8(
     ffi.Pointer<ncdirect> n,
@@ -6627,10 +5751,8 @@ class NcFfi {
   }
 
   late final _ncdirect_canutf8Ptr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_canutf8');
-  late final _ncdirect_canutf8 =
-      _ncdirect_canutf8Ptr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>('ncdirect_canutf8');
+  late final _ncdirect_canutf8 = _ncdirect_canutf8Ptr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_check_pixel_support(
     ffi.Pointer<ncdirect> n,
@@ -6641,10 +5763,9 @@ class NcFfi {
   }
 
   late final _ncdirect_check_pixel_supportPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_check_pixel_support');
-  late final _ncdirect_check_pixel_support = _ncdirect_check_pixel_supportPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncdirect>)>>('ncdirect_check_pixel_support');
+  late final _ncdirect_check_pixel_support =
+      _ncdirect_check_pixel_supportPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 
   int ncdirect_canget_cursor(
     ffi.Pointer<ncdirect> nc,
@@ -6655,10 +5776,8 @@ class NcFfi {
   }
 
   late final _ncdirect_canget_cursorPtr =
-      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>(
-          'ncdirect_canget_cursor');
-  late final _ncdirect_canget_cursor = _ncdirect_canget_cursorPtr
-      .asFunction<int Function(ffi.Pointer<ncdirect>)>();
+      _lookup<ffi.NativeFunction<ffi.Uint8 Function(ffi.Pointer<ncdirect>)>>('ncdirect_canget_cursor');
+  late final _ncdirect_canget_cursor = _ncdirect_canget_cursorPtr.asFunction<int Function(ffi.Pointer<ncdirect>)>();
 }
 
 class notcurses extends ffi.Opaque {}
@@ -6799,22 +5918,15 @@ class __sFILE extends ffi.Struct {
 
   external ffi.Pointer<ffi.Void> _cookie;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>)>> _close;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>)>> _close;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Int8>, ffi.Int32)>> _read;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _read;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          fpos_t Function(ffi.Pointer<ffi.Void>, fpos_t, ffi.Int32)>> _seek;
+  external ffi.Pointer<ffi.NativeFunction<fpos_t Function(ffi.Pointer<ffi.Void>, fpos_t, ffi.Int32)>> _seek;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Int8>, ffi.Int32)>> _write;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Int8>, ffi.Int32)>>
+      _write;
 
   external __sbuf _ub;
 
@@ -6916,9 +6028,7 @@ class ncplane_options extends ffi.Struct {
 
   external ffi.Pointer<ffi.Int8> name;
 
-  external ffi
-          .Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>>
-      resizecb;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>)>> resizecb;
 
   @ffi.Uint64()
   external int flags;
@@ -7097,8 +6207,8 @@ class __va_list_tag extends ffi.Struct {
 
 typedef fadecb = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Int32 Function(ffi.Pointer<notcurses>, ffi.Pointer<ncplane>,
-            ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>>;
+        ffi.Int32 Function(
+            ffi.Pointer<notcurses>, ffi.Pointer<ncplane>, ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>>;
 
 class ncvisual_options extends ffi.Struct {
   external ffi.Pointer<ncplane> n;
@@ -7195,8 +6305,8 @@ class ncvgeom extends ffi.Struct {
 
 typedef ncstreamcb = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Int32 Function(ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>,
-            ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>>;
+        ffi.Int32 Function(
+            ffi.Pointer<ncvisual>, ffi.Pointer<ncvisual_options>, ffi.Pointer<timespec>, ffi.Pointer<ffi.Void>)>>;
 
 class ncreel_options extends ffi.Struct {
   @ffi.Uint32()
@@ -7218,8 +6328,7 @@ class ncreel_options extends ffi.Struct {
   external int flags;
 }
 
-typedef tabletcb = ffi.Pointer<
-    ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctablet>, ffi.Uint8)>>;
+typedef tabletcb = ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<nctablet>, ffi.Uint8)>>;
 
 class ncselector_item extends ffi.Struct {
   external ffi.Pointer<ffi.Int8> option;
@@ -7316,10 +6425,7 @@ class nctree_options extends ffi.Struct {
   @ffi.Uint32()
   external int count;
 
-  external ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Int32 Function(
-                  ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>, ffi.Int32)>>
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>, ffi.Int32)>>
       nctreecb;
 
   @ffi.Int32()
@@ -7399,10 +6505,8 @@ class nctabbed_options extends ffi.Struct {
   external int flags;
 }
 
-typedef tabcb = ffi.Pointer<
-    ffi.NativeFunction<
-        ffi.Void Function(
-            ffi.Pointer<nctab>, ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>>;
+typedef tabcb = ffi
+    .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<nctab>, ffi.Pointer<ncplane>, ffi.Pointer<ffi.Void>)>>;
 
 class ncplot_options extends ffi.Struct {
   @ffi.Uint64()
@@ -7438,12 +6542,9 @@ class ncfdplane_options extends ffi.Struct {
 
 typedef ncfdplane_callback = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Int32 Function(ffi.Pointer<ncfdplane>, ffi.Pointer<ffi.Void>,
-            size_t, ffi.Pointer<ffi.Void>)>>;
-typedef ncfdplane_done_cb = ffi.Pointer<
-    ffi.NativeFunction<
-        ffi.Int32 Function(
-            ffi.Pointer<ncfdplane>, ffi.Int32, ffi.Pointer<ffi.Void>)>>;
+        ffi.Int32 Function(ffi.Pointer<ncfdplane>, ffi.Pointer<ffi.Void>, size_t, ffi.Pointer<ffi.Void>)>>;
+typedef ncfdplane_done_cb
+    = ffi.Pointer<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ncfdplane>, ffi.Int32, ffi.Pointer<ffi.Void>)>>;
 
 class ncsubproc_options extends ffi.Struct {
   external ffi.Pointer<ffi.Void> curry;
