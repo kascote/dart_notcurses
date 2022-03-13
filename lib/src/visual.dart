@@ -8,7 +8,6 @@ import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './notcurses.dart';
 import './plane.dart';
-import './shared.dart';
 
 class VisualOptions {
   // if no ncplane is provided, one will be created using the exact size

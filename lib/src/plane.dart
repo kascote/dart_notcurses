@@ -147,13 +147,13 @@ class Plane {
   }
 
   /// Extract 24 bits of foreground RGB from 'n', split into components.
-  NcResult<int, RGB> fgRGB8() {
-    return using<NcResult<int, RGB>>((Arena alloc) {
+  RGB fgRGB8() {
+    return using<RGB>((Arena alloc) {
       final r = alloc<ffi.Uint32>();
       final g = alloc<ffi.Uint32>();
       final b = alloc<ffi.Uint32>();
-      final rc = ncInline.ncplane_fg_rgb8(_ptr, r, g, b);
-      return NcResult(rc, RGB(r.value, g.value, b.value));
+      ncInline.ncplane_fg_rgb8(_ptr, r, g, b);
+      return RGB(r.value, g.value, b.value);
     });
   }
 
@@ -168,13 +168,13 @@ class Plane {
   }
 
   /// Extract 24 bits of background RGB from 'n', split into components.
-  NcResult<int, RGB> bgRGB8() {
-    return using<NcResult<int, RGB>>((Arena alloc) {
+  RGB bgRGB8() {
+    return using<RGB>((Arena alloc) {
       final r = alloc<ffi.Uint32>();
       final g = alloc<ffi.Uint32>();
       final b = alloc<ffi.Uint32>();
-      final rc = ncInline.ncplane_bg_rgb8(_ptr, r, g, b);
-      return NcResult(rc, RGB(r.value, g.value, b.value));
+      ncInline.ncplane_bg_rgb8(_ptr, r, g, b);
+      return RGB(r.value, g.value, b.value);
     });
   }
 
@@ -385,14 +385,6 @@ class Plane {
   /// written to 'sbytes' if non-NULL.
   NcResult<int, int> putEgc(String value) {
     return putEgcYX(-1, -1, value);
-    /* final sbytes = allocator<ffi.Uint64>();
-    final charC = value.toNativeUtf8().cast<ffi.Int8>();
-    final rc = nc.ncplane_putegc_yx(_ptr, -1, -1, charC, sbytes);
-    final res = NcResult<int, int>(rc, sbytes.value);
-
-    allocator.free(charC);
-    allocator.free(sbytes);
-    return res; */
   }
 
   /// Return the current styling for this ncplane.
@@ -938,12 +930,13 @@ class Plane {
   /// within the ncplane 'n'. If not, return false. If so, return true. Either
   /// way, translate the absolute coordinates relative to 'n'. If the point is not
   /// within 'n', these coordinates will not be within the dimensions of the plane.
-  NcResult<bool, Dimensions> translateAbs(int y, int x) {
-    return using<NcResult<bool, Dimensions>>((Arena alloc) {
+  Dimensions? translateAbs(int y, int x) {
+    return using<Dimensions?>((Arena alloc) {
       final py = alloc<ffi.Int32>();
       final px = alloc<ffi.Int32>();
       final rc = nc.ncplane_translate_abs(_ptr, py, px) != 0;
-      return NcResult(rc, Dimensions(py.value, px.value));
+      if (!rc) return null;
+      return Dimensions(py.value, px.value);
     });
   }
 
@@ -1476,14 +1469,14 @@ class Plane {
   }
 
   /// Duplicate one cell onto another when they share a plane. Convenience wrapper.
-  NcResult<bool, Cell?> duplicateCell(Cell c) {
+  Cell? duplicateCell(Cell c) {
     final targ = Cell.init();
     final rc = nc.nccell_duplicate(_ptr, targ.ptr, c.ptr);
     if (rc != 0) {
       targ.destroy(this);
-      return NcResult(false, null);
+      return null;
     }
-    return NcResult(true, targ);
+    return targ;
   }
 
   /// Returns true if the two nccells are distinct EGCs, attributes, or channels.

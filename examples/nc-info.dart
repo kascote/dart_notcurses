@@ -92,17 +92,17 @@ void tinfoDebugBitmaps(NotCurses nc, Plane plane, List<String> indent) {
   final idt = indent.join();
   final nc = plane.notCurses();
   final fg = nc.defaultForeground();
-  if (fg.result > 0) {
+  if (fg == null) {
     plane.putStr('${idt}no know default fg ');
   } else {
-    plane.putStr('${idt}default fg ${fg.value.toStrHex()}');
+    plane.putStr('${idt}default fg ${fg.toStrHex()} ');
   }
 
   final bg = nc.defaultBackground();
-  if (bg.result > 0) {
+  if (bg == null) {
     plane.putStr('${idt}no know default bg ');
   } else {
-    plane.putStr('${idt}default bg ${bg.value.toStrHex()}');
+    plane.putStr('${idt}default bg ${bg.toStrHex()}');
   }
 
   finishLine(plane);

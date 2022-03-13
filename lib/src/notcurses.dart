@@ -112,6 +112,7 @@ class NotCurses {
 
   /// Returns true if NotCurses was initialized without problems
   bool get initialized => _ptr != ffi.nullptr;
+
   /// Returns true if NotCurses was not initialized
   bool get notInitialized => _ptr == ffi.nullptr;
 
@@ -250,24 +251,26 @@ class NotCurses {
   /// Get the default foreground color, if it is known. Returns -1 on error
   /// (unknown foreground). On success, returns 0, writing the RGB value to
   /// 'fg' (if non-NULL)
-  NcResult<int, int> defaultForeground() {
-    final fgPtr = allocator<ffi.Uint32>();
-    final rc = nc.notcurses_default_foreground(_ptr, fgPtr);
-    final col = fgPtr.value;
-    allocator.free(fgPtr);
-    return NcResult(rc, col);
+  int? defaultForeground() {
+    return using<int?>((Arena alloc) {
+      final ptr = alloc<ffi.Uint32>();
+      final rc = nc.notcurses_default_foreground(_ptr, ptr);
+      if (rc < 0) return null;
+      return ptr.value;
+    });
   }
 
   /// Get the default background color, if it is known. Returns -1 on error
   /// (unknown background). On success, returns 0, writing the RGB value to
   /// 'bg' (if non-NULL) and setting 'bgtrans' high iff the background color
   /// is treated as transparent.
-  NcResult<int, int> defaultBackground() {
-    final fgPtr = allocator<ffi.Uint32>();
-    final rc = nc.notcurses_default_background(_ptr, fgPtr);
-    final col = fgPtr.value;
-    allocator.free(fgPtr);
-    return NcResult(rc, col);
+  int? defaultBackground() {
+    return using<int?>((Arena alloc) {
+      final ptr = alloc<ffi.Uint32>();
+      final rc = nc.notcurses_default_background(_ptr, ptr);
+      if (rc < 0) return null;
+      return ptr.value;
+    });
   }
 
   /// Returns the name (and sometimes version) of the terminal, as Notcurses

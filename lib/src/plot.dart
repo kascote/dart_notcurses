@@ -7,7 +7,6 @@ import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './plane.dart';
-import './shared.dart';
 
 class PlotOptions {
   late int miny;
@@ -102,13 +101,13 @@ class Plot {
   }
 
   /// Allo retrieval of sample data
-  NcResult<int, int> sample(int x, int y) {
-    final yPtr = allocator<Uint64>();
-    yPtr.value = y;
-    final rc = nc.ncuplot_sample(_ptr, x, yPtr);
-    final res = NcResult(rc, yPtr.value);
-    allocator.free(yPtr);
-    return res;
+  int? sample(int x, int y) {
+    return using<int?>((Arena alloc) {
+      final yPtr = alloc<Uint64>();
+      yPtr.value = y;
+      if (nc.ncuplot_sample(_ptr, x, yPtr) < 0) return null;
+      return yPtr.value;
+    });
   }
 
   /// Release the memory associated with this plot
