@@ -60,12 +60,12 @@ bool handle(NotCurses nc, String fname) {
   n.erase();
 
   final rc = visual.geom(nc, vopts);
-  if (!rc.result) {
+  if (rc == null) {
     visual.destroy();
     return false;
   }
 
-  if (!visual.resize(dim.y * rc.value!.scaley!, dim.x * rc.value!.scalex!)) {
+  if (!visual.resize(dim.y * rc.scaley!, dim.x * rc.scalex!)) {
     visual.destroy();
     return false;
   }

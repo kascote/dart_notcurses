@@ -340,15 +340,15 @@ class Visual {
   /// pixel geometry of 'n'. if 'n' is NULL, only cdimy/cdimx, blitter,
   /// scaley/scalex, and maxpixely/maxpixelx are filled in. cdimy/cdimx and
   /// maxpixely/maxpixelx are only ever filled in if we know them.
-  NcResult<bool, VisualGeom?> geom(NotCurses notc, VisualOptions vopts) {
-    return using<NcResult<bool, VisualGeom?>>((Arena alloc) {
+  VisualGeom? geom(NotCurses notc, VisualOptions vopts) {
+    return using<VisualGeom?>((Arena alloc) {
       final _vopts = vopts.toPtr(alloc);
       final _geom = alloc<ncvgeom>();
       final rc = nc.ncvisual_geom(notc.ptr, _ptr, _vopts, _geom);
-      if (rc < 0) return NcResult(false, null);
+      if (rc < 0) return null;
 
       final vgeom = VisualGeom.fromPtr(_geom);
-      return NcResult(true, vgeom);
+      return vgeom;
     });
   }
 
