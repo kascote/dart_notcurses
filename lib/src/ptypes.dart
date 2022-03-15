@@ -1,7 +1,7 @@
 import './ffi/notcurses_g.dart';
 
 /// Log level values to be used on CursesOptions.loglevel
-abstract class NcLogLevel {
+abstract class LogLevel {
   /// print nothing once fullscreen service begins
   static const silent = ncloglevel_e.NCLOGLEVEL_SILENT;
 
@@ -30,7 +30,7 @@ abstract class NcLogLevel {
   static const trace = ncloglevel_e.NCLOGLEVEL_TRACE;
 }
 
-abstract class NcPlaneOptionFlags {
+abstract class PlaneOptionFlags {
   /// Horizontal alignment relative to the parent plane. Use ncalign_e for 'x'.
   static const int horaligned = NCPLANE_OPTION_HORALIGNED;
 
@@ -61,7 +61,7 @@ abstract class NcPlaneOptionFlags {
   static const int vscroll = NCPLANE_OPTION_VSCROLL;
 }
 
-abstract class NcMiceEvents {
+abstract class MiceEvents {
   static const int noEvents = NCMICE_NO_EVENTS;
   static const int moveEvent = NCMICE_MOVE_EVENT;
   static const int buttonEvent = NCMICE_BUTTON_EVENT;
@@ -105,7 +105,7 @@ abstract class NcMiceEvents {
 ///
 /// This options structure works for both the ncuplot (uint64_t) and ncdplot
 /// (double) types.
-abstract class NcPlotOptionsFlags {
+abstract class PlotOptionFlags {
   /// show labels for dependent axis
   static const int labelTickSD = NCPLOT_OPTION_LABELTICKSD;
 
@@ -125,7 +125,7 @@ abstract class NcPlotOptionsFlags {
   static const int printSample = NCPLOT_OPTION_PRINTSAMPLE;
 }
 
-abstract class NcBlitterE {
+abstract class Blitter {
   /// let the ncvisual pick
   static const int defaultt = ncblitter_e.NCBLIT_DEFAULT;
 
@@ -155,7 +155,7 @@ abstract class NcBlitterE {
 }
 
 /// Alignment within a plane or terminal. Left/right-justified, or centered.
-abstract class NcAlignE {
+abstract class Align {
   static const int unaligned = ncalign_e.NCALIGN_UNALIGNED;
   static const int left = ncalign_e.NCALIGN_LEFT;
   static const int center = ncalign_e.NCALIGN_CENTER;
@@ -165,7 +165,7 @@ abstract class NcAlignE {
   static int get bottom => right;
 }
 
-abstract class NcEventType {
+abstract class EventType {
   static const int unknown = ncintype_e.NCTYPE_UNKNOWN;
   static const int press = ncintype_e.NCTYPE_PRESS;
   static const int repeat = ncintype_e.NCTYPE_REPEAT;
@@ -178,7 +178,7 @@ abstract class NcEventType {
 /// to fill the entirety of the plane. NCSCALE_NONE_HIRES and
 /// NCSCALE_SCALE_HIRES behave like their counterparts, but admit blitters
 /// which don't preserve aspect ratio.
-abstract class NcScaleE {
+abstract class Scale {
   static const int none = ncscale_e.NCSCALE_NONE;
   static const int scale = ncscale_e.NCSCALE_SCALE;
   static const int stretch = ncscale_e.NCSCALE_STRETCH;
@@ -188,7 +188,7 @@ abstract class NcScaleE {
 
 /// if you want reverse video, try ncchannels_reverse(). if you want blink, try
 /// ncplane_pulse(). if you want protection, put things on a different plane.
-abstract class NcStyle {
+abstract class Style {
   static const int mask = NCSTYLE_MASK;
   static const int italic = NCSTYLE_ITALIC;
   static const int underline = NCSTYLE_UNDERLINE;
@@ -199,7 +199,7 @@ abstract class NcStyle {
 }
 
 // background cannot be highcontrast, only foreground
-abstract class NcAlpha {
+abstract class Alpha {
   static const int highcontrast = NCALPHA_HIGHCONTRAST; // 0x30000000
   static const int transparent = NCALPHA_TRANSPARENT; // 0x20000000;
   static const int blend = NCALPHA_BLEND; // 0x10000000;
@@ -207,7 +207,7 @@ abstract class NcAlpha {
 }
 
 /// Bits for notcurses_options->flags.
-abstract class NcOptions {
+abstract class OptionFlags {
   /// notcurses_init() will call setlocale() to inspect the current locale. If
   /// that locale is "C" or "POSIX", it will call setlocale(LC_ALL, "") to set
   /// the locale according to the LANG environment variable. Ideally, this will
@@ -267,7 +267,7 @@ abstract class NcOptions {
   static const int cliMode = NCOPTION_CLI_MODE;
 }
 
-abstract class NcBox {
+abstract class BoxFlags {
   static const int maskTop = NCBOXMASK_TOP;
   static const int maskRight = NCBOXMASK_RIGHT;
   static const int maskBottom = NCBOXMASK_BOTTOM;
@@ -282,7 +282,7 @@ abstract class NcBox {
 
 /// used with the modifiers bitmask. definitions come straight from the kitty
 /// keyboard protocol.
-abstract class NcKeyMod {
+abstract class KeyMod {
   static const int shift = 1;
   static const int alt = 2;
   static const int ctrl = 4;
@@ -293,22 +293,14 @@ abstract class NcKeyMod {
   static const int numlock = 128;
 }
 
-abstract class NcReaderOptions {
+abstract class ReaderOptionsFlags {
   static const int horscroll = NCREADER_OPTION_HORSCROLL;
   static const int verscroll = NCREADER_OPTION_VERSCROLL;
   static const int nocdmkeys = NCREADER_OPTION_NOCMDKEYS;
   static const int cursor = NCREADER_OPTION_CURSOR;
 }
 
-abstract class NcScale {
-  static const int none = ncscale_e.NCSCALE_NONE;
-  static const int scale = ncscale_e.NCSCALE_SCALE;
-  static const int stretch = ncscale_e.NCSCALE_STRETCH;
-  static const int noneHires = ncscale_e.NCSCALE_NONE_HIRES;
-  static const int scaleHires = ncscale_e.NCSCALE_SCALE_HIRES;
-}
-
-abstract class NcVisualOptFlags {
+abstract class VisualOptionFlags {
   /// fail rather than degrade
   static const int nodegrade = NCVISUAL_OPTION_NODEGRADE;
 
@@ -331,9 +323,9 @@ abstract class NcVisualOptFlags {
   static const int nointerpolate = NCVISUAL_OPTION_NOINTERPOLATE;
 }
 
-class NcPixelImpleE {
+class PixelImple {
   final int value;
-  const NcPixelImpleE._(this.value);
+  const PixelImple._(this.value);
 
   // https://github.com/dart-lang/sdk/issues/3059
   static const names = [
@@ -346,19 +338,19 @@ class NcPixelImpleE {
     'kittySelfref',
   ];
 
-  static const none = NcPixelImpleE._(0);
-  static const sixel = NcPixelImpleE._(1); // sixel
-  static const linuxfb = NcPixelImpleE._(2); // linux framebuffer
-  static const iterm2 = NcPixelImpleE._(3); // iTerm2
-  static const kittyStatic = NcPixelImpleE._(4); // kitty pre-0.20.0
-  static const kittyAnimated = NcPixelImpleE._(5); // kitty pre-0.22.0
-  static const kittySelfref = NcPixelImpleE._(6); // kitty 0.22.0+, wezterm
+  static const none = PixelImple._(0);
+  static const sixel = PixelImple._(1); // sixel
+  static const linuxfb = PixelImple._(2); // linux framebuffer
+  static const iterm2 = PixelImple._(3); // iTerm2
+  static const kittyStatic = PixelImple._(4); // kitty pre-0.20.0
+  static const kittyAnimated = PixelImple._(5); // kitty pre-0.22.0
+  static const kittySelfref = PixelImple._(6); // kitty 0.22.0+, wezterm
 
   String get name => names[value];
   static String fromValue(int v) => names[v];
 }
 
-abstract class NcDirectOptions {
+abstract class DirectOptionFlags {
   static const inhibitSetlocale = 1;
   static const inhibitCbreak = 2;
   static const drainInput = 4;
@@ -367,7 +359,7 @@ abstract class NcDirectOptions {
   static const veryVerbose = 32;
 }
 
-abstract class NcSeqs {
+abstract class Sequences {
 // unicode box-drawing characters
   static const String boxlightw = '┌┐└┘─│';
   static const String boxheavyw = '┏┓┗┛━┃';

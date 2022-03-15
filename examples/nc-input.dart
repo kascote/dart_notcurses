@@ -16,8 +16,8 @@ Future<void> main() async {
     marginL: 2,
     marginR: 2,
     marginB: 2,
-    loglevel: NcLogLevel.error,
-    flags: NcOptions.inhibitSetlocale,
+    loglevel: LogLevel.error,
+    flags: OptionFlags.inhibitSetlocale,
   ));
 
   if (nc.notInitialized) {
@@ -25,7 +25,7 @@ Future<void> main() async {
     return;
   }
 
-  nc.miceEnable(NcMiceEvents.allEvents);
+  nc.miceEnable(MiceEvents.allEvents);
 
   final stdPlane = setupPlane(nc);
   if (stdPlane == null) {
@@ -120,15 +120,15 @@ Plane? setupPlane(NotCurses n) {
 
   stdPlane.setFgRGB8(0, 0, 0);
   stdPlane.setBgRGB8(0xbb, 0x64, 0xbb); // #bb64bb
-  stdPlane.stylesOn(NcStyle.underline);
+  stdPlane.stylesOn(Style.underline);
 
-  if (stdPlane.putStrAligned(dim.y - 1, NcAlignE.center, 'mash keys, yo. give that mouse some waggle! ctrl+d exits.') <
+  if (stdPlane.putStrAligned(dim.y - 1, Align.center, 'mash keys, yo. give that mouse some waggle! ctrl+d exits.') <
       0) {
     stderr.writeln('error writting to screen');
     return null;
   }
 
-  stdPlane.setStyles(NcStyle.none);
+  stdPlane.setStyles(Style.none);
   stdPlane.setBgDefault();
   if (!n.render()) {
     stderr.writeln('error rendering');
@@ -145,11 +145,11 @@ Plot? setupPlotPlane(Plane stdPlane) {
 
   final pplane = stdPlane.create(PlaneOptions(
     y: dim.y - plotHeight - 1,
-    x: NcAlignE.center,
+    x: Align.center,
     rows: plotHeight,
     cols: plotWidth,
     name: 'plot',
-    flags: NcPlaneOptionFlags.horaligned,
+    flags: PlaneOptionFlags.horaligned,
     marginB: 0,
     marginR: 0,
   ));
@@ -166,8 +166,8 @@ Plot? setupPlotPlane(Plane stdPlane) {
       PlotOptions(
         minchannels: minc,
         maxchannels: maxc,
-        gridtype: NcBlitterE.pixel,
-        flags: NcPlotOptionsFlags.labelTickSD | NcPlotOptionsFlags.printSample,
+        gridtype: Blitter.pixel,
+        flags: PlotOptionFlags.labelTickSD | PlotOptionFlags.printSample,
       ));
   if (plot == null) {
     stderr.writeln('error creating plot');
@@ -208,7 +208,7 @@ void keyHandler(Plane stdPlane, Key key) {
       if (stdPlane.putStr("Special: [${key.id.toStrHex(padding: 4)} (${key.id})] '${ncKeyStr(key.id)}'") < 0) return;
 
       if (key.keyMouseP()) {
-        if (stdPlane.putStrAligned(-1, NcAlignE.right, ' x: ${key.x} y: ${key.y}') < 0) return;
+        if (stdPlane.putStrAligned(-1, Align.right, ' x: ${key.x} y: ${key.y}') < 0) return;
       }
     } else {
       stdPlane.setFgRGB8(0x40, 0x80, 0xfa); // #4080fa
@@ -219,13 +219,13 @@ void keyHandler(Plane stdPlane, Key key) {
 
 String evTypeToChar(Key k) {
   switch (k.evType) {
-    case NcEventType.unknown:
+    case EventType.unknown:
       return 'u';
-    case NcEventType.press:
+    case EventType.press:
       return 'P';
-    case NcEventType.repeat:
+    case EventType.repeat:
       return 'R';
-    case NcEventType.release:
+    case EventType.release:
       return 'L';
   }
   return 'X';

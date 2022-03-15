@@ -8,7 +8,7 @@ void main() {
     marginL: 2,
     marginR: 2,
     marginB: 2,
-    loglevel: NcLogLevel.error,
+    loglevel: LogLevel.error,
   ));
 
   if (nc.notInitialized) {
@@ -73,7 +73,7 @@ void main() {
       vline,
       30,
       30,
-      NcBox.gradTop | NcBox.gradBottom | NcBox.gradRight | NcBox.gradLeft,
+      BoxFlags.gradTop | BoxFlags.gradBottom | BoxFlags.gradRight | BoxFlags.gradLeft,
     );
     p.perimeter(
       ul,
@@ -82,7 +82,7 @@ void main() {
       lr,
       hline,
       vline,
-      NcBox.gradTop | NcBox.gradBottom | NcBox.gradRight | NcBox.gradLeft,
+      BoxFlags.gradTop | BoxFlags.gradBottom | BoxFlags.gradRight | BoxFlags.gradLeft,
     );
 
     ul.destroy(p);
@@ -161,7 +161,7 @@ void shine(NotCurses nc, Plane p) {
           vline,
           10,
           20,
-          NcBox.gradTop | NcBox.gradBottom | NcBox.gradRight | NcBox.gradLeft,
+          BoxFlags.gradTop | BoxFlags.gradBottom | BoxFlags.gradRight | BoxFlags.gradLeft,
         );
 
         nc.render();

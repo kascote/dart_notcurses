@@ -2,7 +2,7 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 void main() {
   final nc = NotCurses(CursesOptions(
-    loglevel: NcLogLevel.info,
+    loglevel: LogLevel.info,
     flags: 594, // info
   ));
 

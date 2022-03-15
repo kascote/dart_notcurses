@@ -1,7 +1,7 @@
 import 'package:dart_notcurses/dart_notcurses.dart';
 
 void main(List<String> args) async {
-  final nc = Direct(flags: NcDirectOptions.inhibitSetlocale);
+  final nc = Direct(flags: DirectOptionFlags.inhibitSetlocale);
 
   try {
     if (args.isEmpty || args[0] == '-i') {

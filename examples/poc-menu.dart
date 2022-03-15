@@ -5,7 +5,7 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 const bgChar = '\u28ff';
 
 void main() {
-  final nc = NotCurses(CursesOptions(loglevel: NcLogLevel.error));
+  final nc = NotCurses(CursesOptions(loglevel: LogLevel.error));
 
   if (nc.notInitialized) {
     stderr.writeln('error initializing nocurses');
@@ -19,7 +19,7 @@ void main() {
     mTop.itemSetStatus('File', 'Close', false);
 
     p.perimeterDouble(0, Channels.zero(), 0);
-    nc.miceEnable(NcMiceEvents.allEvents);
+    nc.miceEnable(MiceEvents.allEvents);
 
     paintBackground(p);
     nc.render();
@@ -51,7 +51,7 @@ void main() {
         }
       } else {
         // discard key release events
-        if (key.evType == NcEventType.release) {
+        if (key.evType == EventType.release) {
           key.destroy();
           nc.render();
           continue;
@@ -92,44 +92,44 @@ Menu topMenu() {
   final ms = MenuSection(
     'File',
     [
-      MenuItem('new-file', 'New File', shortcutKey: 'N', shortcutModifier: NcKeyMod.ctrl),
-      MenuItem('open-file', 'Open File', shortcutKey: 'O', shortcutModifier: NcKeyMod.ctrl),
-      MenuItem('save-file', 'Save File', shortcutKey: 'S', shortcutModifier: NcKeyMod.ctrl),
-      MenuItem('close-file', 'Close', shortcutKey: 'L', shortcutModifier: NcKeyMod.ctrl),
-      MenuItem('quit', 'Quit', shortcutKey: 'Q', shortcutModifier: NcKeyMod.ctrl),
+      MenuItem('new-file', 'New File', shortcutKey: 'N', shortcutModifier: KeyMod.ctrl),
+      MenuItem('open-file', 'Open File', shortcutKey: 'O', shortcutModifier: KeyMod.ctrl),
+      MenuItem('save-file', 'Save File', shortcutKey: 'S', shortcutModifier: KeyMod.ctrl),
+      MenuItem('close-file', 'Close', shortcutKey: 'L', shortcutModifier: KeyMod.ctrl),
+      MenuItem('quit', 'Quit', shortcutKey: 'Q', shortcutModifier: KeyMod.ctrl),
     ],
     shortcutKey: 'F',
-    shortcutModifier: NcKeyMod.ctrl,
+    shortcutModifier: KeyMod.ctrl,
   );
   final ms2 = MenuSection(
       'Edit',
       [
-        MenuItem('copy', 'Copy', shortcutKey: 'K', shortcutModifier: NcKeyMod.ctrl),
-        MenuItem('paste', 'Paste', shortcutKey: 'V', shortcutModifier: NcKeyMod.ctrl),
-        MenuItem('select-all', 'Select All', shortcutKey: 'A', shortcutModifier: NcKeyMod.ctrl),
+        MenuItem('copy', 'Copy', shortcutKey: 'K', shortcutModifier: KeyMod.ctrl),
+        MenuItem('paste', 'Paste', shortcutKey: 'V', shortcutModifier: KeyMod.ctrl),
+        MenuItem('select-all', 'Select All', shortcutKey: 'A', shortcutModifier: KeyMod.ctrl),
       ],
       shortcutKey: 'E',
-      shortcutModifier: NcKeyMod.ctrl);
+      shortcutModifier: KeyMod.ctrl);
   final ms3 = MenuSection(
       'Window',
       [
         MenuItem('window-move-top', 'Move Window top'),
-        MenuItem('window-move-bottom', 'Move Window Bottom', shortcutKey: 'B', shortcutModifier: NcKeyMod.ctrl),
+        MenuItem('window-move-bottom', 'Move Window Bottom', shortcutKey: 'B', shortcutModifier: KeyMod.ctrl),
         MenuItem('', ''),
         MenuItem('window-close-all', 'Close All')
       ],
       shortcutKey: 'W',
-      shortcutModifier: NcKeyMod.ctrl);
+      shortcutModifier: KeyMod.ctrl);
 
   final secChan = Channels.zero()
     ..setFgRGB(0xff0000) // #ffccaa
     ..setBgRGB(0x7f347f) // #7f347f
-    ..setFgAlpha(NcAlpha.highcontrast)
-    ..setBgAlpha(NcAlpha.blend);
+    ..setFgAlpha(Alpha.highcontrast)
+    ..setBgAlpha(Alpha.blend);
   final headChan = Channels.zero()
     ..setFgRGB(0xffffff)
     ..setBgRGB(0x7f347f) // #7f347f
-    ..setBgAlpha(NcAlpha.blend);
+    ..setBgAlpha(Alpha.blend);
 
   return Menu(
       [ms, ms2, ms3],

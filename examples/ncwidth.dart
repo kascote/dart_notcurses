@@ -10,7 +10,7 @@ int main(List<String> args) {
     return -1;
   }
 
-  final nc = Direct.core(flags: NcDirectOptions.verbose);
+  final nc = Direct.core(flags: DirectOptionFlags.verbose);
 
   try {
     var totalCols = 0;

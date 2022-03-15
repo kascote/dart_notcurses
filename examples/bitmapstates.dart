@@ -11,7 +11,7 @@ final U32_SIZE = ffi.sizeOf<ffi.Uint32>();
 const pause = 1;
 
 int main() {
-  final opts = CursesOptions(loglevel: NcLogLevel.trace, flags: NcOptions.drainInput);
+  final opts = CursesOptions(loglevel: LogLevel.trace, flags: OptionFlags.drainInput);
   final notc = NotCurses.core(opts);
 
   final x = notc.checkPixelSupport();
@@ -49,9 +49,9 @@ int wipebitmap(NotCurses notc) {
   }
 
   final vopts = VisualOptions(
-    blitter: NcBlitterE.pixel,
+    blitter: Blitter.pixel,
     plane: p,
-    flags: NcVisualOptFlags.childplane,
+    flags: VisualOptionFlags.childplane,
   );
 
   final pBlit = ncv.blit(notc, vopts);
@@ -81,8 +81,8 @@ int wipebitmap(NotCurses notc) {
   }
 
   final channels = Channels.zero()
-    ..setBgAlpha(NcAlpha.transparent)
-    ..setFgAlpha(NcAlpha.transparent);
+    ..setBgAlpha(Alpha.transparent)
+    ..setFgAlpha(Alpha.transparent);
 
   p.setBase('', 0, channels);
   p.moveTop();

@@ -8,7 +8,7 @@ void main() {
     marginL: 2,
     marginR: 2,
     marginB: 2,
-    loglevel: NcLogLevel.error,
+    loglevel: LogLevel.error,
   ));
 
   if (nc.notInitialized) {

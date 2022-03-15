@@ -43,8 +43,8 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   final vopts = VisualOptions(
     plane: std,
     y: 1,
-    blitter: NcBlitterE.pixel,
-    flags: NcVisualOptFlags.childplane | NcVisualOptFlags.nodegrade,
+    blitter: Blitter.pixel,
+    flags: VisualOptionFlags.childplane | VisualOptionFlags.nodegrade,
   );
 
   final ncvp = ncv.blit(nc, vopts);
@@ -58,7 +58,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   final scalep = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   vopts.y = 0;
   vopts.plane = scalep;
-  vopts.scaling = NcScale.stretch;
+  vopts.scaling = Scale.stretch;
 
   final blitScale = ncv.blit(nc, vopts);
   if (blitScale == null) {
@@ -73,7 +73,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
   leftMargin += scalep!.dimx() + 1;
   final scalepni = std.create(PlaneOptions(y: 3, x: leftMargin, rows: rows, cols: cols));
   vopts.plane = scalepni;
-  vopts.flags = NcVisualOptFlags.nointerpolate;
+  vopts.flags = VisualOptionFlags.nointerpolate;
 
   final blitScaleNo = ncv.blit(nc, vopts);
   if (blitScaleNo == null) {
@@ -113,7 +113,7 @@ bool interp(NotCurses nc, NcPixelGeomData geom) {
 
   vopts.flags = 0;
   vopts.plane = resizep;
-  vopts.scaling = NcScale.none;
+  vopts.scaling = Scale.none;
   final blitResize = ncv.blit(nc, vopts);
   if (blitResize == null) {
     stderr.writeln('can not blit resize');

@@ -4,8 +4,8 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
   final opts = CursesOptions(
-    loglevel: NcLogLevel.error,
-    flags: NcOptions.cliMode, // | NcOptions.inhibitSetlocale,
+    loglevel: LogLevel.error,
+    flags: OptionFlags.cliMode, // | NcOptions.inhibitSetlocale,
   );
   final nc = NotCurses.core(opts);
   if (nc.notInitialized) {
@@ -16,10 +16,10 @@ int main() {
   final std = nc.stdplane();
   var wc = 0x4e00;
 
-  std.setStyles(NcStyle.bold);
+  std.setStyles(Style.bold);
   std.putStr('This program is *not* indicative of real scrolling speed.\n');
   std.putStr('ctrl+d exit\n');
-  std.setStyles(NcStyle.none);
+  std.setStyles(Style.none);
 
   while (true) {
     sleep(Duration(milliseconds: 10));

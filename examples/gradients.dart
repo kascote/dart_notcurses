@@ -4,8 +4,8 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
   final opts = CursesOptions(
-    loglevel: NcLogLevel.error,
-    flags: NcOptions.drainInput,
+    loglevel: LogLevel.error,
+    flags: OptionFlags.drainInput,
   );
   final nc = NotCurses(opts);
   if (nc.notInitialized) {
@@ -31,7 +31,7 @@ bool gradientA(NotCurses nc) {
   final ll = Channels.initializer(0xff, 0, 0, 0, 0xff, 0xff);
   final lr = Channels.initializer(0xff, 0xff, 0xff, 0, 0, 0);
 
-  if (p.gradient(0, 0, 0, 0, 'A', NcStyle.none, ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, 'A', Style.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
@@ -49,7 +49,7 @@ bool gradStriations(NotCurses nc) {
   final ll = Channels.initializer(0xff, 0, 0, 0, 0xff, 0xff);
   final lr = Channels.initializer(0xff, 0xff, 0xff, 0, 0, 0);
 
-  if (p.gradient(0, 0, 0, 0, '▄', NcStyle.none, ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, '▄', Style.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
@@ -58,7 +58,7 @@ bool gradStriations(NotCurses nc) {
   }
   sleep(Duration(seconds: 1));
 
-  if (p.gradient(0, 0, 0, 0, '▀', NcStyle.none, ul, ur, ll, lr) <= 0) {
+  if (p.gradient(0, 0, 0, 0, '▀', Style.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 

@@ -19,7 +19,7 @@ int main(List<String> args) {
       marginR: 2,
       marginB: 2,
       marginL: 2,
-      flags: NcDirectOptions.inhibitSetlocale,
+      flags: OptionFlags.inhibitSetlocale,
     ));
 
     if (nc.checkPixelSupport() <= 0) {
@@ -66,9 +66,9 @@ int handle(NotCurses nc, String fname) {
         plane: std,
         y: y,
         x: x,
-        scaling: NcScaleE.noneHires,
-        blitter: NcBlitterE.pixel,
-        flags: NcVisualOptFlags.childplane | NcVisualOptFlags.nodegrade,
+        scaling: Scale.noneHires,
+        blitter: Blitter.pixel,
+        flags: VisualOptionFlags.childplane | VisualOptionFlags.nodegrade,
       );
 
       final nv = visual.blit(nc, vopts);

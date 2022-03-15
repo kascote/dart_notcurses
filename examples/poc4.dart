@@ -8,7 +8,7 @@ void main() {
     marginL: 2,
     marginR: 2,
     marginB: 2,
-    loglevel: NcLogLevel.error,
+    loglevel: LogLevel.error,
   ));
 
   if (nc.notInitialized) {
@@ -25,7 +25,7 @@ void main() {
       rows: 1,
       cols: 30,
       name: 'input1',
-      flags: NcPlaneOptionFlags.fixed,
+      flags: PlaneOptionFlags.fixed,
     ));
     if (pInput == null) {
       stderr.writeln('error creating input plane');
@@ -35,8 +35,8 @@ void main() {
 
     final opts = ReaderOptions(
       Channels.initializerFg(0xcc, 0xaa, 0xff), // #ccaaff
-      NcStyle.italic,
-      NcReaderOptions.cursor | NcReaderOptions.horscroll,
+      Style.italic,
+      ReaderOptionsFlags.cursor | ReaderOptionsFlags.horscroll,
     );
     final reader = Reader.create(pInput, opts);
 

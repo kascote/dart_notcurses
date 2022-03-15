@@ -2,7 +2,10 @@ import 'dart:io';
 import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main(List<String> args) {
-  final opts = CursesOptions(loglevel: NcLogLevel.trace, flags: NcOptions.drainInput | NcOptions.noAlternateScreen);
+  final opts = CursesOptions(
+    loglevel: LogLevel.trace,
+    flags: OptionFlags.drainInput | OptionFlags.noAlternateScreen,
+  );
   final notc = NotCurses(opts);
 
   if (notc.notInitialized) {
@@ -38,19 +41,19 @@ int blts(NotCurses notc, List<String> args) {
   final std = notc.stdplane();
 
   final blitters = [
-    NcBlitterE.defaultt,
-    NcBlitterE.blit_1x1,
-    NcBlitterE.blit_2x1,
-    NcBlitterE.blit_2x2,
-    NcBlitterE.blit_3x2,
-    NcBlitterE.braille,
-    NcBlitterE.pixel,
+    Blitter.defaultt,
+    Blitter.blit_1x1,
+    Blitter.blit_2x1,
+    Blitter.blit_2x2,
+    Blitter.blit_3x2,
+    Blitter.braille,
+    Blitter.pixel,
   ];
 
   for (var i = 0; i < blitters.length; ++i) {
     final blitter = blitters[i];
 
-    for (int scaling = NcScaleE.none; scaling <= NcScale.stretch; ++scaling) {
+    for (int scaling = Scale.none; scaling <= Scale.stretch; ++scaling) {
       for (int i = 0; i < args.length; ++i) {
         std.erase();
         final fname = args[i];
@@ -65,7 +68,7 @@ int blts(NotCurses notc, List<String> args) {
           plane: std,
           blitter: blitter,
           scaling: scaling,
-          flags: NcVisualOptFlags.childplane,
+          flags: VisualOptionFlags.childplane,
         );
 
         stderr.writeln('--- blit $blitter $scaling ${i + 1}');

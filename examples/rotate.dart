@@ -19,8 +19,8 @@ int main(List<String> args) {
         marginR: 2,
         marginB: 2,
         marginL: 2,
-        flags: NcOptions.drainInput | NcOptions.noAlternateScreen | NcOptions.suppressBanners,
-        loglevel: NcLogLevel.silent));
+        flags: OptionFlags.drainInput | OptionFlags.noAlternateScreen | OptionFlags.suppressBanners,
+        loglevel: LogLevel.silent));
 
     if (nc.checkPixelSupport() <= 0) {
       print('pixel graphics not supported');
@@ -78,9 +78,9 @@ bool handle(NotCurses nc, String fname) {
   nc.render();
   sleep(Duration(milliseconds: 100));
 
-  vopts.x = NcAlignE.center;
-  vopts.y = NcAlignE.center;
-  vopts.flags = NcVisualOptFlags.horaligned | NcVisualOptFlags.veraligned | NcVisualOptFlags.childplane;
+  vopts.x = Align.center;
+  vopts.y = Align.center;
+  vopts.flags = VisualOptionFlags.horaligned | VisualOptionFlags.veraligned | VisualOptionFlags.childplane;
   vopts.plane = nc.stdplane();
   var failed = false;
   for (double i = 0; i < 256; ++i) {

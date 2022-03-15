@@ -3,11 +3,11 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
   final opts = CursesOptions(
-    flags: NcOptions.noAlternateScreen |
-        NcOptions.preserveCursor |
-        NcOptions.noClearBitmaps |
-        NcOptions.drainInput |
-        NcOptions.suppressBanners,
+    flags: OptionFlags.noAlternateScreen |
+        OptionFlags.preserveCursor |
+        OptionFlags.noClearBitmaps |
+        OptionFlags.drainInput |
+        OptionFlags.suppressBanners,
   );
 
   final nc = NotCurses(opts);
@@ -15,20 +15,20 @@ int main() {
     return -1;
   }
 
-  nc.miceEnable(NcMiceEvents.allEvents);
+  nc.miceEnable(MiceEvents.allEvents);
 
   final List<String> indent = [];
   final stdn = nc.stdplane();
   if (stdn.dimx() < 80) {
     stdn.setFgRGB(0xff5349);
-    stdn.setStyles(NcStyle.bold);
+    stdn.setStyles(Style.bold);
     stdn.putStr('This program requires at least 80 columns.\n');
     nc.render();
     nc.stop();
     return -1;
   }
 
-  stdn.setFgAlpha(NcAlpha.highcontrast);
+  stdn.setFgAlpha(Alpha.highcontrast);
   stdn.setFgRGB(0xffffff);
   stdn.setScrolling(true);
 
@@ -49,11 +49,11 @@ int main() {
 
 void tinfoDebugStyles(NotCurses nc, Plane plane, String idt) {
   plane.putStr(idt);
-  tinfoDebugStyle(plane, 'bold', NcStyle.bold, ' ');
-  tinfoDebugStyle(plane, 'ital', NcStyle.italic, ' ');
-  tinfoDebugStyle(plane, 'struck', NcStyle.struck, ' ');
-  tinfoDebugStyle(plane, 'ucurl', NcStyle.undercurl, ' ');
-  tinfoDebugStyle(plane, 'uline', NcStyle.underline, ' ');
+  tinfoDebugStyle(plane, 'bold', Style.bold, ' ');
+  tinfoDebugStyle(plane, 'ital', Style.italic, ' ');
+  tinfoDebugStyle(plane, 'struck', Style.struck, ' ');
+  tinfoDebugStyle(plane, 'ucurl', Style.undercurl, ' ');
+  tinfoDebugStyle(plane, 'uline', Style.underline, ' ');
 
   finishLine(plane);
   plane.putStr(idt);
@@ -63,14 +63,14 @@ void tinfoDebugStyle(Plane plane, String name, int style, String char) {
   final nc = plane.notCurses();
   final support = nc.supportedStyles() & style == style;
   if (!support) {
-    plane.setStyles(NcStyle.italic);
+    plane.setStyles(Style.italic);
   }
 
   plane.setStyles(style);
   plane.putStr(name);
-  plane.setStyles(NcStyle.bold);
+  plane.setStyles(Style.bold);
   plane.putWc(capboolbool(nc.canUtf8(), support));
-  plane.setStyles(NcStyle.none);
+  plane.setStyles(Style.none);
   plane.putChar(char);
 }
 
@@ -109,7 +109,7 @@ void tinfoDebugBitmaps(NotCurses nc, Plane plane, List<String> indent) {
 
   final blit = nc.checkPixelSupport();
 
-  switch (NcPixelImpleE.fromValue(blit)) {
+  switch (PixelImple.fromValue(blit)) {
     case 'none':
       plane.putStr('${idt}no bitmap graphics detected');
       break;
@@ -144,114 +144,114 @@ void unicodeDumper(NotCurses nc, Plane plane, List<String> indent) {
   }
 
   // all NCHALFBLOCKS are contained within NCQUADBLOCKS
-  plane.putStr('$idt${NcSeqs.quadblocks}⎧');
+  plane.putStr('$idt${Sequences.quadblocks}⎧');
   // 🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹 (on Windows, these will be encoded as UTF-16 surrogate
   // pairs due to a 16-bit wchar_t.
-  sexViz(plane, NcSeqs.sexblocks, '⎫', '♠♥${NcSeqs.segdigits}\u2157\u2158\u2159\u215a\u215b');
-  vertViz(plane, '⎧', NcSeqs.eighthsr.characters.elementAt(0), NcSeqs.eighthsl[0], '⎫', '┌╥─╥─╥┐🭩⎛⎞');
+  sexViz(plane, Sequences.sexblocks, '⎫', '♠♥${Sequences.segdigits}\u2157\u2158\u2159\u215a\u215b');
+  vertViz(plane, '⎧', Sequences.eighthsr.characters.elementAt(0), Sequences.eighthsl[0], '⎫', '┌╥─╥─╥┐🭩⎛⎞');
   plane.putStr('$idt╲╿╱ ◨◧ ◪◩ ◖◗ ⫷⫸ ⎩');
-  sexViz(plane, NcSeqs.sexblocks.substring(31), '⎭',
+  sexViz(plane, Sequences.sexblocks.substring(31), '⎭',
       '♦♣\u00bc\u00bd\u00be\u2150\u2151\u2152\u2153\u2154\u2155\u2156\u215c\u215d\u215e\u215f\u2189');
-  vertViz(plane, '⎪', NcSeqs.eighthsr.characters.elementAt(1), NcSeqs.eighthsl[1], '⎪', '├╜╓╫╖╙┤🭫⎜⎟');
+  vertViz(plane, '⎪', Sequences.eighthsr.characters.elementAt(1), Sequences.eighthsl[1], '⎪', '├╜╓╫╖╙┤🭫⎜⎟');
   plane.putStr('$idt╾╳╼ ');
   triviz(
       plane,
-      NcSeqs.whitesquaresw,
-      NcSeqs.whitecirclesw,
-      NcSeqs.diagonalsw,
-      NcSeqs.diagonalsw.characters.skip(4).toString(),
-      NcSeqs.circulararcsw,
-      NcSeqs.whitetrianglesw,
-      NcSeqs.shadetrianglesw,
-      NcSeqs.blacktrianglesw,
-      NcSeqs.boxlightw,
-      NcSeqs.boxlightw.characters.skip(4).toString(),
-      NcSeqs.boxheavyw,
-      NcSeqs.boxheavyw.characters.skip(4).toString(),
-      NcSeqs.boxroundw,
-      NcSeqs.boxroundw.characters.skip(4).toString(),
-      NcSeqs.boxdoublew,
-      NcSeqs.boxdoublew.characters.skip(4).toString(),
-      NcSeqs.boxouterw,
-      NcSeqs.boxouterw.characters.skip(4).toString(),
-      NcSeqs.chessblack,
+      Sequences.whitesquaresw,
+      Sequences.whitecirclesw,
+      Sequences.diagonalsw,
+      Sequences.diagonalsw.characters.skip(4).toString(),
+      Sequences.circulararcsw,
+      Sequences.whitetrianglesw,
+      Sequences.shadetrianglesw,
+      Sequences.blacktrianglesw,
+      Sequences.boxlightw,
+      Sequences.boxlightw.characters.skip(4).toString(),
+      Sequences.boxheavyw,
+      Sequences.boxheavyw.characters.skip(4).toString(),
+      Sequences.boxroundw,
+      Sequences.boxroundw.characters.skip(4).toString(),
+      Sequences.boxdoublew,
+      Sequences.boxdoublew.characters.skip(4).toString(),
+      Sequences.boxouterw,
+      Sequences.boxouterw.characters.skip(4).toString(),
+      Sequences.chessblack,
       '⩘▵△▹▷▿▽◃◁',
-      NcSeqs.arroww);
-  vertViz(plane, '⎪', NcSeqs.eighthsr.characters.elementAt(2), NcSeqs.eighthsl[2], '⎪', '├─╨╫╨─┤┇⎜⎟');
+      Sequences.arroww);
+  vertViz(plane, '⎪', Sequences.eighthsr.characters.elementAt(2), Sequences.eighthsl[2], '⎪', '├─╨╫╨─┤┇⎜⎟');
   plane.putStr('$idt╱╽╲ ');
 
   triviz(
       plane,
-      NcSeqs.whitesquaresw.characters.skip(2).toString(),
-      NcSeqs.whitecirclesw.characters.skip(2).toString(),
-      NcSeqs.diagonalsw.characters.skip(2).toString(),
-      NcSeqs.diagonalsw.characters.skip(6).toString(),
-      NcSeqs.circulararcsw.characters.skip(2).toString(),
-      NcSeqs.whitetrianglesw.characters.skip(2).toString(),
-      NcSeqs.shadetrianglesw.characters.skip(2).toString(),
-      NcSeqs.blacktrianglesw.characters.skip(2).toString(),
-      NcSeqs.boxlightw.characters.skip(2).toString(),
-      NcSeqs.boxlightw.characters.skip(5).toString(),
-      NcSeqs.boxheavyw.characters.skip(2).toString(),
-      NcSeqs.boxheavyw.characters.skip(5).toString(),
-      NcSeqs.boxroundw.characters.skip(2).toString(),
-      NcSeqs.boxroundw.characters.skip(5).toString(),
-      NcSeqs.boxdoublew.characters.skip(2).toString(),
-      NcSeqs.boxdoublew.characters.skip(5).toString(),
-      NcSeqs.boxouterw.characters.skip(2).toString(),
-      NcSeqs.boxouterw.characters.skip(5).toString(),
-      NcSeqs.chessblack.characters.skip(3).toString(),
+      Sequences.whitesquaresw.characters.skip(2).toString(),
+      Sequences.whitecirclesw.characters.skip(2).toString(),
+      Sequences.diagonalsw.characters.skip(2).toString(),
+      Sequences.diagonalsw.characters.skip(6).toString(),
+      Sequences.circulararcsw.characters.skip(2).toString(),
+      Sequences.whitetrianglesw.characters.skip(2).toString(),
+      Sequences.shadetrianglesw.characters.skip(2).toString(),
+      Sequences.blacktrianglesw.characters.skip(2).toString(),
+      Sequences.boxlightw.characters.skip(2).toString(),
+      Sequences.boxlightw.characters.skip(5).toString(),
+      Sequences.boxheavyw.characters.skip(2).toString(),
+      Sequences.boxheavyw.characters.skip(5).toString(),
+      Sequences.boxroundw.characters.skip(2).toString(),
+      Sequences.boxroundw.characters.skip(5).toString(),
+      Sequences.boxdoublew.characters.skip(2).toString(),
+      Sequences.boxdoublew.characters.skip(5).toString(),
+      Sequences.boxouterw.characters.skip(2).toString(),
+      Sequences.boxouterw.characters.skip(5).toString(),
+      Sequences.chessblack.characters.skip(3).toString(),
       '⩗▴⏶⯅▲▸⏵⯈▶',
       '▾⏷⯆▼◂⏴⯇◀');
-  vertViz(plane, '⎪', NcSeqs.eighthsr.characters.elementAt(3), NcSeqs.eighthsl[3], '⎪', '╞═╤╬╤═╡┋⎜⎟');
+  vertViz(plane, '⎪', Sequences.eighthsr.characters.elementAt(3), Sequences.eighthsl[3], '⎪', '╞═╤╬╤═╡┋⎜⎟');
   brailleViz(
     plane,
     '⎡',
-    NcSeqs.brailleegcs,
+    Sequences.brailleegcs,
     '⎤',
     idt,
     '⎨⎬',
-    NcSeqs.eighthsr.characters.elementAt(4),
-    NcSeqs.eighthsl[4],
+    Sequences.eighthsr.characters.elementAt(4),
+    Sequences.eighthsl[4],
     '╞╕╘╬╛╒╡┊⎜⎟',
   );
   brailleViz(
     plane,
     '⎢',
-    NcSeqs.brailleegcs.characters.skip(64).toString(),
+    Sequences.brailleegcs.characters.skip(64).toString(),
     '⎥',
     idt,
     '⎪⎪',
-    NcSeqs.eighthsr.characters.elementAt(5),
-    NcSeqs.eighthsl[5],
+    Sequences.eighthsr.characters.elementAt(5),
+    Sequences.eighthsl[5],
     '└┴─╨─┴┘╏⎝⎠',
   );
   brailleViz(
     plane,
     '⎢',
-    NcSeqs.brailleegcs.characters.skip(128).toString(),
+    Sequences.brailleegcs.characters.skip(128).toString(),
     '⎥',
     idt,
     '⎪⎪',
-    NcSeqs.eighthsr.characters.elementAt(6),
-    NcSeqs.eighthsl[6],
+    Sequences.eighthsr.characters.elementAt(6),
+    Sequences.eighthsl[6],
     '╭──╮⟬⟭╔╗≶≷',
   );
   brailleViz(
     plane,
     '⎣',
-    NcSeqs.brailleegcs.characters.skip(192).toString(),
+    Sequences.brailleegcs.characters.skip(192).toString(),
     '⎦',
     idt,
     '⎪⎪',
-    NcSeqs.eighthsr.characters.elementAt(7),
-    NcSeqs.eighthsl[7],
+    Sequences.eighthsr.characters.elementAt(7),
+    Sequences.eighthsl[7],
     '│╭╮│╔═╝║⊆⊇',
   );
-  legacyViz(plane, indent.join(), '▔🭶🭷🭸🭹🭺🭻▁', NcSeqs.anglesbr, NcSeqs.anglesbl);
-  wviz(plane, NcSeqs.digitssubw);
+  legacyViz(plane, indent.join(), '▔🭶🭷🭸🭹🭺🭻▁', Sequences.anglesbr, Sequences.anglesbl);
+  wviz(plane, Sequences.digitssubw);
   wviz(plane, ' ⎛');
-  wviz(plane, NcSeqs.eighthsb);
+  wviz(plane, Sequences.eighthsb);
   // 🭫⎞⎪🭨🭪⎪╰╯││║╔═╝⊴⊵
   wviz(plane, '\u{1FB6B}\u239e⎪🭨🭪⎪╰╯││║╔═╝⊴⊵');
 
@@ -259,10 +259,10 @@ void unicodeDumper(NotCurses nc, Plane plane, List<String> indent) {
     plane.putChar('\n');
   }
 
-  legacyViz(plane, indent.join(), '▏🭰🭱🭲🭳🭴🭵▕', NcSeqs.anglestr, NcSeqs.anglestl);
-  wviz(plane, NcSeqs.digitssuperw);
+  legacyViz(plane, indent.join(), '▏🭰🭱🭲🭳🭴🭵▕', Sequences.anglestr, Sequences.anglestl);
+  wviz(plane, Sequences.digitssuperw);
   wviz(plane, ' ⎝');
-  wviz(plane, NcSeqs.eighthst);
+  wviz(plane, Sequences.eighthst);
   // 🭩⎠⎩🭪🭨⎭⧒⧑╰╯╚╝❨❩⟃⟄
   wviz(plane, '\u{1FB69}\u23a0⎩🭪🭨⎭⧒⧑╰╯╚╝❨❩⟃⟄');
   if (plane.dimx() > 80) {
@@ -276,10 +276,10 @@ void unicodeDumper(NotCurses nc, Plane plane, List<String> indent) {
   final ul = Channels.initializer(0xff, 0xff, 0xff, 0x19, 0x19, 0x70);
   final ll = Channels.initializer(0xff, 0xff, 0xff, 0x19, 0x19, 0x70);
   plane.stain(d.y - 16, 0, 15, 80, ul, ur, ll, lr);
-  plane.setStyles(NcStyle.bold | NcStyle.italic);
+  plane.setStyles(Style.bold | Style.italic);
   plane.cursorMoveYX(d.y - 12, 55);
   wviz(plane, '🯁🯂🯃https://notcurses.com');
-  plane.setStyles(NcStyle.none);
+  plane.setStyles(Style.none);
 }
 
 int sexViz(Plane plane, String sex, String r, String post) {
@@ -530,8 +530,8 @@ void displayLogo(NotCurses nc, Plane plane) {
     plane: plane,
     y: dim.y - 3,
     x: 55,
-    blitter: NcBlitterE.pixel,
-    flags: NcVisualOptFlags.childplane | NcVisualOptFlags.nodegrade,
+    blitter: Blitter.pixel,
+    flags: VisualOptionFlags.childplane | VisualOptionFlags.nodegrade,
   );
   visual.blit(nc, opts);
   visual.destroy();

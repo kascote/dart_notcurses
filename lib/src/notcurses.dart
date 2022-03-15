@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
+import './direct.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './key.dart';
@@ -18,7 +19,7 @@ class CursesOptions {
   final int flags;
 
   CursesOptions({
-    this.loglevel = NcLogLevel.silent,
+    this.loglevel = LogLevel.silent,
     this.marginT = 0,
     this.marginR = 0,
     this.marginB = 0,
@@ -170,7 +171,7 @@ class NotCurses {
 
   /// Disable mouse events. Any events in the input queue can still be delivered.
   bool miceDisable() {
-    return nc.notcurses_mice_enable(_ptr, NcMiceEvents.noEvents) == 0;
+    return nc.notcurses_mice_enable(_ptr, MiceEvents.noEvents) == 0;
   }
 
   /// Read a UTF-32-encoded Unicode codepoint from input. This might only be part

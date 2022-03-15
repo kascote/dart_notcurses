@@ -1,7 +1,7 @@
 import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
-  final nc = Direct.core(flags: NcDirectOptions.drainInput);
+  final nc = Direct.core(flags: DirectOptionFlags.drainInput);
 
   try {
     for (int i = 1; i < 15; ++i) {
