@@ -70,7 +70,9 @@ class Channels {
 
   /// Initialize a Channels with default FG/BG colors
   factory Channels.defaultColors() {
-    return Channels._(0)..setBgDefault()..setFgDefault();
+    return Channels._(0)
+      ..setBgDefault()
+      ..setFgDefault();
   }
 
   /// Returns a new Channels with the same values

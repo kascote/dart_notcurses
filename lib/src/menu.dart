@@ -11,7 +11,7 @@ import './load_library.dart';
 import './plane.dart';
 import './shared.dart';
 
-abstract class NcMenuFlags {
+abstract class MenuOptionFlags {
   static const int top = 0x0000;
   static const int bottom = 0x0001; // NCMENU_OPTION_BOTTOM - bottom row (as opposed to top row)
   static const int hidding = 0x0002; // NCMENU_OPTION_HIDING - hide the menu when not unrolled
@@ -25,7 +25,7 @@ class MenuOptions {
   MenuOptions({
     Channels? headerChannels,
     Channels? sectionChannels,
-    this.flags = NcMenuFlags.top,
+    this.flags = MenuOptionFlags.top,
   })  : headerChannels = headerChannels ?? Channels.zero(),
         sectionChannels = sectionChannels ?? Channels.zero();
 }

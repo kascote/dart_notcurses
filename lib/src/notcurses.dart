@@ -2,7 +2,6 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import './direct.dart';
 import './ffi/memory.dart';
 import './ffi/notcurses_g.dart';
 import './key.dart';
