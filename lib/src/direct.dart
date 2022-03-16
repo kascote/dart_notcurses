@@ -464,7 +464,7 @@ class Direct {
   }
 
   /// Having loaded the frame 'frame', get the geometry of a potential render.
-  NcPixelGeomData? visualGeom(Visual frame, VisualOptions vopts) {
+  PixelGeomData? visualGeom(Visual frame, VisualOptions vopts) {
     final optr = vopts.toPtr();
     final geomp = allocator<ncvgeom>();
     final rc = nc.ncdirectf_geom(_ptr, frame.ptr, optr, geomp);
@@ -472,7 +472,7 @@ class Direct {
     allocator.free(geomp);
 
     if (rc < 0) return null;
-    return NcPixelGeomData.fromPtr(geomp);
+    return PixelGeomData.fromPtr(geomp);
   }
 
   // TODO: ncdirect_stream

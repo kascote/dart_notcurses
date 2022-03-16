@@ -2,6 +2,7 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
   final nc = Direct.core(flags: DirectOptionFlags.drainInput);
+  final cd = Channels.defaultColors();
 
   try {
     for (int i = 1; i < 15; ++i) {
@@ -10,9 +11,7 @@ int main() {
       if (nc.hlineInterp('-', i, c1, c2) < i) {
         return -1;
       }
-      nc.setFgDefault();
-      nc.setBgDefault();
-      nc.putStr('\n');
+      nc.putStr('\n', cd);
     }
 
     for (int i = 1; i < 15; ++i) {
@@ -21,8 +20,6 @@ int main() {
       if (nc.vlineInterp('|', i, c1, c2) < i) {
         return -1;
       }
-      nc.setFgDefault();
-      nc.setBgDefault();
 
       if (i < 14) {
         if (!nc.cursorUp(i)) {
@@ -30,7 +27,7 @@ int main() {
         }
       }
     }
-    nc.putStr('\n');
+    nc.putStr('\n', cd);
     final ul = Channels.zero()..setFgRGB8(0xff, 0x0, 0xff);
     final ur = Channels.zero()..setFgRGB8(0x0, 0xff, 0x0);
     final ll = Channels.zero()..setFgRGB8(0x0, 0x0, 0xff);

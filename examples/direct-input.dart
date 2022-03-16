@@ -11,9 +11,7 @@ int main() {
 
   while (true) {
     final res = nc.getBlocking();
-    if (res.result < 0) {
-      break;
-    }
+    if (res.result < 0) break;
     final key = res.value!;
     final utf8 = nc.ucsToUtf8(key.id);
 

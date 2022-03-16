@@ -6,7 +6,7 @@ import './ffi/notcurses_g.dart';
 import './load_library.dart';
 import './plane.dart';
 
-class NcPixelGeomData {
+class PixelGeomData {
   late final int _pxy;
   late final int _pxx;
   late final int _celldimy;
@@ -14,7 +14,7 @@ class NcPixelGeomData {
   late final int _maxbmapy;
   late final int _maxbmapx;
 
-  NcPixelGeomData(
+  PixelGeomData(
     Plane plane, {
     bool pxy = false,
     bool pxx = false,
@@ -49,7 +49,7 @@ class NcPixelGeomData {
   int get maxbmapy => _maxbmapy;
   int get maxbmapx => _maxbmapx;
 
-  NcPixelGeomData.fromPtr(ffi.Pointer<ncvgeom> geom) {
+  PixelGeomData.fromPtr(ffi.Pointer<ncvgeom> geom) {
     final r = geom.ref;
     _pxy = r.pixy;
     _pxx = r.pixx;

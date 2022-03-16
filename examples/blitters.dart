@@ -9,7 +9,7 @@ int main(List<String> args) {
   final notc = NotCurses(opts);
 
   if (notc.notInitialized) {
-    stderr.writeln('errir initializing notcurses');
+    stderr.writeln('error initializing notcurses');
     return -1;
   }
 
@@ -57,7 +57,6 @@ int blts(NotCurses notc, List<String> args) {
       for (int i = 0; i < args.length; ++i) {
         std.erase();
         final fname = args[i];
-        stderr.writeln('--- load file');
         final ncv = Visual.fromFile(fname);
         if (ncv.notInitialized) {
           stderr.writeln('ERROR: creating visual');
@@ -71,7 +70,6 @@ int blts(NotCurses notc, List<String> args) {
           flags: VisualOptionFlags.childplane,
         );
 
-        stderr.writeln('--- blit $blitter $scaling ${i + 1}');
         final cn = ncv.blit(notc, vopts);
         if (cn == null) {
           ncv.destroy();
@@ -79,13 +77,10 @@ int blts(NotCurses notc, List<String> args) {
           return -1;
         }
 
-        stderr.writeln('--- render');
         notc.render();
         sleep(Duration(milliseconds: 500));
 
-        stderr.writeln('--- destroy 1');
         cn.destroy();
-        stderr.writeln('--- destroy 2');
         ncv.destroy();
       }
     }

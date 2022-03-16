@@ -143,20 +143,22 @@ void showSelection(Plane p, String kind, String menu, Key? key) {
   final dim = p.dimyx();
   final y = (dim.y / 2).floor();
 
-  p.putStrYX(y, 5, '$kind selected ');
-  p.setFgRGB(0xffccaa);
-  p.putStr(menu);
-  p.setFgRGB(0x444444);
-  p.setBgRGB(0x000000);
-  p.putStr(bgChar.padRight(80, bgChar));
+  p
+    ..putStrYX(y, 5, '$kind selected ')
+    ..setFgRGB(0xffccaa)
+    ..putStr(menu)
+    ..setFgRGB(0x444444)
+    ..setBgRGB(0x000000)
+    ..putStr(bgChar.padRight(80, bgChar));
 
   if (key != null) {
-    p.setFgDefault();
     final str = '${key.id.toStrHex(padding: 4)} ${ncKeyStr(key.id)} ${key.keyStr}';
-    p.putStrYX(y + 1, 5, str);
-    p.setFgRGB(0x444444);
-    p.setBgRGB(0x000000);
-    p.putStr(bgChar.padRight(80, bgChar));
+    p
+      ..setFgDefault()
+      ..putStrYX(y + 1, 5, str)
+      ..setFgRGB(0x444444)
+      ..setBgRGB(0x000000)
+      ..putStr(bgChar.padRight(80, bgChar));
   } else {
     p.putStrYX(y + 1, 5, bgChar.padRight(80, bgChar));
   }

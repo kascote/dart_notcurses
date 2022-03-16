@@ -118,9 +118,10 @@ Plane? setupPlane(NotCurses n) {
   final stdPlane = n.stdplane();
   final dim = stdPlane.dimyx();
 
-  stdPlane.setFgRGB8(0, 0, 0);
-  stdPlane.setBgRGB8(0xbb, 0x64, 0xbb); // #bb64bb
-  stdPlane.stylesOn(Style.underline);
+  stdPlane
+    ..setFgRGB8(0, 0, 0)
+    ..setBgRGB8(0xbb, 0x64, 0xbb) // #bb64bb
+    ..stylesOn(Style.underline);
 
   if (stdPlane.putStrAligned(dim.y - 1, Align.center, 'mash keys, yo. give that mouse some waggle! ctrl+d exits.') <
       0) {
@@ -128,8 +129,9 @@ Plane? setupPlane(NotCurses n) {
     return null;
   }
 
-  stdPlane.setStyles(Style.none);
-  stdPlane.setBgDefault();
+  stdPlane
+    ..setStyles(Style.none)
+    ..setBgDefault();
   if (!n.render()) {
     stderr.writeln('error rendering');
     return null;
@@ -183,21 +185,22 @@ void keyHandler(Plane stdPlane, Key key) {
     return;
   }
 
-  stdPlane.setFgRGB8(0xd0, 0xd0, 0xd0); // #d0d0d0
-
   final keys = StringBuffer();
-  keys.write(key.hasShift() ? 'S' : 's');
-  keys.write(key.hasAlt() ? 'A' : 'a');
-  keys.write(key.hasCtrl() ? 'C' : 'c');
-  keys.write(key.hasSuper() ? 'U' : 'u');
-  keys.write(key.hasHyper() ? 'H' : 'h');
-  keys.write(key.hasMeta() ? 'M' : 'm');
-  keys.write(key.hasCapslock() ? 'X' : 'x');
-  keys.write(key.hasNumlock() ? '#' : '.');
-  keys.write(evTypeToChar(key));
-  keys.write(' ');
+  keys
+    ..write(key.hasShift() ? 'S' : 's')
+    ..write(key.hasAlt() ? 'A' : 'a')
+    ..write(key.hasCtrl() ? 'C' : 'c')
+    ..write(key.hasSuper() ? 'U' : 'u')
+    ..write(key.hasHyper() ? 'H' : 'h')
+    ..write(key.hasMeta() ? 'M' : 'm')
+    ..write(key.hasCapslock() ? 'X' : 'x')
+    ..write(key.hasNumlock() ? '#' : '.')
+    ..write(evTypeToChar(key))
+    ..write(' ');
 
-  stdPlane.putStr(keys.toString());
+  stdPlane
+    ..setFgRGB8(0xd0, 0xd0, 0xd0) // #d0d0d0
+    ..putStr(keys.toString());
 
   if (key.id < 0x80) {
     stdPlane.setFgRGB8(0x80, 0xfa, 0x40); // #80fa40

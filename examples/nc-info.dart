@@ -2,35 +2,34 @@ import 'package:characters/characters.dart';
 import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
-  final opts = CursesOptions(
+  final nc = NotCurses(CursesOptions(
     flags: OptionFlags.noAlternateScreen |
         OptionFlags.preserveCursor |
         OptionFlags.noClearBitmaps |
         OptionFlags.drainInput |
         OptionFlags.suppressBanners,
-  );
-
-  final nc = NotCurses(opts);
-  if (nc.notInitialized) {
-    return -1;
-  }
+  ));
+  if (nc.notInitialized) return -1;
 
   nc.miceEnable(MiceEvents.allEvents);
 
   final List<String> indent = [];
   final stdn = nc.stdplane();
   if (stdn.dimx() < 80) {
-    stdn.setFgRGB(0xff5349);
-    stdn.setStyles(Style.bold);
-    stdn.putStr('This program requires at least 80 columns.\n');
-    nc.render();
-    nc.stop();
+    stdn
+      ..setFgRGB(0xff5349)
+      ..setStyles(Style.bold)
+      ..putStr('This program requires at least 80 columns.\n');
+    nc
+      ..render()
+      ..stop();
     return -1;
   }
 
-  stdn.setFgAlpha(Alpha.highcontrast);
-  stdn.setFgRGB(0xffffff);
-  stdn.setScrolling(true);
+  stdn
+    ..setFgAlpha(Alpha.highcontrast)
+    ..setFgRGB(0xffffff)
+    ..setScrolling(true);
 
   finishLine(stdn);
   finishLine(stdn);
@@ -42,8 +41,9 @@ int main() {
     displayLogo(nc, stdn);
   }
 
-  nc.render();
-  nc.stop();
+  nc
+    ..render()
+    ..stop();
   return 0;
 }
 
@@ -62,16 +62,15 @@ void tinfoDebugStyles(NotCurses nc, Plane plane, String idt) {
 void tinfoDebugStyle(Plane plane, String name, int style, String char) {
   final nc = plane.notCurses();
   final support = nc.supportedStyles() & style == style;
-  if (!support) {
-    plane.setStyles(Style.italic);
-  }
+  if (!support) plane.setStyles(Style.italic);
 
-  plane.setStyles(style);
-  plane.putStr(name);
-  plane.setStyles(Style.bold);
-  plane.putWc(capboolbool(nc.canUtf8(), support));
-  plane.setStyles(Style.none);
-  plane.putChar(char);
+  plane
+    ..setStyles(style)
+    ..putStr(name)
+    ..setStyles(Style.bold)
+    ..putWc(capboolbool(nc.canUtf8(), support))
+    ..setStyles(Style.none)
+    ..putChar(char);
 }
 
 String capboolbool(bool utf8, bool cap) {
@@ -83,9 +82,7 @@ void finishLine(Plane plane) {
   while (x++ < 80) {
     plane.putChar(' ');
   }
-  if (plane.dimx() > 80) {
-    plane.putChar('\n');
-  }
+  if (plane.dimx() > 80) plane.putChar('\n');
 }
 
 void tinfoDebugBitmaps(NotCurses nc, Plane plane, List<String> indent) {

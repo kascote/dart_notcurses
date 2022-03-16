@@ -9,8 +9,9 @@ void main() {
   final canUtf8 = nc.canUtf8();
   final ok = '✅';
   final no = '❌';
-  final okChannel = Channels.initializer(0x00, 0xff, 0x00, 0x00, 0x00, 0x00);
-  final noChannel = Channels.initializer(0xff, 0x00, 0x00, 0x00, 0x00, 0x00);
+  final defaultChannel = Channels.defaultColors();
+  final okChannel = defaultChannel.copy()..setFgRGB(0x00ff00);
+  final noChannel = defaultChannel.copy()..setFgRGB(0xff0000);
 
   final capabilities = {
     'Utf8': canUtf8,
@@ -28,9 +29,7 @@ void main() {
   };
 
   void pLabel(String value) {
-    nc.setFgDefault();
-    nc.setBgDefault();
-    nc.putStr(value.padRight(15));
+    nc.putStr(value.padRight(15), defaultChannel);
   }
 
   void pCap(bool value) {

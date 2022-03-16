@@ -5,7 +5,7 @@ import 'package:dart_notcurses/dart_notcurses.dart';
 int main() {
   final opts = CursesOptions(
     loglevel: LogLevel.error,
-    flags: OptionFlags.cliMode, // | NcOptions.inhibitSetlocale,
+    flags: OptionFlags.cliMode, // | OptionFlags.inhibitSetlocale,
   );
   final nc = NotCurses.core(opts);
   if (nc.notInitialized) {

@@ -30,19 +30,24 @@ void showUsage() {
   print('RGB colors extractracted from https://en.wikipedia.org/wiki/ANSI_escape_code');
 }
 
+void showColor(Direct nc, int idx) {
+  final color = colorCube[idx]!;
+  final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
+  final chn = Channels.zero()
+    ..setBgPalindex(idx)
+    ..setFgPalindex(textColor(color));
+  nc.putStr(' ${idx.toString().padLeft(3)} #$colorStr ', chn);
+  nc.putStr(' ');
+}
+
 void indexed(Direct nc) {
   baseColors(nc);
   nc.putStr('\n');
 
   for (var i = 16; i <= 231; i++) {
-    final color = colorCube[i]!;
-    final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-    final chn = Channels.zero()
-      ..setBgPalindex(i)
-      ..setFgPalindex(textColor(color));
-    nc.putStr(' ${i.toString().padLeft(3)} #$colorStr ', chn);
-    nc.putStr(' ');
+    showColor(nc, i);
     if ((i - 15) % 6 == 0) nc.putStr('\n');
+    if ((i - 15) % 36 == 0) nc.putStr('\n');
   }
 
   grayscale(nc);
@@ -55,16 +60,11 @@ void gradient(Direct nc) {
   for (var i = 16; i <= 46; i += 6) {
     for (var j = i; j <= (i + 185); j += 36) {
       for (var h = j; h <= (j + 5); h++) {
-        final color = colorCube[h]!;
-        final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-        final chn = Channels.zero()
-          ..setBgPalindex(h)
-          ..setFgPalindex(textColor(color));
-        nc.putStr(' ${h.toString().padLeft(3)} #$colorStr ', chn);
-        nc.putStr(' ');
+        showColor(nc, h);
       }
       nc.putStr('\n');
     }
+    nc.putStr('\n');
   }
 
   grayscale(nc);
@@ -82,16 +82,9 @@ void baseColors(Direct nc) {
 }
 
 void grayscale(Direct nc) {
-  // grayscale
   for (var i = 0; i <= 23; i++) {
     final idx = i + 232;
-    final color = colorCube[idx]!;
-    final colorStr = color.toRadixString(16).toUpperCase().padLeft(6, '0');
-    final chn = Channels.zero()
-      ..setBgPalindex(idx)
-      ..setFgPalindex(textColor(color));
-    nc.putStr(' ${idx.toString().padLeft(3)} #$colorStr ', chn);
-    nc.putStr(' ');
+    showColor(nc, idx);
     if ((i + 1) % 6 == 0) nc.putStr('\n');
   }
 }

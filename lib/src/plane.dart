@@ -414,7 +414,7 @@ class Plane {
   /// limit on bitmap size, 'maxbmapy' and 'maxbmapx' will be 0. Any of the
   /// geometry arguments may be NULL.
   // TODO bring this class inside
-  NcPixelGeomData pixelGeom({
+  PixelGeomData pixelGeom({
     bool pxy = false,
     bool pxx = false,
     bool celldimy = false,
@@ -422,7 +422,7 @@ class Plane {
     bool maxbmapy = false,
     bool maxbmapx = false,
   }) {
-    return NcPixelGeomData(
+    return PixelGeomData(
       this,
       pxy: pxy,
       pxx: pxx,

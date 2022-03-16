@@ -68,6 +68,16 @@ class Channels {
     return Channels._(0);
   }
 
+  /// Initialize a Channels with default FG/BG colors
+  factory Channels.defaultColors() {
+    return Channels._(0)..setBgDefault()..setFgDefault();
+  }
+
+  /// Returns a new Channels with the same values
+  Channels copy() {
+    return Channels._(_value);
+  }
+
   /// Creates a new channel pair using 'fchan' as the foreground channel
   /// and 'bchan' as the background channel.
   factory Channels.combine(Channel fchan, Channel bchan) {

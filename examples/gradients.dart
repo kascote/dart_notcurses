@@ -3,14 +3,11 @@ import 'dart:io';
 import 'package:dart_notcurses/dart_notcurses.dart';
 
 int main() {
-  final opts = CursesOptions(
+  final nc = NotCurses(CursesOptions(
     loglevel: LogLevel.error,
     flags: OptionFlags.drainInput,
-  );
-  final nc = NotCurses(opts);
-  if (nc.notInitialized) {
-    return -1;
-  }
+  ));
+  if (nc.notInitialized) return -1;
 
   bool rc = false;
   try {
@@ -53,18 +50,14 @@ bool gradStriations(NotCurses nc) {
     return false;
   }
 
-  if (!nc.render()) {
-    return false;
-  }
+  if (!nc.render()) return false;
   sleep(Duration(seconds: 1));
 
   if (p.gradient(0, 0, 0, 0, '▀', Style.none, ul, ur, ll, lr) <= 0) {
     return false;
   }
 
-  if (!nc.render()) {
-    return false;
-  }
+  if (!nc.render()) return false;
   sleep(Duration(seconds: 1));
 
   return true;
@@ -77,13 +70,9 @@ bool gradHigh(NotCurses nc) {
   final ll = Channel.initializer(0xff, 0, 0);
   final lr = Channel.initializer(0xff, 0xff, 0xff);
 
-  if (p.gradient2x1(0, 0, 0, 0, ul, ur, ll, lr) <= 0) {
-    return false;
-  }
+  if (p.gradient2x1(0, 0, 0, 0, ul, ur, ll, lr) <= 0) return false;
 
-  if (!nc.render()) {
-    return false;
-  }
+  if (!nc.render()) return false;
   sleep(Duration(seconds: 1));
 
   return true;
